@@ -1,0 +1,22 @@
+[
+  { 
+    "text": "Banks", 
+    "icon": "mdi-bank"
+  },
+  {  
+    "text": "Restaurants", 
+    "icon": "mdi-hamburger"
+  },
+  {  
+    "text": "Hospitals", 
+    "icon": "mdi-plus-box"
+  },
+  {  
+    "text": "Religious Centres", 
+    "icon": "mdi-church"
+  },
+  {  
+    "text": "Malls & Shops", 
+    "icon": "mdi-cart"
+  }
+]
