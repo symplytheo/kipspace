@@ -1,6 +1,6 @@
-# theonuxt
+# kipspace-web
 
-> My sublime Nuxt.js project
+> A space reservation project
 
 ## Build Setup
 
