@@ -12,13 +12,15 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-slide-group :mobile-break-point="900">
+            <v-slide-group 
+              :mobile-break-point="900"
+            >
               <v-slide-item v-for="(item, i) in categories" :key="i">
                 <v-card 
                   flat 
                   class="pa-0 mx-5" 
                   style="border-radius: 50px" 
-                  to="/category"
+                  :to="`/category/${item.slug}`"
                 >
                   <div class="category-box d-flex align-center pr-5">
                     <div class="icon-box">
@@ -84,24 +86,27 @@
     <v-container>
       <h3>Top Searches</h3>
       <v-row justify="center">
-        <v-col cols="12" sm="11" md="11" lg="12">
+        <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col cols="6" sm="6" lg="3" v-for="g in 8" :key="g">
+            <v-col cols="6" md="3" v-for="g in 8" :key="g">
               <v-card flat link>
                 <v-img src="/burger.png" :aspect-ratio="17/12"/>
               </v-card>
-              <div class="py-2">
-                <h4 class="d-inline">Dominos Pizza</h4>
-                <v-rating
-                  value=3
-                  half-increments
-                  background-color="primary"
-                  color="primary"
-                  dense
-                  size="16"
-                  class="d-inline float-right"
-                ></v-rating>
-              </div>
+              <v-row>
+                <v-col cols="7">
+                  <h4>Dominos Pizza</h4>
+                </v-col>
+                <v-col cols="5" class="text-right">
+                  <v-rating
+                    :value=3
+                    half-increments
+                    background-color="primary"
+                    color="primary"
+                    dense
+                    size="14"
+                  ></v-rating>
+                </v-col>
+              </v-row>
             </v-col>
             <v-col cols="12" class="my-2">
               <v-pagination 

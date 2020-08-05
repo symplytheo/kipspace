@@ -18,9 +18,9 @@ export default {
 </script>
 <style>
 #app, .v-application {
-   font-family: 'Raleway', Arial;
- }
- .v-application .v-btn {
-   text-transform: none;
- } 
+  font-family: 'Poppins', sans-serif;
+}
+.v-application .v-btn {
+  text-transform: none !important;
+} 
 </style>

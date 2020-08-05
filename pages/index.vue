@@ -1,85 +1,94 @@
 <template>
   <div id="home">
-    <v-img 
-      src="/exclude.jpg" 
-      class="bg-parallax" 
-      style=" width: 100%"
-    >
-      <v-container style="margin-top: 160px" class="mb-10">
-        <v-row justify="center" class="text-center">
-          <v-col cols="12" md="10">
-            <h1 class="white--text">
-              Make a reservation today. <br>
-              Kip. Your. Space.
-            </h1>
-          </v-col>
-          <v-col cols="11" sm="8" lg="6">
-            <v-text-field
-              solo
-              rounded
-              dense
-              flat
-              label="Search or type location"
-              append-icon="mdi-magnify"
-              @keypress.enter="$router.push('/search')"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-container>
+    <v-container style="margin-top: 150px" class="mb-10">
+      <v-row justify="center" class="text-center">
+        <v-col cols="12" md="10">
+          <h1 class="white--text">
+            Make a reservation today. <br>
+            Kip. Your. Space.
+          </h1>
+        </v-col>
+        <v-col cols="11" sm="8" lg="6">
+          <v-text-field
+            solo
+            rounded
+            dense
+            flat
+            label="Search or type location"
+            append-icon="mdi-magnify"
+            @keypress.enter="$router.push('/search')"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-container>
 
-      <v-container class="my-10 my-lg-0">
-        <v-card height="400" flat color="transparent"></v-card>
-      </v-container>
+    <v-container class="my-10">
+      <v-card height="600" flat color="transparent"></v-card>
+    </v-container>
 
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12" sm="10" lg="8">
-            <v-card class="pa-10 mt-4 mb-10">
-              <h3 class="primary--text text-center">
-                Avoid queues<span class="secondary--text">.</span>
-              </h3>
-              <p class="text-center py-3">
-                With Kipspace, you do not need to worry about waiting in queues. Make reservations and gain easy access into any facility of your choice.
-              </p>
-              <v-card flat class="pa-5" color="#F1F1F1">
-                <v-row align="center" justify="center">
-                  <v-col cols="6" class="px-10">
+    <v-container>
+      <v-row justify="center" class="mt-10">
+        <v-col cols="12" lg="10">
+          <v-card class="pa-5 mb-10">
+            <h3 class="primary--text text-center">
+              Avoid queues<span class="secondary--text">.</span>
+            </h3>
+            <p class="text-center pt-2">
+              With Kipspace, you do not need to worry about waiting in queues. Make reservations and gain easy access into any facility of your choice.
+            </p>
+            
+              <v-img
+                src="/ellipse-bg.svg"
+                class="pa-10 px-5"
+                contain
+                height="100%"
+                style="background-color"
+              >
+                <v-row align="center" justify="center" class="mt-">
+                  <v-col cols="8" md="6" class="pl-7 pl-sm-10  pt-0">
                     <h4 class="primary--text">
-                      A new way to kipspace<span class="secondary--text">.</span>
+                      A new way to<br> kipspace<span class="secondary--text">.</span>
                     </h4>
-                    <p class="py-3">
+                    <h5 class="py-3 font-weight-thin">
                       A digital tool for making reservations and managing facilities.
-                    </p>
+                    </h5>
                   </v-col>
-                  <v-col cols="6"></v-col>
+                  <v-col cols="4" md="6" class="pr-5 pr-md-0 pt-0">
+                    <v-img src="/mobile-app.svg" max-height="200" contain></v-img>
+                  </v-col>
                 </v-row>
-              </v-card>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+              </v-img>
+           
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
 
-      <v-container>
+    <v-sheet color="white" tile flat width="100%">
+      <v-container class="mt-lg-10">
         <h3>Top Searches</h3>
         <v-row justify="center">
-          <v-col cols="12" sm="11" md="11" lg="12">
+          <v-col cols="12" sm="10" md="12">
             <v-row>
-              <v-col cols="6" sm="6" lg="3" v-for="g in 8" :key="g">
+              <v-col cols="6" md="3" v-for="g in 8" :key="g">
                 <v-card flat link>
                   <v-img src="/burger.png" :aspect-ratio="17/12"/>
                 </v-card>
-                <div class="py-2">
-                  <h4 class="d-inline">Dominos Pizza</h4>
-                  <v-rating
-                    :value=3
-                    half-increments
-                    background-color="primary"
-                    color="primary"
-                    dense
-                    size="16"
-                    class="d-inline float-right"
-                  ></v-rating>
-                </div>
+                <v-row>
+                  <v-col cols="7">
+                    <h4>Dominos Pizza</h4>
+                  </v-col>
+                  <v-col cols="5" class="text-right">
+                    <v-rating
+                      :value=3
+                      half-increments
+                      background-color="primary"
+                      color="primary"
+                      dense
+                      size="14"
+                    ></v-rating>
+                  </v-col>
+                </v-row>
               </v-col>
               <v-col cols="12" class="my-2">
                 <v-pagination 
@@ -94,7 +103,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-img>
+    </v-sheet>
   </div>
 </template>
 
@@ -126,9 +135,4 @@ export default {
   color: #EA3788;
 }
 
-@media screen and (min-width: 1265px) {
-  .bg-parallax {
-    max-height: 2300px;
-  }
-}
 </style>

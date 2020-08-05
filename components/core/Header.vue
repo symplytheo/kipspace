@@ -17,7 +17,6 @@
       </v-btn>
 
       <v-toolbar-title 
-        class="ml-lg-10"
         @click="$router.push('/')"
         style="cursor: pointer"
       >
@@ -29,7 +28,7 @@
       <span v-if="!isLoggedIn">
         <v-btn
           color="primary"
-          class="mr-2 nav-link"
+          class="nav-link"
           text
         >
           Help
@@ -37,7 +36,7 @@
 
         <v-btn
           color="primary"
-          class="mr-2 hidden-sm-and-down nav-link"
+          class="mx-1 hidden-sm-and-down nav-link"
           text
           @click="openLogin"
         >
@@ -47,18 +46,18 @@
         <v-btn
           color="secondary"
           depressed
-          class="text-capitalize font-weight-bold mx-3 hidden-sm-and-down"
+          class="font-weight-bold mx-2 hidden-sm-and-down"
           @click="openRegister"
           style="font-size: 15px"
         >
-          Sign up
+          Sign Up
         </v-btn>
       </span>
 
       <span v-if="isLoggedIn">
         <v-btn
           color="primary"
-          class="nav-link mr-2 hidden-sm-and-down"
+          class="nav-link mr-1 hidden-sm-and-down"
           text
           v-for="(link, l) in navLinks"
           :key="l"
@@ -71,29 +70,37 @@
         <v-btn
           color="secondary"
           depressed
-          class="text-capitalize mx-2 hidden-sm-and-down font-weight-bold"
+          class="mr-2 hidden-sm-and-down font-weight-bold"
           to="/make-reservation"
         >
-          Make reservation
+          Make Reservation
         </v-btn>
       </span>
       <v-spacer v-if="isLoggedIn"></v-spacer>
       <span v-if="isLoggedIn">
-        <v-btn small icon color="primary" class="mr-5" to="/search">
-          <v-icon class="ma-3">mdi-magnify</v-icon>
+        <v-btn small icon color="primary" class="mr-3" to="/search">
+          <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-btn small icon color="primary" to="/notifications">
-          <v-icon class="ma-3">mdi-bell</v-icon>
+          <v-icon>mdi-bell</v-icon>
         </v-btn>
-        <v-avatar size="40" class="mx-5">
-          <v-img src="/lamp.jpg" />
-        </v-avatar>
+        <v-btn 
+          class="ml-5" 
+          to="/profile" 
+          fab
+          depressed
+          small
+        >
+          <v-avatar size="46">
+            <v-img src="/lamp.jpg" />
+          </v-avatar>
+        </v-btn>
       </span>
     </v-app-bar>
 
     <v-navigation-drawer
       v-model="drawer"
-      absolute
+      app
       floating
       temporary
       color="primary"
@@ -109,17 +116,38 @@
           color="secondary" 
           class="text-capitalize"
           to="/make-reservation"
+          v-if="isLoggedIn"
         >Make Reservation</v-btn>
       </v-toolbar>
-      <v-list>
+      <v-list v-if="!isLoggedIn">
+        <v-list-item link to="/">
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+        <v-list-item link @click="openLogin">
+          <v-list-item-title>Log In</v-list-item-title>
+        </v-list-item>
+      </v-list>
+
+      <v-btn 
+        v-if="!isLoggedIn"
+        color="secondary" 
+        class="mx-3"
+        width="90%"
+        depressed
+        @click="openRegister"
+      >
+        Sign Up
+      </v-btn>
+
+      <v-list v-if="isLoggedIn">
         <v-list-item 
-          v-for="(link, n) in [...navLinks, ...moreLinks]" 
+          v-for="(link, n) in navLinks" 
           :key="n"
           :to="link.href"
         >
           <v-list-item-title>{{link.text}}</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click="signOut" v-on:click="drawer = !drawer">
           <v-list-item-title>Log Out</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -144,11 +172,7 @@ export default {
     navLinks: [
       { text: 'Home', href: '/'},
       { text: 'My Reservations', href: '/reservations'},
-      { text: 'Profile', href: '/profile'}
-    ],
-    moreLinks: [
-      { text: 'Notifications', href: '/notifications'},
-      { text: 'Scan to Exit', href: '/scan'}
+      { text: 'Scan to Exit', href: '/exit'}
     ]
   }),
   computed: {
@@ -159,7 +183,8 @@ export default {
   methods: {
   ...mapMutations({
       openLogin: 'openLoginDialog',
-      openRegister: 'openRegDialog'
+      openRegister: 'openRegDialog',
+      signOut: 'signOut'
     })
   }
 }

@@ -57,13 +57,15 @@
                   <h3 class="font-weight-medium">or sign up using</h3> 
                   <div class="py-5">
                     <v-btn depressed fab color="transparent" class="mx-3">
-                      <v-avatar size="64">
-                        <v-img src="/google-icon.png"></v-img>
+                      <v-avatar size="40">
+                        <v-img src="/google.png"></v-img>
                       </v-avatar>
                     </v-btn>
                     or
-                    <v-btn depressed fab color="white" class="mx-3">
-                      <v-icon size="68" color="blue darken-3">mdi-facebook</v-icon>
+                    <v-btn depressed fab color="transparent" class="mx-3">
+                      <v-avatar size="42">
+                        <v-img src="/facebook.png"></v-img>
+                      </v-avatar>
                     </v-btn>
                   </div>
                 </v-col>

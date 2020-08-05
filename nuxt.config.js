@@ -1,3 +1,11 @@
+import categories from './data/categories.json';
+
+let categoryRoutes = () => {
+  return new Promise(resolve => {
+    resolve(categories.map(el => `/category/${el.slug}`))
+  })
+}
+
 export default {
   mode: 'universal',
   head: {
@@ -12,7 +20,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { 
         rel: 'stylesheet', 
-        href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap'
+        href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
       },
     ]
   },
@@ -24,6 +32,9 @@ export default {
   vuetify: {
     customVariables: ['~/assets/style/variables.scss'],
     optionsPath: '~/plugins/veutify.config.js'
+  },
+  generate: {
+    routes: categoryRoutes
   },
   build: {
     /*

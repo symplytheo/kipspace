@@ -6,18 +6,18 @@
           <v-row>
             <v-col cols="6">
               <h5 class="ml-3">Facility Managers</h5>
-              <v-list color="rgba(0,0,0,0)" dense>
-                <v-list-item>
+              <v-list color="rgba(0,0,0,0)" dense flat>
+                <v-list-item link @click="openRegister">
                   <v-list-item-title>Register</v-list-item-title>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item link @click="openLogin">
                   <v-list-item-title>Log In</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-col>
             <v-col cols="6">
               <h5 class="ml-3">Company</h5>
-              <v-list color="rgba(0,0,0,0)" dense>
+              <v-list color="rgba(0,0,0,0)" dense flat>
                 <v-list-item>
                   <v-list-item-title>About us</v-list-item-title>
                 </v-list-item>
@@ -76,11 +76,27 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
+
 export default {
+  components: {
+    SignIn: () => import('~/components/dialog/Login'),
+    SignUp: () => import('~/components/dialog/Register')
+  },
   data: () => ({
     //
   }),
-  computed: {}
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn
+    }
+  },
+  methods: {
+  ...mapMutations({
+      openLogin: 'openLoginDialog',
+      openRegister: 'openRegDialog'
+    })
+  }
 };
 </script>
 

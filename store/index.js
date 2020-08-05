@@ -1,6 +1,6 @@
 export const state = () => ({
   categories: require('@/data/categories.json'),
-  isLoggedIn: false,
+  isLoggedIn: true,
   loginDialog: false,
   regDialog: false
 })
@@ -26,5 +26,8 @@ export const mutations = {
   openRegDialog: state => (state.regDialog = !state.regDialog),
   closeRegDialog (state) {
     return  state.regDialog = false
+  },
+  signOut (state) {
+    return  state.isLoggedIn = false
   },
 }

@@ -98,7 +98,8 @@
         Reviews
       </v-tab>
       <v-tab-item>
-        <v-sheet tile height="200" color="primary lighten-5">
+        <v-sheet tile height="180" color="grey lighten-4">
+          <v-img src="/chips.png" height="180"></v-img>
         </v-sheet>
         <v-sheet tile elevation="3">
           <v-container class="px-10">
@@ -108,7 +109,7 @@
                   size="160"
                   class="biz-logo"
                 >
-                  <img src="/pizza.png" alt="alt">
+                  <img src="/mcdonald-icon.png" alt="alt">
                 </v-avatar>
               </v-col>
               <v-col cols="7" sm="8" class="pt-0">
@@ -141,12 +142,12 @@
                   <v-col cols="2">
                     <v-icon color="primary" size="28">mdi-clock-outline</v-icon>
                   </v-col>
-                  <v-col cols="10" class="pt-2">
+                  <v-col cols="10" class="pt-3">
                     <v-row v-for="(open, h) in opening" :key="h">
-                      <v-col cols="7">
+                      <v-col cols="7" class="pt-1">
                         {{open.day}}
                       </v-col>
-                      <v-col cols="5">
+                      <v-col cols="5" class="pt-1">
                         {{open.time}}
                       </v-col>
                     </v-row>
