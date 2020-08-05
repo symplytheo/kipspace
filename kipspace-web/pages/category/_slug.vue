@@ -90,7 +90,7 @@ export default {
       return this.$store.getters.categories
     },
     category(){
-      return this.categories.find(el => (el.slug === this.slug))
+      return this.categories.find(el => (el.slug === this.slug));
     }
   }
 }
