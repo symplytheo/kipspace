@@ -99,7 +99,7 @@
       </v-tab>
       <v-tab-item>
         <v-sheet tile height="180" color="grey lighten-4">
-          <v-img src="/chips.png" height="180"></v-img>
+          <v-img src="/img/chips.png" height="180"></v-img>
         </v-sheet>
         <v-sheet tile elevation="3">
           <v-container class="px-10">
@@ -109,7 +109,7 @@
                   size="160"
                   class="biz-logo"
                 >
-                  <img src="/mcdonald-icon.png" alt="alt">
+                  <img src="/img/mcdonald-icon.png" alt="alt"/>
                 </v-avatar>
               </v-col>
               <v-col cols="7" sm="8" class="pt-0">

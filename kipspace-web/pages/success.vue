@@ -26,7 +26,7 @@
           <v-row>
             <v-col cols="12" sm="6" lg="3" v-for="g in 8" :key="g">
               <v-card flat link>
-                <v-img src="/burger.png" :aspect-ratio="17/12"/>
+                <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
               </v-card>
               <div class="py-2">
                 <h4 class="d-inline">Dominos Pizza</h4>
@@ -59,7 +59,11 @@
 
 <script>
 export default {
-
+head() {
+    return {
+      title: 'Congratulations'
+    };
+  }
 }
 </script>
 

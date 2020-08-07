@@ -10,7 +10,7 @@
               size="160"
               class="biz-logo"
             >
-              <img src="/pizza.png" alt="alt">
+              <img src="/img/pizza.png" alt="alt"/>
             </v-avatar>
           </v-col>
           <v-col md="9" lg="10" class="pt-0">

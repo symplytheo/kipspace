@@ -58,13 +58,13 @@
                   <div class="py-5">
                     <v-btn depressed fab color="transparent" class="mx-3">
                       <v-avatar size="40">
-                        <v-img src="/google.png"></v-img>
+                        <v-img src="/img/google.png"></v-img>
                       </v-avatar>
                     </v-btn>
                     or
                     <v-btn depressed fab color="transparent" class="mx-3">
                       <v-avatar size="42">
-                        <v-img src="/facebook.png"></v-img>
+                        <v-img src="/img/facebook.png"></v-img>
                       </v-avatar>
                     </v-btn>
                   </div>

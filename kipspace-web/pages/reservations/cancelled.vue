@@ -42,7 +42,11 @@
 
 <script>
 export default {
-
+  head() {
+    return {
+      title: 'Cancelled Reservations'
+    };
+  }
 }
 </script>
 

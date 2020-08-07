@@ -53,7 +53,11 @@
 
 <script>
 export default {
-
+  head() {
+    return {
+      title: 'Thanks for Coming'
+    };
+  }
 }
 </script>
 

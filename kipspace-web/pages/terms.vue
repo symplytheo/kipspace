@@ -28,7 +28,11 @@
 
 <script>
 export default {
-
+head() {
+    return {
+      title: 'Terms of Service'
+    };
+  }
 }
 </script>
 

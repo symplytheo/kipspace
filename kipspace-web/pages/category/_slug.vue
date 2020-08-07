@@ -44,7 +44,7 @@
           <v-row>
             <v-col cols="6" md="3" v-for="g in 8" :key="g">
               <v-card flat link>
-                <v-img src="/burger.png" :aspect-ratio="17/12"/>
+                <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
               </v-card>
               <v-row>
                 <v-col cols="7">
@@ -92,6 +92,13 @@ export default {
     category(){
       return this.categories.find(el => (el.slug === this.slug));
     }
+  },
+  head() {
+    const text = this.category.text;
+    const title = text.replace(/^\w|(\s\w)/g, str => str.toUpperCase())
+    return {
+      title
+    };
   }
 }
 </script>

@@ -21,7 +21,7 @@
               size="160"
               class="biz-logo"
             >
-              <img src="/pizza.png" alt="alt">
+              <img src="/img/pizza.png" alt="alt">
             </v-avatar>
             <div class="py-1">
               <v-btn 

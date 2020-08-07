@@ -56,7 +56,12 @@
 export default {
   data: () => ({
   //
-  })
+  }),
+  head() {
+    return {
+      title: 'Active Reservations'
+    };
+  }
 }
 </script>
 

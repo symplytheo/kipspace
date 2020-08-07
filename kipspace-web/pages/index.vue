@@ -38,7 +38,7 @@
             </p>
             
               <v-img
-                src="/ellipse-bg.svg"
+                src="/img/ellipse-bg.svg"
                 class="pa-10 px-5"
                 contain
                 height="100%"
@@ -54,7 +54,7 @@
                     </h5>
                   </v-col>
                   <v-col cols="4" md="6" class="pr-5 pr-md-0 pt-0">
-                    <v-img src="/mobile-app.svg" max-height="200" contain></v-img>
+                    <v-img src="/img/mobile-app.svg" max-height="200" contain></v-img>
                   </v-col>
                 </v-row>
               </v-img>
@@ -72,7 +72,7 @@
             <v-row>
               <v-col cols="6" md="3" v-for="g in 8" :key="g">
                 <v-card flat link>
-                  <v-img src="/burger.png" :aspect-ratio="17/12"/>
+                  <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
                 </v-card>
                 <v-row>
                   <v-col cols="7">
@@ -111,11 +111,6 @@
 
 export default {
   layout: 'homepage',
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
   head() {
     return {
       title: 'Home'

@@ -108,7 +108,7 @@
                   size="160"
                   class="biz-logo"
                 >
-                  <img src="/pizza.png" alt="alt">
+                  <img src="/img/pizza.png" alt="alt">
                 </v-avatar>
               </v-col>
               <v-col cols="7" sm="8" class="pt-0">

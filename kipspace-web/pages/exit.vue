@@ -6,7 +6,7 @@
           <v-col cols="10" sm="8" md="5" lg="4">
               <v-row justify="center">
                 <v-col cols="12" class="py-0">
-                  <v-img src="/qr-code-black.png" height="180" contain></v-img>
+                  <v-img src="/img/qr-code-black.png" height="180" contain></v-img>
                 </v-col>
                 <v-col cols="8">
                   <v-btn 
@@ -29,5 +29,10 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: 'Scan to Exit'
+    };
+  }
 }
 </script>

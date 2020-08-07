@@ -182,7 +182,12 @@
 export default {
   data: () => ({
     dialog: false
-  })
+  }),
+  head() {
+    return {
+      title: 'My Reservations'
+    };
+  }
 }
 </script>
 

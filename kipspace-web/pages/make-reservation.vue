@@ -10,6 +10,11 @@ export default {
   components: {
     DesktopView: () => import('~/components/make-reservation/desktop'),
     MobileView: () => import('~/components/make-reservation/mobile'),
+  },
+  head() {
+    return {
+      title: 'Make Reservation'
+    };
   }
 }
 </script>

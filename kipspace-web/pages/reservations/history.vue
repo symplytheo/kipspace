@@ -39,7 +39,11 @@
 
 <script>
 export default {
-
+  head() {
+    return {
+      title: 'History'
+    };
+  }
 }
 </script>
 

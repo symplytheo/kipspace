@@ -7,7 +7,7 @@
             <v-avatar
               size="160"
             >
-              <img src="/lamp.jpg" alt="alt">
+              <img src="/img/lamp.jpg" alt="alt">
             </v-avatar>
             <div class="py-2">
               <v-btn 
@@ -113,7 +113,12 @@ export default {
     location: '',
     pwd: '',
     pwd2: ''
-  })
+  }),
+  head() {
+    return {
+      title: 'Profile'
+    };
+  }
 }
 </script>
 

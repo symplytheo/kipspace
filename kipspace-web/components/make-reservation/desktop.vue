@@ -1,7 +1,7 @@
 <template>
   <div class="hidden-sm-and-down" id="desktop">
     <v-sheet tile height="180" color="grey lighten-5">
-      <v-img src="/chips.png" height="180">
+      <v-img src="/img/chips.png" height="180">
         <v-row justify="center" align="center" class="fill-height">
           <v-col md="10" lg="8">
             <v-card 
@@ -111,7 +111,7 @@
               size="160"
               class="biz-logo"
             >
-              <img src="/mcdonald-icon.png" alt="alt">
+              <img src="/img/mcdonald-icon.png" alt="alt"/>
             </v-avatar>
           </v-col>
           <v-col md="9" lg="10" class="pt-0">

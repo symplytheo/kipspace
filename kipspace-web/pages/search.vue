@@ -45,7 +45,7 @@
       <v-slide-group>
         <v-slide-item v-for="i in 10" :key="i">
           <v-card outlined flat width="250" class="mx-3">
-            <v-img src="/pizza.png" :aspect-ratio="16/9" class="pt-5">
+            <v-img src="/img/pizza.png" :aspect-ratio="16/9" class="pt-5">
             </v-img>
             <v-card-text class="black--text pl-10">
               <h3>Dominos Pizza</h3>
@@ -90,7 +90,7 @@
           <v-row>
             <v-col cols="6" md="3" v-for="g in 8" :key="g">
               <v-card flat link>
-                <v-img src="/burger.png" :aspect-ratio="17/12"/>
+                <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
               </v-card>
               <v-row>
                 <v-col cols="7">
@@ -130,6 +130,11 @@ export default {
     categories() {
       return this.$store.getters.categories
     }
+  },
+  head() {
+    return {
+      title: 'Search'
+    };
   }
 }
 </script>

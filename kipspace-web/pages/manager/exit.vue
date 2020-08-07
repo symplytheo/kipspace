@@ -7,7 +7,7 @@
               <v-row justify="center">
                 
                 <v-col cols="12" class="py-0">
-                  <v-img src="/qr-code.png" height="180" contain></v-img>
+                  <v-img src="/img/qr-code.png" height="180" contain></v-img>
                 </v-col>
                 <v-col cols="8">
                   <v-btn 
