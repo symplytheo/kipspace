@@ -23,7 +23,7 @@ export default {
   modules: ['@nuxtjs/pwa'],
   vuetify: {
     customVariables: ['~/assets/style/variables.scss'],
-    optionsPath: '~/plugins/veutify.config.js'
+    optionsPath: '~/plugins/vuetify.config.js'
   },
   build: {
     /*

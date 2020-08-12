@@ -163,13 +163,15 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import Footer from "~/components/core/Footer";
+import SignIn from "~/components/dialog/Login";
+import SignUp from "~/components/dialog/Register";
 
 export default {
   components: {
-    Footer: () => import('~/components/core/Footer'),
-    SignIn: () => import('~/components/dialog/Login'),
-    SignUp: () => import('~/components/dialog/Register')
+    Footer,
+    SignIn,
+    SignUp
   },
   data: () => ({
     drawer: false,
@@ -183,15 +185,19 @@ export default {
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.state.isLoggedIn
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
-    ...mapMutations({
-      signOut: 'signOut',
-      openRegister: 'openRegDialog',
-      openLogin: 'openLoginDialog'
-    })
+    openLogin() {
+      this.$store.commit('dialog/openLogin');
+    },
+    openRegister() {
+      this.$store.commit('dialog/openRegister');
+    },
+    signOut() {
+      this.$store.commit('signOut');
+    }
   },
   head() {
     return {

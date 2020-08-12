@@ -84,9 +84,6 @@ export default {
     const slug = await params.slug;
     return { slug }
   },
-  data(){
-    //
-  },
   computed: {
     categories() {
       return this.$store.getters['category/categories'];

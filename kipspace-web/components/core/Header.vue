@@ -160,13 +160,13 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import SignIn from '~/components/dialog/Login';
+import SignUp from '~/components/dialog/Register'
 
 export default {
   components: {
-    SignIn: () => import('~/components/dialog/Login'),
-    SignUp: () => import('~/components/dialog/Register'),
-    Footer: () => import('~/components/core/Footer')
+    SignIn,
+    SignUp
   },
   data: () => ({
     drawer: false,
@@ -178,15 +178,19 @@ export default {
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.state.isLoggedIn
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
-  ...mapMutations({
-      openLogin: 'openLoginDialog',
-      openRegister: 'openRegDialog',
-      signOut: 'signOut'
-    })
+    openLogin() {
+      this.$store.commit('dialog/openLogin');
+    },
+    openRegister() {
+      this.$store.commit('dialog/openRegister');
+    },
+    signOut() {
+      this.$store.commit('signOut');
+    }
   }
 }
 </script>

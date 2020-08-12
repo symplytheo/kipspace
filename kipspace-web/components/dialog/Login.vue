@@ -93,9 +93,11 @@
 </template>
 
 <script>
+import SignUp from '~/components/dialog/Register';
+
 export default {
   components: {
-    SignUp: () => import('~/components/dialog/Register')
+    SignUp
   },
   data (){
     return {
@@ -108,16 +110,16 @@ export default {
     }
   },
   computed: {
-    loginDialog () {
-      return this.$store.state.loginDialog
+    loginDialog() {
+      return this.$store.state['dialog/login'];
     },
   },
   methods: {
-    close () {
-      this.$store.commit('closeLoginDialog')
+    close() {
+      this.$store.commit('dialog/closeLogin');
     },
-    openRegister () {
-      this.$store.commit('openRegDialog')
+    openRegister() {
+      this.$store.commit('dialog/openRegister');
     }
   }
 }

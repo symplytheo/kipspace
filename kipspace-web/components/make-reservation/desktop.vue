@@ -1,108 +1,111 @@
 <template>
   <div class="hidden-sm-and-down" id="desktop">
-    <v-sheet tile height="180" color="grey lighten-5">
-      <v-img src="/img/chips.png" height="180">
-        <v-row justify="center" align="center" class="fill-height">
-          <v-col md="10" lg="8">
-            <v-card 
-              class="reserve-box pa-0 pl-8 mb-5" 
-              height="48"
-              flat
-            >
-              <v-row>
-                <v-col class="pa-0">
-                  <v-select
-                    :items="['today', 'tomorrow']"
-                    label="select day"
-                    class=""
-                    solo
-                    flat
-                  ></v-select>
-                </v-col>
-                <v-col class="pa-0">
-                  <v-dialog
-                    ref="timeModal"
-                    v-model="selectTime"
-                    :return-value.sync="time"
-                    persistent
-                    width="290px"
-                    hide-overlay
-                  >
-                    <template v-slot:activator="{on}">
-                      <v-btn
-                        text
-                        tile
-                        depressed
-                        height="48"
-                        width="100%"
-                        class="time-btn"
-                        v-on="on"
-                        :color="!time?'grey darken-1':'black'"
-                        style="border-right: 2px solid #DEDEDE"
-                      >
-                        {{ time ? time : 'pick time' }}
-                        <v-icon right>mdi-menu-down</v-icon>
-                      </v-btn>
-                    </template>
-                    <v-time-picker
-                      v-model="time"
-                      v-if="selectTime"
-                      color="primary" 
-                      ampm-in-title           
+    <v-container fluid>
+      <v-sheet tile height="180" color="grey lighten-5">
+        <v-img src="/img/chips.png" height="180">
+          <v-row justify="center" align="center" class="fill-height">
+            <v-col md="10" lg="8">
+              <v-card 
+                class="reserve-box pa-0 pl-8 mb-5" 
+                height="48"
+                flat
+              >
+                <v-row>
+                  <v-col class="pa-0">
+                    <v-select
+                      :items="['today', 'tomorrow']"
+                      label="select day"
+                      class=""
+                      solo
+                      flat
+                    ></v-select>
+                  </v-col>
+                  <v-col class="pa-0">
+                    <v-dialog
+                      ref="timeModal"
+                      v-model="selectTime"
+                      :return-value.sync="time"
+                      persistent
+                      width="290px"
+                      hide-overlay
                     >
-                      <v-spacer></v-spacer>
-                      <v-btn 
-                        text 
+                      <template v-slot:activator="{on}">
+                        <v-btn
+                          text
+                          tile
+                          depressed
+                          height="48"
+                          width="100%"
+                          class="time-btn"
+                          v-on="on"
+                          :color="!time?'grey darken-1':'black'"
+                          style="border-right: 2px solid #DEDEDE"
+                        >
+                          {{ time ? time : 'pick time' }}
+                          <v-icon right>mdi-menu-down</v-icon>
+                        </v-btn>
+                      </template>
+                      <v-time-picker
+                        v-model="time"
+                        v-if="selectTime"
                         color="primary" 
-                        @click="selectTime = false"
-                        class="font-weight-bold text-capitalize"
+                        ampm-in-title           
                       >
-                        Cancel
-                      </v-btn>
-                      <v-btn 
-                        text 
-                        color="primary" 
-                        @click="$refs.timeModal.save(time)"
-                        class="font-weight-bold text-capitalize"
-                      >
-                        Save
-                      </v-btn>
-                    </v-time-picker>
-                  </v-dialog>
-                </v-col>
-                <v-col class="pa-0">
-                  <v-select
-                    :items="['1 seat', '2 seats', '3 seats', '4 seats', '5 seats']"
-                    label="no. of seats"
-                    class=""
-                    solo
-                    flat
-                  ></v-select>
-                </v-col>
-                <v-col class="pa-0" cols="3">
-                  <v-select
-                    :items="['15 mins before','30 mins before','1 hour before','2 hours before']"
-                    label="remind me "
-                    solo
-                    flat
-                  ></v-select>
-                </v-col>
-                <v-col class="pa-0 reserve-btn-col">
-                  <v-btn 
-                    color="white"
-                    text
-                    large
-                    class="reserve-btn text-capitalize"
-                    width="100%"
-                    height="48"
-                  >Reserve</v-btn>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-img>
-    </v-sheet>
+                        <v-spacer></v-spacer>
+                        <v-btn 
+                          text 
+                          color="primary" 
+                          @click="selectTime = false"
+                          class="font-weight-bold text-capitalize"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-btn 
+                          text 
+                          color="primary" 
+                          @click="$refs.timeModal.save(time)"
+                          class="font-weight-bold text-capitalize"
+                        >
+                          Save
+                        </v-btn>
+                      </v-time-picker>
+                    </v-dialog>
+                  </v-col>
+                  <v-col class="pa-0">
+                    <v-select
+                      :items="['1 seat', '2 seats', '3 seats', '4 seats', '5 seats']"
+                      label="no. of seats"
+                      class=""
+                      solo
+                      flat
+                    ></v-select>
+                  </v-col>
+                  <v-col class="pa-0" cols="3">
+                    <v-select
+                      :items="['15 mins before','30 mins before','1 hour before','2 hours before']"
+                      label="remind me "
+                      solo
+                      flat
+                    ></v-select>
+                  </v-col>
+                  <v-col class="pa-0 reserve-btn-col">
+                    <v-btn 
+                      color="white"
+                      text
+                      large
+                      class="reserve-btn text-capitalize"
+                      width="100%"
+                      height="48"
+                    >Reserve</v-btn>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-sheet>
+    </v-container>
+    
     <v-sheet tile elevation="3">
       <v-container>
         <v-row>

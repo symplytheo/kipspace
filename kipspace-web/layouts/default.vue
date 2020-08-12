@@ -1,9 +1,11 @@
 <template>
   <v-app>
     <Header />
-    <v-main>
-      <nuxt />
-    </v-main>
+    <v-container fluid class="pt-0">
+      <v-main>
+        <nuxt />
+      </v-main>
+    </v-container>
     <Footer />
   </v-app>
 </template>

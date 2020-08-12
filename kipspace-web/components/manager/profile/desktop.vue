@@ -1,7 +1,10 @@
 <template>
   <div class="hidden-sm-and-down" id="desktop">
+
     <v-sheet tile height="150" color="primary lighten-5">
+      <v-img src="/img/chips.png" height="100%"></v-img>
     </v-sheet>
+
     <v-sheet tile elevation="3">
       <v-container>
         <v-row>
@@ -199,7 +202,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #desktop .biz-logo {
   margin-top: -65px; 
   border: 10px solid white; 

@@ -110,16 +110,16 @@ export default {
     }
   },
   computed: {
-    regDialog () {
-      return this.$store.state.regDialog
+    regDialog() {
+      return this.$store.state.dialog.register;
     },
   },
   methods: {
-    close () {
-      this.$store.commit('closeRegDialog')
+    close() {
+      this.$store.commit('dialog/closeRegister');
     },
-    openLogin () {
-      this.$store.commit('openLoginDialog')
+    openLogin() {
+      this.$store.commit('dialog/openLogin');
     }
   }
 }

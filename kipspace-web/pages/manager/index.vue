@@ -81,7 +81,7 @@ export default {
   layout: 'manager',
   computed: {
     isLoggedIn() {
-      return this.$store.state.isLoggedIn
+      return this.$store.getters.isLoggedIn
     }
   }
 }

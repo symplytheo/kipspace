@@ -90,168 +90,170 @@
       </v-row>
     </v-container>
 
-    <v-tabs>
-      <v-tab class="text-capitalize font-weight-bold">
-        Overview
-      </v-tab>
-      <v-tab class="text-capitalize font-weight-bold">
-        Reviews
-      </v-tab>
-      <v-tab-item>
-        <v-sheet tile height="180" color="grey lighten-4">
-          <v-img src="/img/chips.png" height="180"></v-img>
-        </v-sheet>
-        <v-sheet tile elevation="3">
-          <v-container class="px-10">
-            <v-row>
-              <v-col cols="5" sm="4">
-                <v-avatar
-                  size="160"
-                  class="biz-logo"
-                >
-                  <img src="/img/mcdonald-icon.png" alt="alt"/>
-                </v-avatar>
-              </v-col>
-              <v-col cols="7" sm="8" class="pt-0">
-                <h3>Dominos Pizza</h3>
-                <div class="pt-1">
-                  
-                  <v-rating
-                    value=4
-                    half-increments
-                    color="primary"
-                    background-color="primary"
-                    dense
-                    size="18"
-                    class="d-inline"
-                  ></v-rating>
-                </div>
-                <div class="pt-1">
-                  No. 6 Adenuga street, Ibara-expressway, Lagos State.
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-sheet>
-
-        <v-container class="py-10">
-          <v-row justify="center">
-            <v-col cols="10">
-              <v-card outlined class="px-5 py-3">
-                <v-row>
-                  <v-col cols="2">
-                    <v-icon color="primary" size="28">mdi-clock-outline</v-icon>
-                  </v-col>
-                  <v-col cols="10" class="pt-3">
-                    <v-row v-for="(open, h) in opening" :key="h">
-                      <v-col cols="7" class="pt-1">
-                        {{open.day}}
-                      </v-col>
-                      <v-col cols="5" class="pt-1">
-                        {{open.time}}
-                      </v-col>
-                    </v-row>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="2">
-                    <v-icon color="primary" size="28">mdi-phone</v-icon>
-                  </v-col>
-                  <v-col cols="10" class="pt-2">
-                    <v-btn 
-                      large 
-                      color="grey lighten-3" 
-                      href="tel:+2348012345678"
-                      link
-                      depressed
-                    >
-                      +234 801 234 5678
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="2">
-                    <v-icon color="primary" size="28">mdi-account-multiple</v-icon>
-                  </v-col>
-                  <v-col cols="10" class="pt-2">
-                    <v-chip 
-                      color="grey lighten-3"
-                      label
-                      class="px-10 py-5" 
-                    >
-                      1000
-                    </v-chip>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-tab-item>
-
-      <v-tab-item>
-        <v-container class="pt-0">
-          <v-row justify="center">
-            <v-col cols="12" class="pt-0">
-              <v-card outlined class="pa-5 pb-2">
-                <h3>Review Summary</h3>
-                <v-row align="center" class="pb-3">
-                  <v-col cols="8" class="pt-5">
-                    <v-row align="center" v-for="(rate, r) in rating" :key="r">
-                      <v-col cols="1" class="py-0">
-                        {{rate.num}}
-                      </v-col>
-                      <v-col cols="11" class="py-0">
-                        <v-progress-linear 
-                          :value="rate.value" 
-                          color="primary" 
-                          background-color="secondary"
-                          height="10"
-                          rounded
-                        ></v-progress-linear>
-                      </v-col>
-                    </v-row>
-                  </v-col>
-                  <v-col cols="4" class="text-center">
-                    <h1 style="font-size: 48px">
-                      4.4
-                    </h1>
+    <v-container fluid>
+      <v-tabs>
+        <v-tab class="text-capitalize font-weight-bold">
+          Overview
+        </v-tab>
+        <v-tab class="text-capitalize font-weight-bold">
+          Reviews
+        </v-tab>
+        <v-tab-item>
+          <v-sheet tile height="180" color="grey lighten-4">
+            <v-img src="/img/chips.png" height="180"></v-img>
+          </v-sheet>
+          <v-sheet tile elevation="3">
+            <v-container class="px-10">
+              <v-row>
+                <v-col cols="5" sm="4">
+                  <v-avatar
+                    size="160"
+                    class="biz-logo"
+                  >
+                    <img src="/img/mcdonald-icon.png" alt="alt"/>
+                  </v-avatar>
+                </v-col>
+                <v-col cols="7" sm="8" class="pt-0">
+                  <h3>Dominos Pizza</h3>
+                  <div class="pt-1">
+                    
                     <v-rating
                       value=4
                       half-increments
                       color="primary"
                       background-color="primary"
                       dense
-                      size="16"
+                      size="18"
+                      class="d-inline"
                     ></v-rating>
-                    <h4 class="">1000 Reviews</h4>
-                  </v-col>
-                </v-row>
-                <div v-for="(review, w) in reviews" :key="w">
-                  <v-divider></v-divider>
-                  <v-card tile flat class="pt-5 pb-3">
-                    <h4>{{review.name}}</h4>
-                    <span class="grey--text">{{review.date}}</span>
-                    <v-rating
-                      :value="review.rating"
-                      half-increments
-                      color="primary"
-                      background-color="primary"
-                      dense
-                      size="16"
-                      class="d-inline mx-2"
-                    ></v-rating>
-                    <div class="py-2">
-                      {{review.text}}
-                    </div>
-                  </v-card>
-                </div>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-tab-item>
-    </v-tabs>
+                  </div>
+                  <div class="pt-1">
+                    No. 6 Adenuga street, Ibara-expressway, Lagos State.
+                  </div>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+
+          <v-container class="py-10">
+            <v-row justify="center">
+              <v-col cols="10">
+                <v-card outlined class="px-5 py-3">
+                  <v-row>
+                    <v-col cols="2">
+                      <v-icon color="primary" size="28">mdi-clock-outline</v-icon>
+                    </v-col>
+                    <v-col cols="10" class="pt-3">
+                      <v-row v-for="(open, h) in opening" :key="h">
+                        <v-col cols="7" class="pt-1">
+                          {{open.day}}
+                        </v-col>
+                        <v-col cols="5" class="pt-1">
+                          {{open.time}}
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="2">
+                      <v-icon color="primary" size="28">mdi-phone</v-icon>
+                    </v-col>
+                    <v-col cols="10" class="pt-2">
+                      <v-btn 
+                        large 
+                        color="grey lighten-3" 
+                        href="tel:+2348012345678"
+                        link
+                        depressed
+                      >
+                        +234 801 234 5678
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="2">
+                      <v-icon color="primary" size="28">mdi-account-multiple</v-icon>
+                    </v-col>
+                    <v-col cols="10" class="pt-2">
+                      <v-chip 
+                        color="grey lighten-3"
+                        label
+                        class="px-10 py-5" 
+                      >
+                        1000
+                      </v-chip>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
+
+        <v-tab-item>
+          <v-container class="pt-0">
+            <v-row justify="center">
+              <v-col cols="12" class="pt-0">
+                <v-card outlined class="pa-5 pb-2">
+                  <h3>Review Summary</h3>
+                  <v-row align="center" class="pb-3">
+                    <v-col cols="8" class="pt-5">
+                      <v-row align="center" v-for="(rate, r) in rating" :key="r">
+                        <v-col cols="1" class="py-0">
+                          {{rate.num}}
+                        </v-col>
+                        <v-col cols="11" class="py-0">
+                          <v-progress-linear 
+                            :value="rate.value" 
+                            color="primary" 
+                            background-color="secondary"
+                            height="10"
+                            rounded
+                          ></v-progress-linear>
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="4" class="text-center">
+                      <h1 style="font-size: 48px">
+                        4.4
+                      </h1>
+                      <v-rating
+                        value=4
+                        half-increments
+                        color="primary"
+                        background-color="primary"
+                        dense
+                        size="16"
+                      ></v-rating>
+                      <h4 class="">1000 Reviews</h4>
+                    </v-col>
+                  </v-row>
+                  <div v-for="(review, w) in reviews" :key="w">
+                    <v-divider></v-divider>
+                    <v-card tile flat class="pt-5 pb-3">
+                      <h4>{{review.name}}</h4>
+                      <span class="grey--text">{{review.date}}</span>
+                      <v-rating
+                        :value="review.rating"
+                        half-increments
+                        color="primary"
+                        background-color="primary"
+                        dense
+                        size="16"
+                        class="d-inline mx-2"
+                      ></v-rating>
+                      <div class="py-2">
+                        {{review.text}}
+                      </div>
+                    </v-card>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
+      </v-tabs>
+    </v-container>
   </div>
 </template>
 
