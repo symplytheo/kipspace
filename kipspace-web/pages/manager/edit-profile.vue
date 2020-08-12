@@ -2,18 +2,18 @@
   <div id="mgr-edit">
     <v-container>
       <v-card outlined flat>
-        <v-sheet tile height="150" color="primary lighten-5">
-          <v-row align="end" justify="end" class="fill-height">
-            <v-btn 
-              text 
-              color="primary" 
-              class="text-lowercase font-weight-bold mx-10 my-2" 
-              depressed
-            >
-              <v-icon left>mdi-cloud-upload</v-icon>
-              upload
-            </v-btn>
-          </v-row>
+        <v-sheet tile height="150" color="grey lighten-4">
+          <v-img height="100%" src="/img/chips.png">
+            <v-row align="end" justify="end" class="fill-height">
+              <v-btn  
+                color="rgba(255,255,255,0.35)" 
+                class="text-lowercase font-weight-bold mx-2" 
+                depressed
+              >
+                <v-icon large color="primary">mdi-camera</v-icon>
+              </v-btn>
+            </v-row>
+          </v-img>
         </v-sheet>
         <v-row justify="center" class="text-center">
           <v-col cols="6">
@@ -21,25 +21,26 @@
               size="160"
               class="biz-logo"
             >
-              <img src="/img/pizza.png" alt="alt">
+              <v-img src="/img/pizza.png" alt="alt">
+                <v-row align="end" justify="center" class="fill-height">
+                  <v-btn  
+                    color="rgba(255,255,255,0.35)" 
+                    class="text-lowercase font-weight-bold my-3 mx-2" 
+                    depressed
+                    small
+                    block
+                  >
+                    <v-icon size="30" color="primary">mdi-camera</v-icon>
+                  </v-btn>
+                </v-row>
+              </v-img>
             </v-avatar>
-            <div class="py-1">
-              <v-btn 
-                text 
-                color="primary" 
-                class="text-lowercase font-weight-bold" 
-                depressed
-              >
-                <v-icon left>mdi-cloud-upload</v-icon>
-                upload
-              </v-btn>
-            </div>
           </v-col>
         </v-row>
         <v-row class="px-10 py-5">
           <v-col cols="12" sm="6">
             <label for="name">
-              <b>Company name</b>
+              <b>Company Name</b>
               <v-text-field
                 v-model="name"
                 outlined
@@ -78,7 +79,7 @@
               ></v-text-field>
             </label>
             <label for="phone">
-              <b>Phone number</b>
+              <b>Phone Number</b>
               <v-text-field
                 v-model="phone"
                 outlined
@@ -86,9 +87,9 @@
               ></v-text-field>
             </label>
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col cols="12" md="6">
             <label for="opening">
-              <b>Opening hours</b>
+              <b>Opening Hours</b>
               <v-card
                 outlined
               >
@@ -172,12 +173,12 @@
               </v-card>
             </label>
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col cols="12" md="6">
             <div class="text-center py-2">
-              <h3>Change password?</h3>
+              <h3>Change Password</h3>
             </div>
             <label for="pwd">
-              <b>Old password</b> 
+              <b>Old Password</b> 
               <v-text-field
                 v-model="pwd"
                 outlined
@@ -185,7 +186,7 @@
               ></v-text-field>
             </label>
             <label for="pwd2">
-              <b>New password</b>
+              <b>New Password</b>
               <v-text-field
                 v-model="pwd2"
                 outlined

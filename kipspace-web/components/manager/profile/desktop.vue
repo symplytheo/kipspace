@@ -162,8 +162,6 @@
 <script>
 export default {
   data: () => ({
-    time: null,
-    selectTime: false,
     rating: [
       { num: 5, value: 100},
       { num: 4, value: 50},
@@ -207,27 +205,5 @@ export default {
   border: 10px solid white; 
   border-radius: 50%;
 }
-#desktop .reserve-box {
-  border-radius: 50px!important
-}
-#desktop .reserve-box .v-input__slot {
-  border-right: 2px solid #DEDEDE;
-  border-radius:0%
-}
-#desktop .time-btn {
-  text-transform: lowercase;
-  border-right: 2px solid #DEDEDE;
-}
-#desktop .time-btn::before {
-  background-color: transparent!important;
-}
-#desktop .reserve-btn-col {
-  background: #EA3788; 
-  height: 48px; 
-  border-radius: 0px 50px 50px 0px;
-}
-#desktop .reserve-btn {
-  text-transform: capitalize;
-  border-radius: 0px 50px 50px 0px;
-}
+
 </style>

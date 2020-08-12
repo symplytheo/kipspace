@@ -1,16 +1,8 @@
-import categories from './data/categories.json';
-
-let categoryRoutes = () => {
-  return new Promise(resolve => {
-    resolve(categories.map(el => `/category/${el.slug}`))
-  })
-}
-
 export default {
   mode: 'universal',
   head: {
     titleTemplate: '%s - Kipspace',
-    title: 'My Nuxtjs Playground',
+    title: 'Welcome to Kipspace',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -32,9 +24,6 @@ export default {
   vuetify: {
     customVariables: ['~/assets/style/variables.scss'],
     optionsPath: '~/plugins/veutify.config.js'
-  },
-  generate: {
-    routes: categoryRoutes
   },
   build: {
     /*

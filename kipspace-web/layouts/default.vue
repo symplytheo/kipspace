@@ -9,18 +9,30 @@
 </template>
 
 <script>
+import Header from "~/components/core/Header";
+import Footer from "~/components/core/Footer";
+
 export default {
   components: {
-    Header: () => import('~/components/core/Header'),
-    Footer: () => import('~/components/core/Footer')
+    Header,
+    Footer
   }
 }
 </script>
 <style>
 #app, .v-application {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif
 }
-.v-application .v-btn {
+#app .v-btn {
   text-transform: none !important;
 } 
+.pagination .v-pagination__item, .pagination .v-pagination__navigation {
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent!important;
+}
+.pagination .v-pagination__item--active {
+  background: transparent!important;
+  color: #EA3788!important;
+}
 </style>

@@ -20,6 +20,7 @@
             x-large
             class="my-10"
             to="/"
+            style="text-transform: none"
           >
             Back to Homepage
           </v-btn>

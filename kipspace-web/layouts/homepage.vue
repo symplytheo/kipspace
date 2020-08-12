@@ -21,7 +21,7 @@
         @click="$router.push('/')"
         style="cursor: pointer"
       >
-        <v-img src="/logo-white.png"></v-img>
+        <v-img src="/logo-white.png" alt="Kipspace"></v-img>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -37,7 +37,7 @@
 
         <v-btn
           color="white"
-          class="mx-1 hidden-sm-and-down nav-link"
+          class="mx-1 hidden-sm-and-down nav-link text-capitalize"
           text
           @click="openLogin"
         >
@@ -47,7 +47,7 @@
         <v-btn
           color="secondary"
           depressed
-          class="font-weight-bold mx-2 hidden-sm-and-down"
+          class="font-weight-bold mx-2 hidden-sm-and-down text-capitalize"
           @click="openRegister"
           style="font-size: 15px"
         >
@@ -64,6 +64,7 @@
           :key="l"
           :to="link.href"
           active-class="link-active"
+          style="text-transform: none"
         >
           {{link.text}}
         </v-btn>
@@ -71,8 +72,9 @@
         <v-btn
           color="secondary"
           depressed
-          class="mr-2 hidden-sm-and-down font-weight-bold"
+          class="mr-2 hidden-sm-and-down font-weight-bold text-capitalize"
           to="/make-reservation"
+          style="font-size: 15px"
         >
           Make Reservation
         </v-btn>
@@ -93,7 +95,7 @@
           small
         >
           <v-avatar size="46">
-            <v-img src="/lamp.jpg" />
+            <v-img src="/img/lamp.jpg" />
           </v-avatar>
         </v-btn>
       </span>
@@ -126,6 +128,7 @@
           color="secondary" 
           to="/make-reservation"
           v-if="isLoggedIn"
+          class="text-capitalize"
         >Make Reservation</v-btn>
       </v-toolbar>
       <v-list v-if="!isLoggedIn">
@@ -138,7 +141,7 @@
       </v-list>
       <v-btn 
         color="secondary" 
-        class="mx-3"
+        class="mx-3 text-capitalize"
         width="90%"
         depressed
         @click="openRegister"
@@ -165,13 +168,15 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import SignIn from "~/components/dialog/Login";
+import SignUp from "~/components/dialog/Register";
+import Footer from "~/components/core/Footer";
 
 export default {
   components: {
-    SignIn: () => import('~/components/dialog/Login'),
-    SignUp: () => import('~/components/dialog/Register'),
-    Footer: () => import('~/components/core/Footer')
+    SignIn,
+    SignUp,
+    Footer
   },
   data: () => ({
     drawer: false,
@@ -183,22 +188,26 @@ export default {
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.state.isLoggedIn
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
-  ...mapMutations({
-      openLogin: 'openLoginDialog',
-      openRegister: 'openRegDialog',
-      signOut: 'signOut'
-    })
+    openLogin() {
+      this.$store.commit('dialog/openLogin');
+    },
+    openRegister() {
+      this.$store.commit('dialog/openRegister')
+    },
+    signOut() {
+      this.$store.commit('signOut');
+    }
   }
 }
 </script>
 <style>
 #homepage {
-  background-image: url('/office-building.svg'), url('/purple-bg.png');
-  background-position: center, top center;
+  background-image: url('/img/purple-bg.png');
+  background-position: top center;
   background-size: cover;
 }
 .nav-link {

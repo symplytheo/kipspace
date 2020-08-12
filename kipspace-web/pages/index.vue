@@ -95,7 +95,7 @@
                   :length="6" 
                   :value=1
                   color="primary"
-                  id="pager"
+                  class="pagination"
                 >
                 </v-pagination>
               </v-col>
@@ -120,14 +120,5 @@ export default {
 </script>
 
 <style>
-#pager .v-pagination__item, #pager .v-pagination__navigation {
-  border-radius: 0;
-  box-shadow: none;
-  background: transparent!important;
-}
-#pager .v-pagination__item--active {
-  background: transparent!important;
-  color: #EA3788;
-}
 
 </style>

@@ -46,7 +46,7 @@
                 :length="6" 
                 :value=1
                 color="primary"
-                id="page"
+                class="pagination"
               >
               </v-pagination>
             </v-col>
@@ -68,13 +68,4 @@ head() {
 </script>
 
 <style>
-#page .v-pagination__item, #page .v-pagination__navigation {
-  border-radius: 0;
-  box-shadow: none;
-  background: transparent!important;
-}
-#page .v-pagination__item--active {
-  background: transparent!important;
-  color: #EA3788;
-}
 </style>

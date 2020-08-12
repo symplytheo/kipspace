@@ -45,6 +45,7 @@
                 text 
                 color="primary" 
                 @click="selectTime = false"
+                class="text-capitalize"
               >
                 Cancel
               </v-btn>
@@ -52,6 +53,7 @@
                 text 
                 color="primary" 
                 @click="$refs.timeModal.save(time)"
+                class="text-capitalize"
               >
                 Save
               </v-btn>

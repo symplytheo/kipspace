@@ -6,10 +6,13 @@
 </template>
 
 <script>
+import DesktopView from "~/components/make-reservation/desktop";
+import MobileView from "~/components/make-reservation/mobile";
+
 export default {
   components: {
-    DesktopView: () => import('~/components/make-reservation/desktop'),
-    MobileView: () => import('~/components/make-reservation/mobile'),
+    DesktopView,
+    MobileView
   },
   head() {
     return {

@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors';
-import '@mdi/font/css/materialdesignicons.min.css';
 
 const theme= {
   dark: false,
@@ -17,8 +16,3 @@ const theme= {
   }
 }
 
-export default {
-  // breakpoint: {},
-  icons: { iconfont: 'mdi' },
-  theme
-};

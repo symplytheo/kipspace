@@ -76,26 +76,26 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import SignIn from "~/components/dialog/Login";
+import SignUp from "~/components/dialog/Register";
 
 export default {
   components: {
-    SignIn: () => import('~/components/dialog/Login'),
-    SignUp: () => import('~/components/dialog/Register')
+    SignIn,
+    SignUp
   },
-  data: () => ({
-    //
-  }),
   computed: {
     isLoggedIn() {
-      return this.$store.state.isLoggedIn
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
-  ...mapMutations({
-      openLogin: 'openLoginDialog',
-      openRegister: 'openRegDialog'
-    })
+    openLogin() {
+      this.$store.commit('dialog/openLogin');
+    },
+    openRegister() {
+      this.$store.commit('dialog/openRegister');
+    }
   }
 };
 </script>

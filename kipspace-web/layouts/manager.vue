@@ -18,40 +18,101 @@
         </v-btn>
 
         <v-toolbar-title 
-          class="ml-lg-10"
           @click="$router.push('/')"
           style="cursor: pointer"
         >
           <v-img src="/logo.svg"></v-img>
         </v-toolbar-title>
+        <span 
+          class="primary--text ml-2 font-weight-bold"
+          style="margin-bottom: -10px"
+        >
+          Manager
+        </span>
 
         <v-spacer></v-spacer>
-        
-        <v-btn
-          color="primary"
-          class="nav-link mr-2 hidden-sm-and-down"
-          text
-          v-for="(link, l) in links"
-          :key="l"
-          :to="link.to"
-          active-class="link-active"
-        >
-          {{link.text}}
-        </v-btn>
 
-        <v-btn
-          color="secondary"
-          depressed
-          class="text-capitalize mx-2 hidden-sm-and-down font-weight-bold"
-          to="/manager/walk-ins"
-        >
-          Walk-ins
-        </v-btn>
+        <span v-if="!isLoggedIn">
+          <v-btn
+            color="primary"
+            class="mx-1 hidden-sm-and-down nav-link text-capitalize"
+            text
+            @click="openLogin"
+          >
+            Login
+          </v-btn>
 
-        <v-spacer></v-spacer>
-        <v-avatar size="40" class="mx-5">
-          <v-img src="/lamp.jpg" />
-        </v-avatar>
+          <v-btn
+            color="secondary"
+            depressed
+            class="font-weight-bold mx-2 hidden-sm-and-down text-capitalize"
+            @click="openRegister"
+            style="font-size: 15px"
+          >
+            Sign Up
+          </v-btn>
+        </span>
+
+        <span v-if="isLoggedIn">
+          <v-btn
+            color="primary"
+            class="nav-link mr-1 hidden-sm-and-down"
+            text
+            v-for="(link, l) in links"
+            :key="l"
+            :to="link.to"
+            active-class="link-active"
+            style="text-transform: none"
+            exact
+          >
+            {{link.text}}
+          </v-btn>
+
+          <v-btn
+            color="secondary"
+            depressed
+            class="mr-2 hidden-sm-and-down font-weight-bold text-capitalize"
+            to="/manager/walk-ins"
+          >
+            Walk-ins
+          </v-btn>
+        </span>
+        <v-spacer v-if="isLoggedIn"></v-spacer>
+        <span v-if="isLoggedIn">
+          <v-btn small icon color="primary" class="mr-3" to="/search">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
+          <v-btn small icon color="primary" to="/notifications">
+            <v-icon>mdi-bell</v-icon>
+          </v-btn>
+          <v-menu offset-y>
+            <template v-slot:activator="{on}">
+              <v-btn 
+                class="ml-5"  
+                fab
+                depressed
+                small
+                v-on="on"
+              >
+                <v-avatar size="48">
+                  <v-img src="/img/mcdonald-icon.png" />
+                </v-avatar>
+              </v-btn>
+            </template>
+            <v-list class="text-center">
+              <v-btn
+                color="secondary"
+                depressed
+                class="ma-5 font-weight-bold text-capitalize"
+                @click="signOut"
+                v-on:click="drawer = false"
+                small
+              >
+                Logout
+              </v-btn>
+            </v-list>
+          </v-menu>
+        </span>
       </v-app-bar>
     </div>
 
@@ -59,22 +120,84 @@
       <nuxt />
     </v-main>
     <Footer />
+
+    <!-- Mobile Nav -->
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      floating
+      temporary
+      color="primary"
+      dark
+    >
+      <v-toolbar color="transparent" flat>
+        <v-btn icon color="white">
+          <v-icon size="30"  @click="drawer = false">mdi-close</v-icon>
+        </v-btn>
+      </v-toolbar>
+
+      <v-list v-if="!isLoggedIn">
+        <v-list-item link @click="openLogin">
+          <v-list-item-title>Log In</v-list-item-title>
+        </v-list-item>
+        <v-list-item link @click="openRegister">
+          <v-list-item-title>Register</v-list-item-title>
+        </v-list-item>
+      </v-list>
+
+      <v-list v-if="isLoggedIn">
+        <v-list-item 
+          v-for="(link, n) in links" 
+          :key="n"
+          :to="link.to"
+        >
+          <v-list-item-title>{{link.text}}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <SignIn />
+    <SignUp />
+
   </v-app>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   components: {
-    Footer: () => import('~/components/core/Footer')
+    Footer: () => import('~/components/core/Footer'),
+    SignIn: () => import('~/components/dialog/Login'),
+    SignUp: () => import('~/components/dialog/Register')
   },
   data: () => ({
+    drawer: false,
+    menu: false,
     links: [
-      {text: 'Dashboard', to: '/manager/dashboard'},
+      {text: 'Dashboard', to: '/manager'},
       {text: 'Notifications', to: '/manager/notifications'},
       {text: 'Profile', to: '/manager/profile'},
       {text: 'Exit Code', to: '/manager/exit'}
     ]
-  })
+  }),
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn
+    }
+  },
+  methods: {
+    ...mapMutations({
+      signOut: 'signOut',
+      openRegister: 'openRegDialog',
+      openLogin: 'openLoginDialog'
+    })
+  },
+  head() {
+    return {
+      title: 'Dashboard / Facility Manager'
+    }
+  }
 }
 </script>
 

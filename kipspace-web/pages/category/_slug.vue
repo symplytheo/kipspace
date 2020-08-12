@@ -67,7 +67,7 @@
                 :length="6" 
                 :value=1
                 color="primary"
-                id="page"
+                class="pagination"
               >
               </v-pagination>
             </v-col>
@@ -80,14 +80,16 @@
 
 <script>
 export default {
+  async asyncData(params) {
+    const slug = await params.slug;
+    return { slug }
+  },
   data(){
-    return {
-      slug: this.$route.params.slug,
-    }
+    //
   },
   computed: {
     categories() {
-      return this.$store.getters.categories
+      return this.$store.getters['category/categories'];
     },
     category(){
       return this.categories.find(el => (el.slug === this.slug));
@@ -123,14 +125,5 @@ export default {
 }
 .greyBd{
   border: 5px solid grey
-}
-#category #page .v-pagination__item, #category #page .v-pagination__navigation {
-  border-radius: 0;
-  box-shadow: none;
-  background: transparent!important;
-}
-#category #page .v-pagination__item--active {
-  background: transparent!important;
-  color: #EA3788;
 }
 </style>

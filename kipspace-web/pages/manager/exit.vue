@@ -15,7 +15,8 @@
                     large 
                     color="secondary" 
                     dark  
-                   depressed
+                    depressed
+                    style="text-transform: none"
                   >
                     Scan to Exit
                   </v-btn>
