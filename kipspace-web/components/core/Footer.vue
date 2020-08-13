@@ -6,22 +6,32 @@
           <v-row>
             <v-col cols="6">
               <h5 class="ml-3">Facility Managers</h5>
-              <v-list color="rgba(0,0,0,0)" dense flat>
+
+              <v-list color="rgba(0,0,0,0)" dense flat v-if="!isLoggedIn">
+                <v-list-item link @click="openLogin">
+                  <v-list-item-title>Log In</v-list-item-title>
+                </v-list-item>
                 <v-list-item link @click="openRegister">
                   <v-list-item-title>Register</v-list-item-title>
                 </v-list-item>
-                <v-list-item link @click="openLogin">
-                  <v-list-item-title>Log In</v-list-item-title>
+              </v-list>
+
+              <v-list color="rgba(0,0,0,0)" dense flat v-if="isLoggedIn">
+                <v-list-item to="/manager">
+                  <v-list-item-title>Dashboard</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click="signOut">
+                  <v-list-item-title>Logout</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-col>
             <v-col cols="6">
               <h5 class="ml-3">Company</h5>
               <v-list color="rgba(0,0,0,0)" dense flat>
-                <v-list-item>
+                <v-list-item link>
                   <v-list-item-title>About us</v-list-item-title>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item link>
                   <v-list-item-title>Contact us</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -95,6 +105,9 @@ export default {
     },
     openRegister() {
       this.$store.commit('dialog/openRegister');
+    },
+    signOut() {
+      this.$store.commit('signOut');
     }
   }
 };

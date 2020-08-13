@@ -71,54 +71,26 @@
           <v-btn
             color="secondary"
             depressed
-            class="mr-2 hidden-sm-and-down font-weight-bold text-capitalize"
+            class="hidden-sm-and-down font-weight-bold text-capitalize"
             to="/manager/walk-ins"
           >
             Walk-ins
           </v-btn>
         </span>
+
         <v-spacer v-if="isLoggedIn"></v-spacer>
-        <span v-if="isLoggedIn">
-          <v-btn small icon color="primary" class="mr-3" to="/search">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-          <v-btn small icon color="primary" to="/notifications">
-            <v-icon>mdi-bell</v-icon>
-          </v-btn>
-          <v-menu offset-y>
-            <template v-slot:activator="{on}">
-              <v-btn 
-                class="ml-5"  
-                fab
-                depressed
-                small
-                v-on="on"
-              >
-                <v-avatar size="48">
-                  <v-img src="/img/mcdonald-icon.png" />
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-list class="text-center">
-              <v-btn
-                color="secondary"
-                depressed
-                class="ma-5 font-weight-bold text-capitalize"
-                @click="signOut"
-                v-on:click="drawer = false"
-                small
-              >
-                Logout
-              </v-btn>
-            </v-list>
-          </v-menu>
-        </span>
+        <v-avatar size="48" color="grey lighten-4" v-if="isLoggedIn">
+          <v-img src="/img/mcdonald-icon.png" />
+        </v-avatar>
+        
       </v-app-bar>
     </div>
 
-    <v-main>
-      <nuxt />
-    </v-main>
+    <v-container fluid class="pt-0 px-0">
+      <v-main>
+        <nuxt />
+      </v-main>
+    </v-container>
     <Footer />
 
     <!-- Mobile Nav -->
@@ -133,6 +105,15 @@
       <v-toolbar color="transparent" flat>
         <v-btn icon color="white">
           <v-icon size="30"  @click="drawer = false">mdi-close</v-icon>
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="secondary"
+          depressed
+          class="mr-2 font-weight-bold text-capitalize"
+          to="/manager/walk-ins"
+        >
+          Walk-ins
         </v-btn>
       </v-toolbar>
 
@@ -150,6 +131,7 @@
           v-for="(link, n) in links" 
           :key="n"
           :to="link.to"
+          exact
         >
           <v-list-item-title>{{link.text}}</v-list-item-title>
         </v-list-item>
@@ -178,8 +160,8 @@ export default {
     menu: false,
     links: [
       {text: 'Dashboard', to: '/manager'},
-      {text: 'Notifications', to: '/manager/notifications'},
       {text: 'Profile', to: '/manager/profile'},
+      {text: 'Notifications', to: '/manager/notifications'},
       {text: 'Exit Code', to: '/manager/exit'}
     ]
   }),

@@ -83,6 +83,7 @@
             height="48"
             class="text-capitalize"
             color="secondary"
+            to="/success"
           >
             Reserve
           </v-btn>
@@ -90,7 +91,7 @@
       </v-row>
     </v-container>
 
-    <v-container fluid>
+    <v-container fluid class="px-0">
       <v-tabs>
         <v-tab class="text-capitalize font-weight-bold">
           Overview
@@ -107,7 +108,7 @@
               <v-row>
                 <v-col cols="5" sm="4">
                   <v-avatar
-                    size="160"
+                    size="150"
                     class="biz-logo"
                   >
                     <img src="/img/mcdonald-icon.png" alt="alt"/>

@@ -87,25 +87,24 @@
         <v-btn small icon color="white" to="/notifications">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
-        <v-btn 
-          class="ml-5" 
-          to="/profile" 
-          fab
-          depressed
-          small
+        
+        <v-avatar
+          size="48" 
+          color="grey lighten-5" 
+          v-on="on"
+          style="cursor: pointer"
         >
-          <v-avatar size="46">
-            <v-img src="/img/lamp.jpg" />
-          </v-avatar>
-        </v-btn>
+          <v-img src="/img/lamp.jpg" />
+        </v-avatar>
       </span>
     </v-app-bar>
 
     <!-- Content -->
-    <v-main>
-      <nuxt />
-    </v-main>
- 
+    <v-container fluid class="pt-0">
+      <v-main>
+        <nuxt />
+      </v-main>
+    </v-container>
     <!-- Footer -->
     <Footer />
 

@@ -80,7 +80,7 @@
 
 <script>
 export default {
-  async asyncData(params) {
+  async asyncData({ params }) {
     const slug = await params.slug;
     return { slug }
   },

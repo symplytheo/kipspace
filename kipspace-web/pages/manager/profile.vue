@@ -48,112 +48,116 @@
     </v-sheet>
 
     <v-container class="py-10">
-      <v-row>
-        <v-col md="5" lg="4">
-          <v-card outlined class="pa-5">
-            <v-row>
-              <v-col cols="2">
-                <v-icon color="primary" large>mdi-clock-outline</v-icon>
-              </v-col>
-              <v-col cols="10">
-                <v-row v-for="(open, h) in opening" :key="h">
-                  <v-col cols="7" class="py-1">
-                    {{open.day}}
+      <v-row justify="center">
+        <v-col cols="12" sm="10" md="12">
+          <v-row>
+            <v-col cols="12" md="5" lg="4">
+              <v-card outlined class="pa-5">
+                <v-row>
+                  <v-col cols="2">
+                    <v-icon color="primary" large>mdi-clock-outline</v-icon>
                   </v-col>
-                  <v-col cols="5" class="py-1">
-                    {{open.time}}
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="2">
-                <v-icon color="primary" large>mdi-phone</v-icon>
-              </v-col>
-              <v-col cols="10" class="pt-0">
-                <v-btn 
-                  x-large 
-                  color="grey lighten-3" 
-                  href="tel:+2348012345678"
-                  link
-                  depressed
-                >
-                  +234 801 234 5678
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="2">
-                <v-icon color="primary" large>mdi-account-multiple</v-icon>
-              </v-col>
-              <v-col cols="10" class="pt-0">
-                <v-chip 
-                  large 
-                  color="grey lighten-3"
-                  label
-                  class="px-10" 
-                >
-                  1000
-                </v-chip>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-        <v-col md="7" lg="8">
-          <v-card outlined class="pa-5">
-            <h3>Review Summary</h3>
-            <v-row align="center" class="pb-3">
-              <v-col md="7" lg="9" class="pt-5">
-                <v-row align="center" v-for="(rate, r) in rating" :key="r">
-                  <v-col md="2" lg="1" class="py-0">
-                    {{rate.num}}
-                  </v-col>
-                  <v-col md="10" lg="11" class="py-0">
-                    <v-progress-linear 
-                      :value=rate.value 
-                      color="primary" 
-                      background-color="secondary"
-                      height="10"
-                      rounded
-                    ></v-progress-linear>
+                  <v-col cols="10">
+                    <v-row v-for="(open, h) in opening" :key="h">
+                      <v-col cols="7" class="py-1">
+                        {{open.day}}
+                      </v-col>
+                      <v-col cols="5" class="py-1">
+                        {{open.time}}
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
-              </v-col>
-              <v-col md="5" lg="3" class="text-center">
-                <h1 style="font-size: 60px">
-                  4.4
-                </h1>
-                <v-rating
-                  value=4
-                  half-increments
-                  color="primary"
-                  background-color="primary"
-                  dense
-                  size="18"
-                ></v-rating>
-                <h4>1000 Reviews</h4>
-              </v-col>
-            </v-row>
-            <div v-for="(review, w) in reviews" :key="w">
-              <v-divider></v-divider>
-              <v-card tile flat class="pt-5 pb-3">
-                <h4>{{review.name}}</h4>
-                <span class="grey--text">{{review.date}}</span>
-                <v-rating
-                  :value=review.rating
-                  half-increments
-                  color="primary"
-                  background-color="primary"
-                  dense
-                  size="16"
-                  class="d-inline mx-2"
-                ></v-rating>
-                <div class="py-2">
-                  {{review.text}}
+                <v-row>
+                  <v-col cols="2">
+                    <v-icon color="primary" large>mdi-phone</v-icon>
+                  </v-col>
+                  <v-col cols="10" class="pt-0">
+                    <v-btn 
+                      x-large 
+                      color="grey lighten-3" 
+                      href="tel:+2348012345678"
+                      link
+                      depressed
+                    >
+                      +234 801 234 5678
+                    </v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="2">
+                    <v-icon color="primary" large>mdi-account-multiple</v-icon>
+                  </v-col>
+                  <v-col cols="10" class="pt-0">
+                    <v-chip 
+                      large 
+                      color="grey lighten-3"
+                      label
+                      class="px-10" 
+                    >
+                      1000
+                    </v-chip>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+            <v-col cols="12" md="7" lg="8">
+              <v-card outlined class="pa-5">
+                <h3>Review Summary</h3>
+                <v-row align="center" class="pb-3">
+                  <v-col cols="8" md="7" lg="9" class="pt-5">
+                    <v-row align="center" v-for="(rate, r) in rating" :key="r">
+                      <v-col cols="2" md="2" lg="1" class="py-0">
+                        {{rate.num}}
+                      </v-col>
+                      <v-col cols="10" md="10" lg="11" class="py-0">
+                        <v-progress-linear 
+                          :value=rate.value 
+                          color="primary" 
+                          background-color="secondary"
+                          height="10"
+                          rounded
+                        ></v-progress-linear>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="4" md="5" lg="3" class="text-center">
+                    <h1 style="font-size: 46px">
+                      4.4
+                    </h1>
+                    <v-rating
+                      value=4
+                      half-increments
+                      color="primary"
+                      background-color="primary"
+                      dense
+                      size="16"
+                    ></v-rating>
+                    <h4 class="pt-2">1000 Reviews</h4>
+                  </v-col>
+                </v-row>
+                <div v-for="(review, w) in reviews" :key="w">
+                  <v-divider></v-divider>
+                  <v-card tile flat class="pt-5 pb-3">
+                    <h4>{{review.name}}</h4>
+                    <span class="grey--text">{{review.date}}</span>
+                    <v-rating
+                      :value=review.rating
+                      half-increments
+                      color="primary"
+                      background-color="primary"
+                      dense
+                      size="16"
+                      class="d-inline mx-2"
+                    ></v-rating>
+                    <div class="py-2">
+                      {{review.text}}
+                    </div>
+                  </v-card>
                 </div>
               </v-card>
-            </div>
-          </v-card>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>

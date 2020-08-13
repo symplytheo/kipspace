@@ -14,6 +14,6 @@ export const mutations = {
     state.register = !state.register;
   },
   closeRegister(state) {
-    state.regDialog = false;
+    state.register = false;
   },
 }

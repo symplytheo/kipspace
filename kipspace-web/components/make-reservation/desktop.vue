@@ -1,6 +1,6 @@
 <template>
   <div class="hidden-sm-and-down" id="desktop">
-    <v-container fluid>
+    <v-container fluid class="pa-0">
       <v-sheet tile height="180" color="grey lighten-5">
         <v-img src="/img/chips.png" height="180">
           <v-row justify="center" align="center" class="fill-height">
@@ -80,7 +80,7 @@
                       flat
                     ></v-select>
                   </v-col>
-                  <v-col class="pa-0" cols="3">
+                  <v-col class="pa-0 remind" cols="3">
                     <v-select
                       :items="['15 mins before','30 mins before','1 hour before','2 hours before']"
                       label="remind me "
@@ -305,6 +305,9 @@ export default {
 #desktop .reserve-box .v-input__slot {
   border-right: 2px solid #DEDEDE;
   border-radius:0%
+}
+#desktop .reserve-box .remind .v-input__slot {
+  border: none;
 }
 #desktop .time-btn {
   text-transform: lowercase;

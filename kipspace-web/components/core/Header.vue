@@ -1,16 +1,15 @@
 <template>
-  <div style="border-bottom: 1px solid #D1D1D1; margin-top: 64px">
+  <div id="navbar">
     <v-app-bar
       app
       height="64"
       color="white"
-      class="px-lg-10"
       elevate-on-scroll
     >
       <v-btn 
         icon 
         color="primary" 
-        class="hidden-md-and-up"
+        class="hidden-md-and-up mr-2"
         @click="drawer = !drawer"
       >
         <v-icon large>mdi-sort-variant</v-icon>
@@ -73,6 +72,7 @@
           depressed
           class="mr-2 hidden-sm-and-down font-weight-bold text-capitalize"
           to="/make-reservation"
+          active-class="mkr-active"
         >
           Make Reservation
         </v-btn>
@@ -85,17 +85,9 @@
         <v-btn small icon color="primary" to="/notifications">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
-        <v-btn 
-          class="ml-5" 
-          to="/profile" 
-          fab
-          depressed
-          small
-        >
-          <v-avatar size="46">
-            <v-img src="/lamp.jpg" />
-          </v-avatar>
-        </v-btn>
+        <v-avatar size="46" color="grey lighten-4">
+          <v-img src="/img/lamp.jpg" />
+        </v-avatar>
       </span>
     </v-app-bar>
 
@@ -118,7 +110,10 @@
           class="text-capitalize"
           to="/make-reservation"
           v-if="isLoggedIn"
-        >Make Reservation</v-btn>
+          active-class="mkr-active"
+        >
+          Make Reservation
+        </v-btn>
       </v-toolbar>
       <v-list v-if="!isLoggedIn">
         <v-list-item link to="/">
@@ -173,7 +168,7 @@ export default {
     navLinks: [
       { text: 'Home', href: '/'},
       { text: 'My Reservations', href: '/reservations'},
-      { text: 'Scan to Exit', href: '/exit'}
+      { text: 'Scan to Exit', href: '/exit'} 
     ]
   }),
   computed: {
@@ -213,4 +208,8 @@ export default {
 .nav-link:hover {
   opacity: 0.7;
 }
+.mkr-active {
+  opacity: 0.8; 
+}
+
 </style>

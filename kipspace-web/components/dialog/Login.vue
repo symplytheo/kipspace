@@ -111,7 +111,7 @@ export default {
   },
   computed: {
     loginDialog() {
-      return this.$store.state['dialog/login'];
+      return this.$store.state.dialog.login;
     },
   },
   methods: {

@@ -39,16 +39,36 @@
       </v-container>
 
       <v-container>
-        <v-row>
-          <v-col>
+        <v-row justify="center">
+          <!-- Mobile -->
+          <v-col cols="12" sm="10" class="hidden-md-and-up">
             <v-card class="pa-5" elevation="5">
               <h4>Weekly Insights</h4>
               <div class="pa-3 px-10">
                 <v-sparkline
                   :value="[700, 50, 850, 75, 400, 50, 900]"
                   padding="8"
-                  label-size="6"
+                  label-size="10"
                   auto-line-width
+                  :labels="['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun']"
+                  class="primary--text"
+                  :show-labels="true"
+                  type="bar"
+                ></v-sparkline>
+              </div>
+            </v-card>
+          </v-col>
+
+          <!-- Desktop -->
+          <v-col cols="12" class="hidden-sm-and-down">
+            <v-card class="pa-5" elevation="5">
+              <h4>Weekly Insights</h4>
+              <div class="pa-3 px-10">
+                <v-sparkline
+                  :value="[700, 50, 850, 75, 400, 50, 900]"
+                  padding
+                  label-size="5"
+                  line-width="24"
                   :labels="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"
                   class="primary--text"
                   :show-labels="true"

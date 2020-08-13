@@ -93,9 +93,11 @@
 </template>
 
 <script>
+import SignIn from "~/components/dialog/Login";
+
 export default {
   components: {
-    SignIn: () => import('~/components/dialog/Login')
+    SignIn
   },
   data (){
     return {

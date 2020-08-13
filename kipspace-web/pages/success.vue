@@ -3,15 +3,8 @@
     <v-sheet color="primary" tile class="py-5">
       <v-row align="center" justify="center" class="fill-height">
         <v-col cols="10" sm="8" lg="6">
-          <v-text-field
-            solo
-            flat
-            rounded
-            label="Search or type location"
-            append-icon="mdi-magnify"
-          ></v-text-field>
-          <div class="py-2 white--text text-center">
-            <h2>Congratulations!</h2>
+          <div class="py-5 white--text text-center">
+            <h1>Congratulations!</h1>
             <h4 class="font-weight-thin">
               Check your reservations for your QR code.
             </h4>

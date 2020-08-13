@@ -1,11 +1,9 @@
 <template>
   <v-app>
     <Header />
-    <v-container fluid class="pt-0">
-      <v-main>
-        <nuxt />
-      </v-main>
-    </v-container>
+      <v-content>
+          <nuxt />
+      </v-content>
     <Footer />
   </v-app>
 </template>
@@ -23,7 +21,7 @@ export default {
 </script>
 <style>
 #app, .v-application {
-  font-family: 'Poppins', sans-serif
+  font-family: 'Poppins', 'Roboto', sans-serif
 }
 #app .v-btn {
   text-transform: none !important;
@@ -36,5 +34,8 @@ export default {
 .pagination .v-pagination__item--active {
   background: transparent!important;
   color: #EA3788!important;
+}
+.v-app-bar--fixed.v-app-bar--hide-shadow.white > .v-toolbar__content {
+  border-bottom: 1px solid rgba(0,0,0,0.12)
 }
 </style>

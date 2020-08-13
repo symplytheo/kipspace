@@ -90,17 +90,15 @@
           <v-col cols="12" md="6">
             <label for="opening">
               <b>Opening Hours</b>
-              <v-card
-                outlined
-              >
+              <v-card outlined>
                 <div v-for="(open, p) in opening" :key="p">
                   <v-row class="px-5" align="center">
-                    <v-col cols="6" class="py-0">
+                    <v-col cols="5" class="py-0">
                       {{open.day}}
                     </v-col>
-                    <v-col cols="6" class="py-0">
+                    <v-col cols="7" class="py-0">
                       <v-row>
-                        <v-col cols="5">
+                        <v-col cols="4">
                           <v-menu
                             v-model="menu[p]"
                             :close-on-content-click="false"
@@ -132,8 +130,8 @@
                             </v-time-picker>
                           </v-menu>
                         </v-col>
-                        <v-col cols="2">to</v-col>
-                        <v-col cols="5">
+                        <v-col cols="4" class="text-center">to</v-col>
+                        <v-col cols="4">
                           <v-menu
                             v-model="menu2[p]"
                             :close-on-content-click="false"
@@ -232,7 +230,8 @@ export default {
       {day: 'Wednesday', from: '', to: ''},
       {day: 'Thursday', from: '', to: ''},
       {day: 'Friday', from: '', to: ''},
-      {day: 'Saturday', from: '', to: ''}
+      {day: 'Saturday', from: '', to: ''},
+      {day: 'Sunday', from: '', to: ''}
     ]
   })
 }
