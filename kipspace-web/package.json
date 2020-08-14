@@ -1,15 +1,9 @@
 {
-  "name": "Kipspace",
+  "name": "kipspace",
   "version": "1.0.0",
   "description": "A space reservation website",
   "author": "",
   "private": true,
-  "config": {
-    "nuxt": {
-      "port": "4227",
-      "host": "0.0.0.0"
-    }
-  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
