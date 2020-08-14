@@ -1,15 +1,9 @@
 {
-  "name": "Kipspace",
+  "name": "kipspace",
   "version": "1.0.0",
   "description": "A space reservation website",
   "author": "",
   "private": true,
-  "config": {
-    "nuxt": {
-      "port": "4227",
-      "host": "0.0.0.0"
-    }
-  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -17,8 +11,9 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
-    "@nuxtjs/pwa": "^3.0.0-0"
+    "@mdi/font": "^5.5.55",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0"
