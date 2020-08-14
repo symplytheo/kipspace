@@ -1,5 +1,5 @@
 <template>
-  <v-app id="homepage">
+  <v-app class="homepage" :style="$vuetify.breakpoint.smAndDown ? 'background-image: url(/img/purple-bg-mob.png);' : 'background-image: url(/img/purple-bg.png);'">
     <v-app-bar
       app
       absolute
@@ -100,11 +100,9 @@
     </v-app-bar>
 
     <!-- Content -->
-    <v-container fluid class="pt-0">
-      <v-main>
-        <nuxt />
-      </v-main>
-    </v-container>
+    <v-content>
+      <nuxt />
+    </v-content>
     <!-- Footer -->
     <Footer />
 
@@ -204,10 +202,9 @@ export default {
 }
 </script>
 <style>
-#homepage {
-  background-image: url('/img/purple-bg.png');
-  background-position: top center;
-  background-size: cover;
+.homepage {
+  background-position: top center !important;
+  background-size: cover !important;
 }
 .nav-link {
   font-size: 15px;
