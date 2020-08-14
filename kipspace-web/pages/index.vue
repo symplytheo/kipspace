@@ -58,59 +58,40 @@
                   </v-col>
                 </v-row>
               </v-img>
-           
           </v-card>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-sheet color="white" tile flat width="100%">
-      <v-container class="mt-lg-10">
-        <h3>Top Searches</h3>
-        <v-row justify="center">
-          <v-col cols="12" sm="10" md="12">
-            <v-row>
-              <v-col cols="6" md="3" v-for="g in 8" :key="g">
-                <v-card flat link>
-                  <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
-                </v-card>
-                <v-row>
-                  <v-col cols="7">
-                    <h4>Dominos Pizza</h4>
-                  </v-col>
-                  <v-col cols="5" class="text-right">
-                    <v-rating
-                      :value=3
-                      half-increments
-                      background-color="primary"
-                      color="primary"
-                      dense
-                      size="14"
-                    ></v-rating>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" class="my-2">
-                <v-pagination 
-                  :length="6" 
-                  :value=1
-                  color="primary"
-                  class="pagination"
-                >
-                </v-pagination>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-sheet>
+    <v-container class="mt-lg-10">
+      <h3>Top Searches</h3>
+      <v-row justify="center">
+        <v-col cols="12" sm="10" md="12">
+          <v-row>
+            <v-col cols="6" md="3" v-for="g in 8" :key="g">
+              <FacilityCard />
+            </v-col>
+            <v-col cols="12" class="my-2">
+              <v-pagination 
+                :length="6" 
+                :value=1
+                color="primary"
+                class="pagination"
+              >
+              </v-pagination>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-
+import FacilityCard from '~/components/home/FacilityCard'
 export default {
   layout: 'homepage',
+  components: { FacilityCard },
   head() {
     return {
       title: 'Home'
