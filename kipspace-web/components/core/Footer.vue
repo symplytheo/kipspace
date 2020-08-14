@@ -1,10 +1,10 @@
 <template>
   <v-footer dark color="primary">
     <v-container class="py-5">
-      <v-row>
-        <v-col cols="12" sm="6" md="4" lg="4">
+      <v-row justify="space-between">
+        <v-col cols>
           <v-row>
-            <v-col cols="6">
+            <v-col cols="12" md="4" class="px-0">
               <h5 class="ml-3">Facility Managers</h5>
 
               <v-list color="rgba(0,0,0,0)" dense flat v-if="!isLoggedIn">
@@ -25,7 +25,7 @@
                 </v-list-item>
               </v-list>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" md="4" class="px-0">
               <h5 class="ml-3">Company</h5>
               <v-list color="rgba(0,0,0,0)" dense flat>
                 <v-list-item link>
@@ -38,8 +38,9 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col class="d-none d-sm-flex" sm="1" md="4" ></v-col>
-        <v-col cols="9" sm="4" md="4" lg="3" class="pt-6 pl-7 pl-sm-0">
+        <!-- <v-col class="d-none d-sm-flex" sm="1" md="4" ></v-col> -->
+        <!-- <v-col cols="12" sm="4" md="auto" class="pt-6 pl-7 pl-sm-0"> -->
+        <v-col cols="12" md="auto" class="">
           <h5>Have a Problem?</h5>
           <v-card outlined light class="pl-3 pa-0 my-2" height="40">
             <v-row id="sub">
