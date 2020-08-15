@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface IAdmin extends Document {
+export interface Admin {
 	firstname: string;
 	lastname: string;
 	middlename: string;
@@ -8,3 +8,5 @@ export interface IAdmin extends Document {
 	hash: string;
 	is_active: boolean;
 }
+
+export interface IAdmin extends Admin, Document {}

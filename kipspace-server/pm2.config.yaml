@@ -1,0 +1,5 @@
+apps:
+  - script   : node -r module-alias/register ./dist
+    name     : 'kipspace-server'
+    instances: 4
+    exec_mode: cluster

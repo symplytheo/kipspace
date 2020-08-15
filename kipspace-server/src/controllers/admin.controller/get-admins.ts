@@ -2,7 +2,6 @@ import Admin from '@models/Admin.model';
 import { GetMultipleAdmin, Projection, GetOneAdmin } from './types';
 
 const defaultProjection: Projection = {
-	token: 0,
 	hash: 0,
 };
 

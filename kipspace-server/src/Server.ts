@@ -15,7 +15,7 @@ import { COOKIE_SECRET } from '@config';
 const app = express();
 
 // Connect to MongoDB
-connectDB();
+// connectDB();
 
 /************************************************************************************
  *                              Set basic express settings

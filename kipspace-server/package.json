@@ -13,6 +13,7 @@
 		"@daos": "dist/daos",
 		"@controllers": "dist/controllers",
 		"@middlewares": "dist/middlewares",
+		"@services": "dist/services",
 		"@models": "dist/models",
 		"@shared": "dist/shared",
 		"@config": "dist/config",

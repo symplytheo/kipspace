@@ -4,9 +4,6 @@ import { GetMultipleUser, GetOneUser, Projection } from './types';
 const defaultProjection: Projection = {
 	token: 0,
 	hash: 0,
-	FB_userId: 0,
-	GG_userId: 0,
-	TW_userId: 0,
 };
 
 export const getMultipleUser: GetMultipleUser = async (query, projection) => {

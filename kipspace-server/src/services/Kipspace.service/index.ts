@@ -1,10 +1,10 @@
 import { Request, NextFunction, Response } from 'express';
 import { OK, CREATED, ACCEPTED, UNAUTHORIZED, SERVICE_UNAVAILABLE } from 'http-status-codes';
-import { IUser } from '@models/User.model';
-import { IAdmin } from '@models/Admin.model';
+// import { IUser } from '@models/User.model';
+// import { IAdmin } from '@models/Admin.model';
 
 import logger from '@shared/Logger';
-import auth from '@middlewares/authentication';
+// import auth from '@middlewares/authentication';
 
 import { SendResponse, AuthenticateUser } from './types';
 
@@ -20,44 +20,44 @@ class KipspaceService<Model> {
 	private _response: Response;
 	private _next?: NextFunction;
 
-	private _currentUser?: IUser;
-	private _currentAdmin?: IAdmin;
+	// private _currentUser?: IUser;
+	// private _currentAdmin?: IAdmin;
 
 	private readonly _okStatuses = [OK, CREATED, ACCEPTED];
 
-	public get CurrentUser(): IUser | null {
-		return this._currentUser ? this._currentUser : null;
-	}
+	// public get CurrentUser(): IUser | null {
+	// 	return this._currentUser ? this._currentUser : null;
+	// }
 
-	public get CurrentAdmin(): IAdmin | null {
-		return this._currentAdmin ? this._currentAdmin : null;
-	}
+	// public get CurrentAdmin(): IAdmin | null {
+	// 	return this._currentAdmin ? this._currentAdmin : null;
+	// }
 
 	/**
 	 * @param request
 	 */
-	public AuthenticateUser: AuthenticateUser = async (request) => {
-		try {
-			const req = request || this._request;
-			const token =
-				(req.body && req.body.access_token) ||
-				(req.query && req.query.access_token) ||
-				req.headers['x-access-token'] ||
-				req.cookies.access_token;
-			const user = await auth(token);
+	// public AuthenticateUser: AuthenticateUser = async (request) => {
+	// 	try {
+	// 		const req = request || this._request;
+	// 		const token =
+	// 			(req.body && req.body.access_token) ||
+	// 			(req.query && req.query.access_token) ||
+	// 			req.headers['x-access-token'] ||
+	// 			req.cookies.access_token;
+	// 		const user = await auth(token);
 
-			if (user) {
-				this._currentUser = user as IUser;
-				this._next && this._next();
-			}
-		} catch (error) {
-			this.SendResponse({
-				message: error.message,
-				status: UNAUTHORIZED,
-				error,
-			});
-		}
-	};
+	// 		if (user) {
+	// 			this._currentUser = user as IUser;
+	// 			this._next && this._next();
+	// 		}
+	// 	} catch (error) {
+	// 		this.SendResponse({
+	// 			message: error.message,
+	// 			status: UNAUTHORIZED,
+	// 			error,
+	// 		});
+	// 	}
+	// };
 
 	/**
 	 * @param message<`string`>
