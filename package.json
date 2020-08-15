@@ -1,0 +1,4 @@
+{
+	"name": "kipspace",
+	"cacheDirectories": ["kipspace-web/node_modules", "kipspace-server/node_modules"]
+}

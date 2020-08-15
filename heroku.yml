@@ -1,0 +1,9 @@
+release:
+  command:
+    - yarn --cwd ./kipspace-server install
+    - yarn --cwd ./kipspace-server build
+    - yarn --cwd ./kipspace-web install
+    - yarn --cwd ./kipspace-web build
+run:
+  web: yarn --cwd ./kipspace-server start
+  web: yarn --cwd ./kipspace-web start
