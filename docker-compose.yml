@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+   kipspace-web:
+      image: node:14.4.0
+      command: npm run docker
+      volumes:
+         - ./kipspace-web:/usr/src/app
+      working_dir: /usr/src/app
+      ports:
+         - "3000:3000"
+      environment:
+         HOST: 0.0.0.0
+         
+   kipspace-server:
+      image: node:14.4.0
+      command: npm run docker
+      volumes:
+         - ./kipspace-server:/usr/src/app
+      working_dir: /usr/src/app
+      ports:
+         - "5000:5000"
+      environment:
+         PORT: 5000
