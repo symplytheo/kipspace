@@ -4,6 +4,8 @@ services:
    kipspace-web:
       image: node:14.4.0
       command: npm run docker
+      container_name: kipspace-frontend
+      restart: unless-stopped
       volumes:
          - ./kipspace-web:/usr/src/app
       working_dir: /usr/src/app
@@ -11,14 +13,35 @@ services:
          - "3000:3000"
       environment:
          HOST: 0.0.0.0
+      networks:
+         - kipspace-network
          
    kipspace-server:
       image: node:14.4.0
       command: npm run docker
+      container_name: kipspace-server
+      restart: unless-stopped
       volumes:
          - ./kipspace-server:/usr/src/app
       working_dir: /usr/src/app
       ports:
-         - "5000:5000"
+         - "5000:4000"
       environment:
          PORT: 5000
+      networks:
+         - kipspace-network
+
+   nginx:
+      restart: always
+      container_name: kipspace-controller
+      build:
+         dockerfile: Dockerfile
+         context: ./nginx
+      ports:
+         - "80:80"
+      networks:
+         - kipspace-network
+
+networks:
+   kipspace-network:
+      driver: bridge

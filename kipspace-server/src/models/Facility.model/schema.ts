@@ -5,7 +5,7 @@ export const FacilitySchema: Schema = new Schema(
 		name: { type: String, required: true, maxlength: 50 },
 		short_description: { type: String, required: true, maxlength: 150 },
 		location: { type: Types.ObjectId, ref: 'Location' },
-		categpry: { type: Types.ObjectId, ref: 'Category' },
+		category: { type: Types.ObjectId, ref: 'Category', required: true },
 		email: { type: String },
 		phone: { type: String },
 		capacity: { type: Number, default: 10, min: 0 },
