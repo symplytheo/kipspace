@@ -7,8 +7,7 @@
 		"start:dev": "nodemon --config nodemon.json",
 		"test": "nodemon --config nodemon.test.json",
 		"lint": "eslint '*/**/*.{js,ts,tsx}' .gitignore .",
-		"lintfix": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix --ignore-path .gitignore .",
-		"docker": "npm run start:dev"
+		"lintfix": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix --ignore-path .gitignore ."
 	},
 	"_moduleAliases": {
 		"@daos": "dist/daos",
