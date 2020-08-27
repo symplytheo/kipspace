@@ -1,0 +1,11 @@
+{
+	"name": "kipspace",
+	"cacheDirectories": [
+		"kipspace-web/node_modules",
+		"kipspace-server/node_modules"
+	],
+	"engines": {
+		"node": "14.x",
+		"yarn": "1.22.4"
+	}
+}

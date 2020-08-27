@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { SERVICE_UNAVAILABLE, OK, NOT_FOUND } from 'http-status-codes';
-import Medfinder from '@services/MedFinder.service';
+import KipspaceService from '@services/Kipspace.service';
 import { getOneUser, getMultipleUser } from '@controllers/user.controller';
 import { IUser } from '@models/User.model';
 
-class UserService extends Medfinder<IUser> {
+class UserService extends KipspaceService<IUser> {
 	public CreateUser = async (req: Request): Promise<Response | null> => {
 		try {
 			return this.SendResponse({

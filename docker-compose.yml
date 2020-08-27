@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+   kipspace-client:
+      container_name: kipspace-client
+      build: ./kipspace-client/
+      restart: unless-stopped
+      command:
+         "npm run start"
+      ports:
+         - "3000:3000"
+      environment:
+         HOST: 0.0.0.0
+      networks:
+         - kipspace-network
+
+   kipspace-server:
+      container_name: kipspace-server
+      build: ./kipspace-server/
+      restart: unless-stopped
+      command:
+         "npm run start"
+      ports:
+         - "4000:4000"
+      environment:
+         PORT: 4000
+      networks:
+         - kipspace-network
+
+   nginx:
+      restart: always
+      container_name: kipspace-controller
+      tty: true
+      build:
+         dockerfile: Dockerfile
+         context: ./nginx
+      ports:
+         - "80:80"
+         - "443:443"
+      volumes:
+         - ./:/var/www
+         # - ./nginx/conf.d/:/etc/nginx/conf.d/
+         - ./nginx:/etc/nginx/conf.d
+      networks:
+         - kipspace-network
+      depends_on:
+         - kipspace-client
+         - kipspace-server
+
+networks:
+   kipspace-network:
+      driver: bridge
