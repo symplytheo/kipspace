@@ -123,15 +123,23 @@
         <v-btn small icon color="primary" to="/notifications">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
-        <v-avatar size="46" class="mx-3">
-          <v-img src="/img/lamp.jpg" />
-        </v-avatar>
+
+        <v-btn
+          fab
+          depressed
+          to="/profile"
+          class="mx-3"
+        >
+          <v-avatar size="46">
+            <v-img src="/img/lamp.jpg" />
+          </v-avatar>
+        </v-btn>
       </div>
 
       <div v-else>
         <v-btn
           color="primary"
-          class="nav-link text-capitalize"
+          class="nav-link text-capitalize subtitle-1 font-weight-bold"
           text
         >
           Help
@@ -139,9 +147,10 @@
 
         <v-btn
           color="primary"
-          class="mx-1 hidden-sm-and-down nav-link text-capitalize"
+          class="mx-1 hidden-sm-and-down subtitle-1 nav-link font-weight-bold"
           text
           @click="openLogin"
+          style="text-transform: capitalize"
         >
           Login
         </v-btn>
@@ -149,9 +158,9 @@
         <v-btn
           color="secondary"
           depressed
-          class="font-weight-bold mx-2 hidden-sm-and-down text-capitalize"
+          class="font-weight-bold mx-2 subtitle-1 hidden-sm-and-down"
           @click="openRegister"
-          style="font-size: 15px"
+          style="text-transform: capitalize"
         >
           Sign Up
         </v-btn>
@@ -220,6 +229,10 @@ export default {
 }
 .mkr-active {
   opacity: 0.8; 
+}
+
+#navbar .v-btn--fab.v-size--default {
+  height: 46px 
 }
 
 </style>

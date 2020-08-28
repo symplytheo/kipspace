@@ -41,8 +41,7 @@
                 choice.
               </p>
             </v-row>
-            <!-- <v-card-title class="text-center">
-            </v-card-title>-->
+
             <v-row>
               <v-container class="px-md-15">
                 <v-row>

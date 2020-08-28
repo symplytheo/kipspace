@@ -61,6 +61,7 @@
                   color="primary"
                   background-color="primary"
                   dense
+                  readonly
                   size="16"
                   class="d-inline"
                 ></v-rating>

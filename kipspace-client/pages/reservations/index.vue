@@ -5,7 +5,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-card class="pa-5" flat color="primary" dark>
             <h3>Active Reservations</h3>
-            <v-sheet style="border-top: 2px solid #fff" width="190"/>
+            <v-divider />
             <div class="py-3">
               <span>Feb 3, 2020</span>
               <span class="mx-5">12:00PM</span>
@@ -14,9 +14,13 @@
                 1
               </span>
             </div>
-            <p>
-              To Dominos Pizza, No.6 Adenuga street, ibara-expressway, lagos state.
-            </p>
+            <div class="py-1">
+              To Dominos Pizza, No.6 Adenuga street, ibara-expressway, 
+              lagos state.
+            </div>
+            <div class="py-2">
+              <v-img src="/img/qr-code.png" height="80" width="85" />
+            </div>
             <div class="pt-1">
               <v-dialog v-model="dialog" persistent max-width="290">
                 <template v-slot:activator="{on, attrs}">
@@ -74,7 +78,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-card class="pa-5" flat outlined>
             <h3>Cancelled Reservations</h3>
-            <v-sheet style="border-top: 2px solid #000" width="225"/>
+            <v-divider />
             <div class="py-3">
               <span>Feb 3, 2020</span>
               <span class="mx-5">12:00PM</span>
@@ -83,12 +87,13 @@
                 1
               </span>
             </div>
-            <p>
-              To Dominos Pizza, No.6 Adenuga street, ibara-expressway, lagos state.
-            </p>
-            <p class="pt-3">
+            <div class="py-1">
+              To Dominos Pizza, No.6 Adenuga street, ibara-expressway, 
+              lagos state.
+            </div>
+            <div class="py-2">
               This reservation has been cancelled and is no longer active.
-            </p>
+            </div>
             <v-btn 
               color="#D1D1D1" 
               depressed
@@ -113,7 +118,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-card class="pa-5" flat outlined>
             <h3>History</h3>
-            <v-sheet style="border-top: 2px solid #000" width="65"/>
+            <v-divider />
             <div class="py-3">
               <span>Feb 3, 2020</span>
               <span class="mx-5">12:00PM</span>
@@ -122,12 +127,13 @@
                 1
               </span>
             </div>
-            <p>
-              To Dominos Pizza, No.6 Adenuga street, ibara-expressway, lagos state.
-            </p>
-            <p class="pt-3">
+            <div class="py-1">
+              To Dominos Pizza, No.6 Adenuga street, ibara-expressway, 
+              lagos state.
+            </div>
+            <div class="py-2">
               This reservation has been cancelled and is no longer active.
-            </p>
+            </div>
             <v-btn 
               color="#D1D1D1" 
               large
@@ -152,26 +158,36 @@
       </v-row>
       <v-row class="py-10" justify="center">
         <v-col cols="12" sm="10" md="12" lg="10">
-          <v-divider></v-divider>
-          <div v-for="x in 6" :key="x">
-            <v-row align="center" class="px-5">
-              <v-col cols="2">Feb 3, 2020</v-col>
-              <v-col cols="2">12:00PM</v-col>
-              <v-col cols="2">
-                <v-icon left>mdi-account-multiple</v-icon>
-                1
-              </v-col>
-              <v-col cols="4">
-                To Dominos Pizza, No.6 Adenuga street, ibara-expressway, lagos state.
-              </v-col>
-              <v-col cols="2">
-                <v-btn text class="text-capitalize font-weight-bold" color="primary">
-                  Details
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-divider></v-divider>
-          </div>
+          <v-divider />
+
+          <v-simple-table>
+            <template>
+              <tbody>
+                <tr v-for="s in 6" :key="s">
+                  <td>Feb 3, 2020</td>
+                  <td>
+                    <span>
+                      <v-icon small left>mdi-account-multiple</v-icon> 1
+                    </span>
+                  </td>
+                  <td class="py-2">
+                    To Dominos Pizza, No.6 Adenuga street, Ibara-expressway, 
+                    Lagos State.
+                  </td>
+                  <td>
+                    <v-btn 
+                      text 
+                      class="text-capitalize font-weight-bold" 
+                      color="primary"
+                    >
+                      Details
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+
         </v-col>
       </v-row>
     </v-container>

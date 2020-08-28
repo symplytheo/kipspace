@@ -15,6 +15,7 @@
                     color="secondary" 
                     dark  
                    depressed
+                   to="/thanks"
                   >
                     Scan to Exit
                   </v-btn>

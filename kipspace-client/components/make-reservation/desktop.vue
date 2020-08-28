@@ -96,7 +96,10 @@
                       class="reserve-btn text-capitalize"
                       width="100%"
                       height="48"
-                    >Reserve</v-btn>
+                      to="/success"
+                    >
+                      Reserve
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-card>
@@ -127,6 +130,7 @@
                 color="primary"
                 background-color="primary"
                 dense
+                readonly
                 size="18"
                 class="d-inline"
               ></v-rating>
@@ -228,7 +232,7 @@
             <div v-for="(review, w) in reviews" :key="w">
               <v-divider></v-divider>
               <v-card tile flat class="pt-5 pb-3">
-                <h4>{{review.name}}</h4>
+                <div class="subtitle-1 font-weight-bold">{{review.name}}</div>
                 <span class="grey--text">{{review.date}}</span>
                 <v-rating
                   :value=review.rating
@@ -296,7 +300,7 @@ export default {
 <style>
 #desktop .biz-logo {
   margin-top: -65px; 
-  border: 10px solid white; 
+  border: 7px solid white; 
   border-radius: 50%;
 }
 #desktop .reserve-box {

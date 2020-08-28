@@ -16,6 +16,7 @@
         <v-spacer />
 
         <v-btn
+          v-show="isLoggedIn"
           color="secondary"
           depressed
           class="mr-2 font-weight-bold text-capitalize"
@@ -67,12 +68,14 @@
       </v-btn>
 
       <v-toolbar-title 
-        @click="$router.push('/')"
+        @click="$router.push('/manager')"
         style="cursor: pointer"
       >
-        <v-img src="/logo.svg"></v-img>
+        <v-img src="/logo.svg" />
       </v-toolbar-title>
+
       <v-divider vertical inset class="mx-2"/>
+
       <span 
         class="primary--text subtitle-1 font-weight-bold"
       >
@@ -108,9 +111,16 @@
 
         <v-spacer class="mr-10"/>
 
-        <v-avatar size="48" color="grey lighten-4">
-          <v-img src="/img/mcdonald-icon.png" />
-        </v-avatar>
+        <v-btn
+          fab
+          depressed
+          to="/manager/profile"
+          class="mx-3"
+        >
+          <v-avatar size="46">
+            <v-img src="/img/mcdonald-icon.png" />
+          </v-avatar>
+        </v-btn>
       </div>
 
       <div v-else>
@@ -211,5 +221,8 @@ export default {
 }
 #mgr .nav-link:hover {
   opacity: 0.7;
+}
+#mgr .v-btn--fab.v-size--default {
+  height: 46px 
 }
 </style>

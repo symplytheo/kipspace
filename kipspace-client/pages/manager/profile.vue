@@ -123,24 +123,25 @@
                     </v-row>
                   </v-col>
                   <v-col cols="4" md="5" lg="3" class="text-center">
-                    <h1 style="font-size: 46px">
+                    <div class="display-2 font-weight-bold">
                       4.4
-                    </h1>
+                    </div>
                     <v-rating
                       :value=4
                       half-increments
                       color="primary"
                       background-color="primary"
                       dense
+                      readonly
                       size="16"
-                    ></v-rating>
+                    />
                     <h4 class="pt-2">1000 Reviews</h4>
                   </v-col>
                 </v-row>
                 <div v-for="(review, w) in reviews" :key="w">
                   <v-divider></v-divider>
                   <v-card tile flat class="pt-5 pb-3">
-                    <h4>{{review.name}}</h4>
+                    <div class="font-weight-bold">{{review.name}}</div>
                     <span class="grey--text">{{review.date}}</span>
                     <v-rating
                       :value=review.rating
@@ -148,9 +149,10 @@
                       color="primary"
                       background-color="primary"
                       dense
+                      readonly
                       size="16"
                       class="d-inline mx-2"
-                    ></v-rating>
+                    />
                     <div class="py-2">
                       {{review.text}}
                     </div>
@@ -202,7 +204,12 @@ export default {
         text: "In general it is a good app, but has had some annoying issues. If you get a link it will be opened in the browser and not app. Sometimes you you get redirected from the app to the browser, too. It doesn't store the cvc of your card, so what is the point of storing the card if you need it anyway."
       }
     ]
-  })
+  }),
+  head() {
+    return {
+      title: 'Profile / Facility Manager'
+    };
+  }
 }
 </script>
 

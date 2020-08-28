@@ -7,22 +7,22 @@
             <v-avatar
               size="160"
             >
-              <img src="/img/lamp.jpg" alt="alt">
+              <v-img src="/img/lamp.jpg" alt="alt">
+                <v-row align="end" justify="center" class="fill-height">
+                  <v-btn  
+                    color="rgba(255,255,255,0.35)" 
+                    class="mx-2" 
+                    depressed
+                    block
+                  >
+                    <v-icon size="30" color="primary">mdi-camera</v-icon>
+                  </v-btn>
+                </v-row>
+              </v-img>
             </v-avatar>
-            <div class="py-2">
-              <v-btn 
-                text 
-                color="primary" 
-                class="text-lowercase font-weight-bold" 
-                depressed
-              >
-                <v-icon left>mdi-cloud-upload</v-icon>
-                upload
-              </v-btn>
-            </div>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row class="pt-5">
           <v-col cols="12" sm="6">
             <label for="firstname">
               <b>First name</b>
@@ -116,7 +116,7 @@ export default {
   }),
   head() {
     return {
-      title: 'Profile'
+      title: 'User profile'
     };
   }
 }

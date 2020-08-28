@@ -1,6 +1,6 @@
 <template>
   <v-app
-    class="homepage"
+    id="homepage"
     :style="
       $vuetify.breakpoint.smAndDown
         ? 'background-image: url(/img/purple-bg-mob.png);'
@@ -119,9 +119,16 @@
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-avatar size="46" class="mx-3">
-          <v-img src="/img/lamp.jpg" />
-        </v-avatar>
+        <v-btn
+          fab
+          depressed
+          to="/profile"
+          class="mx-3"
+        >
+          <v-avatar size="46">
+            <v-img src="/img/lamp.jpg" />
+          </v-avatar>
+        </v-btn>
       </div>
 
       <div v-else>
@@ -208,7 +215,7 @@ export default {
 </script>
 
 <style>
-.homepage {
+#homepage {
   background-position: top center !important;
   background-size: cover !important;
 }
@@ -217,5 +224,8 @@ export default {
 }
 .nav-link:hover {
   opacity: 0.8;
+}
+#homepage .v-btn--fab.v-size--default {
+  height: 46px 
 }
 </style>
