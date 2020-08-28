@@ -3,6 +3,7 @@
     <v-sheet tile height="150" color="grey lighten-4">
       <v-img src="/img/chips.png" height="100%"></v-img>
     </v-sheet>
+
     <v-sheet tile elevation="3">
       <v-container>
         <v-row>
@@ -11,7 +12,7 @@
               size="150"
               class="biz-logo"
             >
-              <img src="/img/pizza.png" alt="alt"/>
+              <v-img src="/img/pizza.png" alt="alt" />
             </v-avatar>
           </v-col>
           <v-col cols="8" md="9" lg="10" class="pt-0">
@@ -30,7 +31,7 @@
             <div class="pt-1">
               
               <v-rating
-                value=4
+                :value=4
                 half-increments
                 color="primary"
                 background-color="primary"
@@ -126,7 +127,7 @@
                       4.4
                     </h1>
                     <v-rating
-                      value=4
+                      :value=4
                       half-increments
                       color="primary"
                       background-color="primary"

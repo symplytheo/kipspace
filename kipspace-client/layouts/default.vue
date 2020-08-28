@@ -21,8 +21,12 @@ export default {
 </script>
 <style>
 #app, .v-application {
-  font-family: 'Poppins', 'Roboto', sans-serif
+  font-family: 'Poppins', sans-serif
 }
+.v-application .subtitle-1, .v-application .subtitle-2{
+  font-family: 'Poppins'!important;
+}
+
 #app .v-btn {
   text-transform: none !important;
 } 

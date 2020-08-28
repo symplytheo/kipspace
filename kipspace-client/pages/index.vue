@@ -78,21 +78,6 @@
                 </v-row>
               </v-container>
             </v-row>
-
-            <!-- <v-img
-                src="/img/ellipse-bg.svg"
-                class="pa-10 px-5"
-                contain
-                height="100%"
-                style="background-color"
-              >
-                <v-row align="center" justify="center" class="mt-">
-                  <v-col cols="8" md="6" class="pl-7 pl-sm-10  pt-0">
-                  </v-col>
-                  <v-col cols="4" md="6" class="pr-5 pr-md-0 pt-0">
-                  </v-col>
-                </v-row>
-            </v-img>-->
           </v-card>
         </v-col>
       </v-row>

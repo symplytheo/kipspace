@@ -13,7 +13,7 @@
           </v-col>
           <v-col cols="12">
             <v-slide-group 
-              :mobile-break-point="900"
+              :mobile-breakpoint="900"
             >
               <v-slide-item v-for="(item, i) in categories" :key="i">
                 <v-card flat class="pa-0 mx-5" style="border-radius: 50px" :to="`/category/${item.slug}`">
@@ -43,24 +43,7 @@
         <v-col cols="12" sm="10" md="12">
           <v-row>
             <v-col cols="6" md="3" v-for="g in 8" :key="g">
-              <v-card flat link>
-                <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
-              </v-card>
-              <v-row>
-                <v-col cols="7">
-                  <h4>Dominos Pizza</h4>
-                </v-col>
-                <v-col cols="5" class="text-right">
-                  <v-rating
-                    :value=3
-                    half-increments
-                    background-color="primary"
-                    color="primary"
-                    dense
-                    size="14"
-                  ></v-rating>
-                </v-col>
-              </v-row>
+              <FacilityCard />
             </v-col>
             <v-col cols="12" class="my-2">
               <v-pagination 
@@ -79,11 +62,14 @@
 </template>
 
 <script>
+import FacilityCard from '~/components/home/FacilityCard'
+
 export default {
   async asyncData({ params }) {
     const slug = await params.slug;
     return { slug }
   },
+  components: { FacilityCard },
   computed: {
     categories() {
       return this.$store.getters['category/categories'];
@@ -106,11 +92,11 @@ export default {
 #category .category-box {
   border: 1px solid #D1D1D1;
   border-radius: 50px;
-  height: 60px;
+  height: 70px;
 }
 #category .icon-box {
-  height: 59px;
-  width: 59px;
+  height: 69px;
+  width: 69px;
   display: inline-flex;
   border-radius: 50%;
   background-color: white;

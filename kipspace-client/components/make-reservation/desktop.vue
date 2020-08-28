@@ -122,7 +122,7 @@
             <div class="pt-1">
               
               <v-rating
-                value=4
+                :value=4
                 half-increments
                 color="primary"
                 background-color="primary"
@@ -215,7 +215,7 @@
                   4.4
                 </h1>
                 <v-rating
-                  value=4
+                  :value=4
                   half-increments
                   color="primary"
                   background-color="primary"
@@ -273,11 +273,11 @@ export default {
     ],
     reviews: [
       {
-        name: 'Ayobami Muyiwa', rating:4, date: 'July 1, 2020',
+        name: 'Ayobami Muyiwa', rating: 4, date: 'July 1, 2020',
         text: "I've used this app to booked accommodation all around lagos & have had no problems with it so far. I love showing up on the doorstep of the place I have booked & they are expecting me, everything goes smoothly & there are no issues before, during or after my stayReading the reviews from other users is also really helpful so I can get an idea of what to expect of the service/facilities/amenities & surroundings."
       },
       {
-        name: 'Ahmed Sulaimon', rating:3, date: 'August 2, 2020',
+        name: 'Ahmed Sulaimon', rating:  3, date: 'August 2, 2020',
         text: 'It was an Amazing time!'
       },
       {
@@ -285,7 +285,7 @@ export default {
         text: 'This is the best app in the market. The UI is sleek, beautiful and easy to navigate and use. The suggestions are good. Also it offers lots of filtering options for search results. I wish it had the option to list properties that have good price and are popular as well.'
       },
       {
-        name: 'Ubon Jeffery', rating:4, date: 'August 15, 2020',
+        name: 'Ubon Jeffery', rating: 4, date: 'August 15, 2020',
         text: "In general it is a good app, but has had some annoying issues. If you get a link it will be opened in the browser and not app. Sometimes you you get redirected from the app to the browser, too. It doesn't store the cvc of your card, so what is the point of storing the card if you need it anyway."
       }
     ]

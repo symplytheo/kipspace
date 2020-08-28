@@ -119,7 +119,7 @@
                   <div class="pt-1">
                     
                     <v-rating
-                      value=4
+                      :value=4
                       half-increments
                       color="primary"
                       background-color="primary"
@@ -219,7 +219,7 @@
                         4.4
                       </h1>
                       <v-rating
-                        value=4
+                        :value=4
                         half-increments
                         color="primary"
                         background-color="primary"
@@ -235,7 +235,7 @@
                       <h4>{{review.name}}</h4>
                       <span class="grey--text">{{review.date}}</span>
                       <v-rating
-                        :value="review.rating"
+                        :value=review.rating
                         half-increments
                         color="primary"
                         background-color="primary"
