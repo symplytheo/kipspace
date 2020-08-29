@@ -3,7 +3,6 @@
     v-model="regDialog"
     fullscreen
     hide-overlay
-    transition="slide-y-reverse-transition"
   >
     <v-card flat color="primary" tile dark>
       <v-toolbar color="transparent" flat>
@@ -85,16 +84,19 @@
         </v-row>
       </v-card-text>
     </v-card>
+
+    <!-- Dialog -->
     <SignIn />
+
   </v-dialog>
 </template>
 
 <script>
-import SignIn from '~/components/dialog/Login'
 
 export default {
+  name: "SignUp",
   components: {
-    SignIn,
+    SignIn: () => import('~/components/dialog/Login')
   },
   data() {
     return {

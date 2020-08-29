@@ -6,7 +6,6 @@
           <v-select
             :items="['today', 'tomorrow']"
             label="select day"
-            class=""
             solo
             flat
           ></v-select>
@@ -93,15 +92,17 @@
 
     <v-container fluid class="px-0">
       <v-tabs>
-        <v-tab class="text-capitalize font-weight-bold">
-          Overview
+        <v-tab 
+          class="subtitle-1 text-capitalize font-weight-bold"
+          v-for="tab in ['Overview', 'Reviews']"
+          :key="tab"
+        >
+         {{ tab }}
         </v-tab>
-        <v-tab class="text-capitalize font-weight-bold">
-          Reviews
-        </v-tab>
+
         <v-tab-item>
           <v-sheet tile height="180" color="grey lighten-4">
-            <v-img src="/img/chips.png" height="180"></v-img>
+            <v-img src="/img/chips.png" height="100%" />
           </v-sheet>
           <v-sheet tile elevation="3">
             <v-container class="px-10">
@@ -111,19 +112,19 @@
                     size="150"
                     class="biz-logo"
                   >
-                    <img src="/img/mcdonald-icon.png" alt="alt"/>
+                    <v-img src="/img/mcdonald-icon.png" alt="alt"/>
                   </v-avatar>
                 </v-col>
                 <v-col cols="7" sm="8" class="pt-0">
-                  <h3>Dominos Pizza</h3>
+                  <div class="title font-weight-bold">Dominos Pizza</div>
                   <div class="pt-1">
-                    
                     <v-rating
-                      value=4
+                      :value=4
                       half-increments
                       color="primary"
                       background-color="primary"
                       dense
+                      readonly
                       size="18"
                       class="d-inline"
                     ></v-rating>
@@ -196,7 +197,7 @@
             <v-row justify="center">
               <v-col cols="12" class="pt-0">
                 <v-card outlined class="pa-5 pb-2">
-                  <h3>Review Summary</h3>
+                  <div class="title font-weight-bold">Review Summary</div>
                   <v-row align="center" class="pb-3">
                     <v-col cols="8" class="pt-5">
                       <v-row align="center" v-for="(rate, r) in rating" :key="r">
@@ -215,31 +216,35 @@
                       </v-row>
                     </v-col>
                     <v-col cols="4" class="text-center">
-                      <h1 style="font-size: 48px">
+                      <div class="display-1 font-weight-bold">
                         4.4
-                      </h1>
+                      </div>
                       <v-rating
-                        value=4
+                        :value=4
                         half-increments
                         color="primary"
                         background-color="primary"
                         dense
+                        readonly
                         size="16"
-                      ></v-rating>
+                      />
                       <h4 class="">1000 Reviews</h4>
                     </v-col>
                   </v-row>
                   <div v-for="(review, w) in reviews" :key="w">
-                    <v-divider></v-divider>
+                    <v-divider />
                     <v-card tile flat class="pt-5 pb-3">
-                      <h4>{{review.name}}</h4>
+                      <div class="subtitle-1 font-weight-bold">
+                        {{review.name}}
+                      </div>
                       <span class="grey--text">{{review.date}}</span>
                       <v-rating
-                        :value="review.rating"
+                        :value=review.rating
                         half-increments
                         color="primary"
                         background-color="primary"
                         dense
+                        readonly
                         size="16"
                         class="d-inline mx-2"
                       ></v-rating>
@@ -303,7 +308,7 @@ export default {
 <style>
 #mobile .biz-logo {
   margin-top: -65px; 
-  border: 10px solid white; 
+  border: 7px solid white; 
   border-radius: 50%;
 }
 #mobile .v-input__control {

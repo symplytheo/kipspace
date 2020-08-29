@@ -30,6 +30,7 @@
 
 <script>
 export default {
+  name: "FacilityCard",
   props: {
     facility: {
       type: Object,

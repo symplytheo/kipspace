@@ -21,8 +21,23 @@ export default {
 </script>
 <style>
 #app, .v-application {
-  font-family: 'Poppins', 'Roboto', sans-serif
+  font-family: 'Poppins', sans-serif
 }
+
+/* Vuetify typography helper classes font-family */
+.v-application .display-4, .v-application .display-3{
+  font-family: 'Poppins'!important;
+}
+.v-application .display-2, .v-application .display-1{
+  font-family: 'Poppins'!important;
+}
+.v-application .headline, .v-application .title{
+  font-family: 'Poppins'!important;
+}
+.v-application .subtitle-1, .v-application .subtitle-2{
+  font-family: 'Poppins'!important;
+}
+
 #app .v-btn {
   text-transform: none !important;
 } 

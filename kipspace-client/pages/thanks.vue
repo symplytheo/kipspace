@@ -4,15 +4,19 @@
       <v-row justify="center" align="center" class="text-center">
         <v-col cols="12" sm="9" md="8" lg="6">
           <v-card outlined class="py-5 text-center">
-            <h4>Thank you for coming</h4>
+            <div class="title font-weight-bold">Thank you for coming!</div>
             <v-row justify="center" class="py-5">
-              <v-card flat link color="grey lighten-2" height="180" width="180">
-
-              </v-card>
+              <v-card 
+                flat
+                tile 
+                color="grey lighten-2" 
+                height="180" 
+                width="180"
+              />
             </v-row>
             <div class="py-5">
-              <h4 class="mb-2">Rate and review</h4>
-              <h5 class="mb-5">Share your experience with us</h5>
+              <div class="mb-2 font-weight-bold">Rate and review</div>
+              <div class="mb-5 subtitle-2">Share your experience with us</div>
               <v-rating
                 size="46"
                 dense

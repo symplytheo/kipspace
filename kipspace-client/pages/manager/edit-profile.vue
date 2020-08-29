@@ -7,7 +7,7 @@
             <v-row align="end" justify="end" class="fill-height">
               <v-btn  
                 color="rgba(255,255,255,0.35)" 
-                class="text-lowercase font-weight-bold mx-2" 
+                class="mx-2" 
                 depressed
               >
                 <v-icon large color="primary">mdi-camera</v-icon>
@@ -25,7 +25,7 @@
                 <v-row align="end" justify="center" class="fill-height">
                   <v-btn  
                     color="rgba(255,255,255,0.35)" 
-                    class="text-lowercase font-weight-bold my-3 mx-2" 
+                    class="my-3 mx-2" 
                     depressed
                     small
                     block

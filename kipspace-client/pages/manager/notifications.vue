@@ -3,10 +3,12 @@
     <v-container class="text-center pt-5 pb-10 my-10">
       <v-row justify="center">
         <v-col cols="9" sm="7" md="6" lg="5">
-          <h4>5 more people approaching your facility in 15 mins!</h4>
-          <p class="py-10">
+          <div class="font-weight-bold">
+            5 more people approaching your facility in 15 mins!
+          </div>
+          <div class="py-7">
             No notifications for now! 
-          </p>
+          </div>
         </v-col>
       </v-row>
     </v-container>
