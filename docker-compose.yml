@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-   kipspace-web:
-      container_name: kipspace-frontend
-      build: ./kipspace-web/
+   kipspace-client:
+      container_name: kipspace-client
+      build: ./kipspace-client/
       restart: unless-stopped
       command:
          "npm run start"
@@ -19,7 +19,7 @@ services:
       build: ./kipspace-server/
       restart: unless-stopped
       command:
-         "npm run docker"
+         "npm run start"
       ports:
          - "4000:4000"
       environment:
@@ -44,7 +44,7 @@ services:
       networks:
          - kipspace-network
       depends_on:
-         - kipspace-web
+         - kipspace-client
          - kipspace-server
 
 networks:
