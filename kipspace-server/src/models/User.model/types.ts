@@ -18,6 +18,7 @@ export interface User {
 	is_deleted?: boolean;
 	email_verified?: boolean;
 	phone_verified?: boolean;
+	role: 'USER' | 'ADMIN';
 	hash: string;
 	token?: string;
 	token_expire?: string;

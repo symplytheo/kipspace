@@ -1,10 +1,18 @@
 import { Schema, Types } from 'mongoose';
 
+const enumLocationType = {
+	USER: 'User',
+	FACILITY: 'Facility',
+};
+
 export const LocationSchema = new Schema(
 	{
-		user: { type: Types.ObjectId, ref: 'User' }, // location for user ?
-		facility: { type: Types.ObjectId, ref: 'Facility' }, // location for facility ?
-
+		type: {
+			type: String,
+			required: true,
+			enum: Object.keys(enumLocationType),
+			description: 'Location type User or Facility',
+		},
 		address: { type: String, required: true, maxlength: 100, text: true },
 		state: { type: String, text: true },
 		city: { type: String, required: true, text: true },
@@ -20,3 +28,13 @@ export const LocationSchema = new Schema(
 		timestamps: true,
 	}
 );
+
+LocationSchema.set('discriminatorKey', 'type');
+
+export const UserLocationSchema = new Schema({
+	user: { type: Types.ObjectId, required: true, ref: 'User' }, // location for user ?
+});
+
+export const FacilityLocationSchema = new Schema({
+	facility: { type: Types.ObjectId, required: true, ref: 'Facility' }, // location for facility ?
+});
