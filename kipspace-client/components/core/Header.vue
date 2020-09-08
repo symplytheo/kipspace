@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-
+    <!-- Mobile Menu -->
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -66,6 +66,7 @@
       
     </v-navigation-drawer>
 
+    <!-- Desktop Navbar -->
     <v-app-bar
       app
       height="64"
@@ -75,7 +76,7 @@
       <v-btn 
         icon 
         color="primary" 
-        class="hidden-md-and-up mr-2"
+        class="hidden-md-and-up"
         @click="toggleDrawer"
       >
         <v-icon large>mdi-sort-variant</v-icon>
@@ -84,6 +85,7 @@
       <v-toolbar-title 
         @click="$router.push('/')"
         style="cursor: pointer"
+        class="pl-1"
       >
         <v-img src="/logo.svg" />
       </v-toolbar-title>
@@ -117,21 +119,29 @@
 
         <v-spacer class="mr-10"/>
 
-        <v-btn small icon color="primary" class="mr-3" to="/search">
+        <v-btn
+          icon
+          height="40"
+          width="40"
+          color="primary"
+          class="mr-2"
+          to="/search"
+        >
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn small icon color="primary" to="/notifications">
+        <v-btn height="40" width="40" icon color="primary" to="/notifications">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
         <v-btn
-          fab
-          depressed
+          icon
+          height="50"
+          width="50"
           to="/profile"
           class="mx-3"
         >
-          <v-avatar size="46">
-            <v-img src="/img/lamp.jpg" />
+          <v-avatar size="50">
+            <v-img src="/img/lamp.jpg" alt="Kipspace"/>
           </v-avatar>
         </v-btn>
       </div>
@@ -213,6 +223,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .link-active {
   color: #380F4F99!important;
@@ -230,9 +241,4 @@ export default {
 .mkr-active {
   opacity: 0.8; 
 }
-
-#navbar .v-btn--fab.v-size--default {
-  height: 46px 
-}
-
 </style>

@@ -78,32 +78,13 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <v-container>
-      <v-row 
-        class="text-center ma-10 py-10"
-        justify="center"
-        align="center"
-      >
-        <v-col cols="12" class="pa-5">
-          <div class="font-weight-thin display-1">
-            You have to Login to view your dashboard!
-          </div> 
-        </v-col>
-      </v-row>
-    </v-container>
     
   </div>
 </template>
 
 <script>
 export default {
-  layout: 'manager',
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn
-    }
-  }
+  layout: 'manager'
 }
 </script>
 

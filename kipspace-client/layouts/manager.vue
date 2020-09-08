@@ -64,12 +64,15 @@
         class="hidden-md-and-up"
         @click="toggleDrawer"
       >
-        <v-icon large>mdi-sort-variant</v-icon>
+        <v-icon large>
+          mdi-sort-variant
+        </v-icon>
       </v-btn>
 
       <v-toolbar-title 
         @click="$router.push('/manager')"
         style="cursor: pointer"
+        class="pl-1"
       >
         <v-img src="/logo.svg" />
       </v-toolbar-title>
@@ -112,13 +115,14 @@
         <v-spacer class="mr-10"/>
 
         <v-btn
-          fab
-          depressed
+          icon
+          height="50"
+          width="50"
           to="/manager/profile"
           class="mx-3"
         >
-          <v-avatar size="46">
-            <v-img src="/img/mcdonald-icon.png" />
+          <v-avatar size="50">
+            <v-img src="/img/mcdonald-icon.png" alt="Kipspace"/>
           </v-avatar>
         </v-btn>
       </div>
