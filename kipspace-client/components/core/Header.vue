@@ -92,7 +92,7 @@
 
       <v-spacer />
 
-      <div v-if="isLoggedIn" class="d-flex align-center">
+      <div v-if="isLoggedIn">
         <v-btn
           color="primary"
           class="nav-link mr-1 hidden-sm-and-down subtitle-1 font-weight-bold"
@@ -116,9 +116,9 @@
         >
           Make Reservation
         </v-btn>
-
-        <v-spacer class="mr-10"/>
-
+      </div>
+      <v-spacer />
+      <div v-if="isLoggedIn">
         <v-btn
           icon
           height="40"

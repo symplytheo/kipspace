@@ -91,7 +91,7 @@
 
       <v-spacer />
 
-      <div v-if="isLoggedIn" class="d-flex align-center">
+      <div v-if="isLoggedIn">
         <v-btn
           v-for="(link, l) in navLinks"
           :key="l"
@@ -114,9 +114,9 @@
         >
           Make Reservation
         </v-btn>
-
-        <v-spacer class="mr-10"/>
-
+      </div>
+      <v-spacer />
+      <div v-if="isLoggedIn">
         <v-btn
           icon
           height="40"
