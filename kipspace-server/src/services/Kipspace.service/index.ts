@@ -1,37 +1,66 @@
 import { Request, NextFunction, Response } from 'express';
-import { OK, CREATED, ACCEPTED, UNAUTHORIZED, SERVICE_UNAVAILABLE } from 'http-status-codes';
-// import { IUser } from '@models/User.model';
+import {
+	OK,
+	CREATED,
+	ACCEPTED,
+	// UNAUTHORIZED,
+	SERVICE_UNAVAILABLE,
+	BAD_REQUEST,
+} from 'http-status-codes';
+import { validationResult } from 'express-validator';
+import { sign } from 'jsonwebtoken';
+import { ValidationError } from 'apollo-server-express';
+
+import { IUser } from '@models/User.model';
 // import { IAdmin } from '@models/Admin.model';
-
-import logger from '@shared/Logger';
 // import auth from '@middlewares/authentication';
+import logger from '@shared/Logger';
 
-import { SendResponse, AuthenticateUser } from './types';
+import { JWT_SECRET } from '@config';
+
+import { SendResponse, ValidateFields } from './types';
 
 class KipspaceService<Model> {
-	constructor(request: Request, response: Response, next?: NextFunction) {
-		this._request = request;
-		this._response = response;
-
-		if (next) this._next = next;
-	}
-
-	private _request: Request;
-	private _response: Response;
+	private _request?: Request;
+	private _response?: Response;
 	private _next?: NextFunction;
 
-	// private _currentUser?: IUser;
+	private _currentUser?: IUser;
 	// private _currentAdmin?: IAdmin;
 
 	private readonly _okStatuses = [OK, CREATED, ACCEPTED];
 
-	// public get CurrentUser(): IUser | null {
-	// 	return this._currentUser ? this._currentUser : null;
-	// }
+	public set Request(req: Request) {
+		this._request = req;
+	}
 
-	// public get CurrentAdmin(): IAdmin | null {
-	// 	return this._currentAdmin ? this._currentAdmin : null;
-	// }
+	public set Response(res: Response) {
+		this._response = res;
+	}
+
+	public set Next(next: NextFunction) {
+		this._next = next;
+	}
+
+	public get CurrentUser(): IUser | null {
+		return this._currentUser ? this._currentUser : null;
+	}
+
+	public set CurrentUser(user: IUser | null) {
+		this._currentUser = user || undefined;
+	}
+
+	public get UserToken(): string | null {
+		if (!this._currentUser) return null;
+
+		const token = sign(
+			{ _id: this._currentUser._id, email: this._currentUser.email },
+			JWT_SECRET,
+			{ expiresIn: '30 days' }
+		);
+
+		return token;
+	}
 
 	/**
 	 * @param request
@@ -60,20 +89,65 @@ class KipspaceService<Model> {
 	// };
 
 	/**
-	 * @param message<`string`>
-	 * @param status
-	 * @param payload
-	 * @param error
+	 * validate
 	 */
-	public SendResponse: SendResponse<Model> = ({ message, status, payload, error }) => {
-		error && logger.error(error?.message);
+	public ValidateFields: ValidateFields = (validationChain) => {
+		return async (
+			req: Request,
+			_: Response,
+			next: NextFunction
+		): Promise<Response | void> => {
+			try {
+				await Promise.all(validationChain.map((validation) => validation.run(req)));
 
-		return this._response.status(status).send({
-			state: error ? 'ERROR' : this._okStatuses.includes(status) ? 'OK' : 'NO',
-			message,
-			payload,
-			error,
+				const errors = validationResult(req);
+
+				if (errors.isEmpty()) return next();
+				else {
+					return this.SendResponse({
+						message: 'Some fields missing/incorrect.',
+						status: BAD_REQUEST,
+						error: (errors.array() as unknown) as ValidationError[],
+					});
+				}
+			} catch (error) {
+				return this.SendResponse({
+					message: 'Validation error occured.',
+					status: SERVICE_UNAVAILABLE,
+					error,
+				});
+			}
+		};
+	};
+
+	public SendError = (error: any): void => {
+		this.SendResponse({
+			status: error.code || SERVICE_UNAVAILABLE,
+			message: error.message,
+			error: error,
 		});
+	};
+
+	/**
+	 * Send response
+	 */
+	public SendResponse: SendResponse<Model> = ({
+		message,
+		status,
+		payload,
+		error,
+		token,
+	}) => {
+		error && logger.error(error);
+
+		this._response &&
+			this._response.status(status).send({
+				state: error ? 'ERROR' : this._okStatuses.includes(status) ? 'OK' : 'NO',
+				message,
+				payload,
+				error,
+				token,
+			});
 	};
 }
 
