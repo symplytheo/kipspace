@@ -24,7 +24,7 @@ export const UserSchema: Schema = new Schema(
 		email_verified: { type: Boolean, default: false },
 		phone_verified: { type: Boolean, default: false },
 
-		role: { type: String, required: true, enum: ['USER', 'ADMIN'] },
+		role: { type: String, default: 'USER', required: true, enum: ['USER', 'ADMIN'] },
 
 		hash: { type: String, required: true },
 		token: { type: String },

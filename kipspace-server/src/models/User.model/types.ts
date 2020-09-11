@@ -4,16 +4,15 @@ import { IReservation } from '@models/Reservation.model';
 import { INotification } from '@models/Notification.model';
 
 export interface User {
-	title?: string;
-	firstname: string;
+	firstname?: string;
 	middlename?: string;
-	lastname: string;
+	lastname?: string;
 	email: string;
 	phone?: string;
 	avatar?: string;
 	location?: ILocation['_id'];
-	reservations: IReservation['_id'][];
-	notifications: INotification['_id'][];
+	reservations?: IReservation['_id'][];
+	notifications?: INotification['_id'][];
 	is_active?: boolean;
 	is_deleted?: boolean;
 	email_verified?: boolean;
