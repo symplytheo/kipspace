@@ -1,55 +1,64 @@
-import { Request, Response } from 'express';
-import { SERVICE_UNAVAILABLE, OK, NOT_FOUND } from 'http-status-codes';
-import KipspaceService from '@services/Kipspace.service';
-import { getOneUser, getMultipleUser } from '@controllers/user.controller';
+import { Request } from 'express';
+import { OK } from 'http-status-codes';
+
 import { IUser } from '@models/User.model';
+import { CreateUser } from '@daos/user.dao';
+
+import KipspaceService from '@services/Kipspace.service';
 
 class UserService extends KipspaceService<IUser> {
-	public CreateUser = async (req: Request): Promise<Response | null> => {
+	public CreateAccount = async (req: Request): Promise<void> => {
 		try {
-			return this.SendResponse({
+			const user = await CreateUser({
+				email: req.body.email,
+				password: req.body.password,
+			});
+
+			this.CurrentUser = user;
+			const token = this.UserToken || '';
+
+			this.SendResponse({
 				status: OK,
 				message: 'user created successfully',
-				payload: req.body,
+				payload: user,
+				token,
 			});
 		} catch (error) {
-			return this.SendResponse({
-				status: SERVICE_UNAVAILABLE,
-				message: error.message,
-				error: error,
-			});
+			this.SendError(error);
 		}
 	};
 
-	public GetSingleUser = async (req: Request): Promise<Response | null> => {
-		try {
-			const { id } = req.params;
+	// public GetSingleUser = async (req: Request): Promise<Response | null> => {
+	// 	try {
+	// 		const { id } = req.params;
 
-			const user = await getOneUser({ _id: id });
+	// 		const user = await getOneUser({ _id: id });
 
-			if (!user) {
-				return this.SendResponse({
-					status: NOT_FOUND,
-					message: 'user not found',
-				});
-			}
+	// 		if (!user) {
+	// 			return this.SendResponse({
+	// 				status: NOT_FOUND,
+	// 				message: 'user not found',
+	// 			});
+	// 		}
 
-			const userDoc = user.populate('location').populate('added_facilities', ['name', 'short_bio'] as any);
-			const userData = await userDoc.execPopulate();
+	// 		const userDoc = user
+	// 			.populate('location')
+	// 			.populate('added_facilities', ['name', 'short_bio'] as any);
+	// 		const userData = await userDoc.execPopulate();
 
-			return this.SendResponse({
-				status: OK,
-				message: 'user fetched successfully',
-				payload: userData,
-			});
-		} catch (error) {
-			return this.SendResponse({
-				status: SERVICE_UNAVAILABLE,
-				message: error.message,
-				error: error,
-			});
-		}
-	};
+	// 		return this.SendResponse({
+	// 			status: OK,
+	// 			message: 'user fetched successfully',
+	// 			payload: userData,
+	// 		});
+	// 	} catch (error) {
+	// 		return this.SendResponse({
+	// 			status: SERVICE_UNAVAILABLE,
+	// 			message: error.message,
+	// 			error: error,
+	// 		});
+	// 	}
+	// };
 
 	// public async LoadUserProfile(req: Request, res: Response): Promise<Response | null> {
 	// 	try {
