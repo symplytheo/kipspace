@@ -54,7 +54,11 @@ class KipspaceService<Model> {
 		if (!this._currentUser) return null;
 
 		const token = sign(
-			{ _id: this._currentUser._id, email: this._currentUser.email },
+			{
+				_id: this._currentUser._id,
+				email: this._currentUser.email,
+				role: this._currentUser.role,
+			},
 			JWT_SECRET,
 			{ expiresIn: '30 days' }
 		);
