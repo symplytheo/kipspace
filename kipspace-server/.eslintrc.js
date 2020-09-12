@@ -18,5 +18,7 @@ module.exports = {
 	rules: {
 		semi: ['error', 'always'],
 		'no-console': 'off',
+		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-explicit-any': 'off',
 	},
 };
