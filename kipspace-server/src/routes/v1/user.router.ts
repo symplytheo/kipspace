@@ -1,14 +1,19 @@
 import { Router } from 'express';
 import UserService from '@services/user.service';
 
+import { CreateUserValidator } from 'src/validators/user.validator';
+
 const UserRouter = Router();
+const User = new UserService();
 
-UserRouter.use('/', (req, res, next) => {
-	const User = new UserService(req, res);
-
-	UserRouter.post('/', User.CreateUser);
+// Expose request handlers to the service
+UserRouter.use((req, res, next) => {
+	User.Request = req;
+	User.Response = res;
 
 	next();
 });
+
+UserRouter.post('/', User.ValidateFields(CreateUserValidator), User.CreateAccount);
 
 export default UserRouter;
