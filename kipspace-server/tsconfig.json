@@ -19,11 +19,17 @@
 			"@middlewares/*": [
 				"src/middlewares/*"
 			],
+			"@validators/*": [
+				"src/validators/*"
+			],
 			"@models/*": [
 				"src/models/*"
 			],
 			"@shared/*": [
 				"src/shared/*"
+			],
+			"@daos/*": [
+				"src/daos/*"
 			],
 			"@db/*": [
 				"src/db/*"
@@ -37,12 +43,15 @@
 			"@server": [
 				"src/Server"
 			],
+			"@apollo": [
+				"src/ApolloServer"
+			]
 		},
 		"types": [
-			"node"
+			"node",
 		],
 		"typeRoots": [
-			"./src/@types",
+			"./src/types",
 			"node_modules/@types"
 		]
 	},

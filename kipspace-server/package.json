@@ -13,11 +13,13 @@
 		"@daos": "dist/daos",
 		"@controllers": "dist/controllers",
 		"@middlewares": "dist/middlewares",
+		"@validators": "dist/validators",
 		"@services": "dist/services",
 		"@models": "dist/models",
 		"@shared": "dist/shared",
 		"@config": "dist/config",
-		"@server": "dist/Server"
+		"@server": "dist/Server",
+		"@apollo": "dist/ApolloServer"
 	},
 	"dependencies": {
 		"apollo-engine": "^1.1.2",
