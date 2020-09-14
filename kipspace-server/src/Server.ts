@@ -6,7 +6,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { SERVICE_UNAVAILABLE, NOT_FOUND } from 'http-status-codes';
 import 'express-async-errors';
 
-import ApolloServer from '@apollo';
+import ApolloServer from './ApolloServer';
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
 import connectDB from './db';

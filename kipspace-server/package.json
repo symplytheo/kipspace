@@ -18,8 +18,7 @@
 		"@models": "dist/models",
 		"@shared": "dist/shared",
 		"@config": "dist/config",
-		"@server": "dist/Server",
-		"@apollo": "dist/ApolloServer"
+		"@server": "dist/Server"
 	},
 	"dependencies": {
 		"apollo-engine": "^1.1.2",
