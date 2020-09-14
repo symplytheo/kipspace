@@ -21,21 +21,21 @@ export default {
 </script>
 <style>
 #app, .v-application {
-  font-family: 'Poppins', sans-serif
+  font-family: 'Poppins', Arial, Helvetica, sans-serif
 }
 
 /* Vuetify typography helper classes font-family */
 .v-application .display-4, .v-application .display-3{
-  font-family: 'Poppins'!important;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
 }
 .v-application .display-2, .v-application .display-1{
-  font-family: 'Poppins'!important;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif!important;
 }
 .v-application .headline, .v-application .title{
-  font-family: 'Poppins'!important;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif!important;
 }
 .v-application .subtitle-1, .v-application .subtitle-2{
-  font-family: 'Poppins'!important;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif!important;
 }
 
 #app .v-btn {

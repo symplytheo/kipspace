@@ -9,7 +9,7 @@
           <v-card outlined class="my-2">
             <div v-for="v in 7" :key="v">
               <div class="pa-5">
-                <v-row justify="center">
+                <v-row justify="center" align="end">
                   <v-col cols="8" sm="9" md="8">
                     <v-row align="center">
                       <v-col cols>Feb 3, 2020</v-col>
@@ -36,7 +36,7 @@
                     </v-row>
                   </v-col>
                   <v-col cols="4" sm="3" md="2">
-                    <v-img src="/qr-code-black.png" height="100" contain></v-img>
+                    <v-img src="/img/qr-code-black.png" height="100" contain />
                   </v-col>
                 </v-row>
               </div>

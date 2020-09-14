@@ -13,22 +13,23 @@
       </v-row>
     </v-sheet>
     
-    <v-container class="py-10">
-      <h3>Top Searches</h3>
+    <v-container class="mt-lg-10">
+      <div class="title font-weight-bold">
+        Top Searches
+      </div>
       <v-row justify="center">
-        <v-col cols="10" sm="11" md="11" lg="12">
+        <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col cols="12" sm="6" lg="3" v-for="g in 8" :key="g">
+            <v-col v-for="g in 8" :key="g" cols="6" md="3">
               <FacilityCard />
             </v-col>
             <v-col cols="12" class="my-2">
-              <v-pagination 
-                :length="6" 
-                :value=1
+              <v-pagination
+                :length="6"
+                :value="1"
                 color="primary"
                 class="pagination"
-              >
-              </v-pagination>
+              ></v-pagination>
             </v-col>
           </v-row>
         </v-col>
