@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import UserService from '@services/user.service';
 
-import { CreateUserValidator } from 'src/validators/user.validator';
+import { CreateUserValidator } from '@validators/user.validator';
 
 const UserRouter = Router();
 const User = new UserService();
