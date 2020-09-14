@@ -5,6 +5,9 @@ const enumNotificationType = {
 	FACILITYY: 'Facility',
 };
 
+export const ProtectedFields = [];
+export const ImmutableFields = ['createdAt', 'updatedAt', 'user', 'facility'];
+
 export const NotificationSchema = new Schema(
 	{
 		type: {

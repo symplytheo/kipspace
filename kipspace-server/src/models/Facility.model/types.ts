@@ -2,6 +2,7 @@ import { Document } from 'mongoose';
 import { ICategory } from '@models/Category.model';
 import { IReservation } from '@models/Reservation.model';
 import { INotification } from '@models/Notification.model';
+import { IUser } from '@models/User.model';
 
 interface OpeningHour {
 	day: string;
@@ -13,7 +14,8 @@ export interface Facility {
 	name: string;
 	short_description: string;
 	location: string;
-	categpry: ICategory['_id'];
+	user: IUser['_id'];
+	category: ICategory['_id'];
 	email: string;
 	phone: string;
 	capacity: string;

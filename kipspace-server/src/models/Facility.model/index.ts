@@ -1,30 +1,22 @@
 import { Model, model } from 'mongoose';
-import { composeWithMongoose } from 'graphql-compose-mongoose';
-import { IFacility } from './types';
-import { FacilitySchema } from './schema';
-import { FacilityLocationTC } from '@models/Location.model';
-import { CategoryTC } from '@models/Category.model';
-import { ReservationTC } from '@models/Reservation.model';
-import { NotificationTC } from '@models/Notification.model';
+import { composeWithMongoose, convertSchemaToGraphQL } from 'graphql-compose-mongoose';
+import { schemaComposer } from 'graphql-compose';
+
+import { IFacility, Facility } from './types';
+import {
+	FacilitySchema,
+	OpeningHoursSchema,
+	ImmutableFields,
+	ProtectedFields,
+} from './schema';
 
 const Facility: Model<IFacility> = model('Facility', FacilitySchema);
 
-const FacilityTC = composeWithMongoose(Facility);
+convertSchemaToGraphQL(OpeningHoursSchema, 'OpeningHours', schemaComposer);
 
-FacilityTC.addRelation('location', {
-	resolver: () => FacilityLocationTC.getResolver('findById'),
-});
-
-FacilityTC.addRelation('category', {
-	resolver: () => CategoryTC.getResolver('findById'),
-});
-
-FacilityTC.addRelation('reservations', {
-	resolver: () => ReservationTC.getResolver('findByIds'),
-});
-
-FacilityTC.addRelation('notifications', {
-	resolver: () => NotificationTC.getResolver('findByIds'),
+const FacilityTC = composeWithMongoose(Facility, {
+	fields: { remove: ProtectedFields },
+	inputType: { fields: { remove: ImmutableFields } },
 });
 
 export * from './types';

@@ -1,6 +1,16 @@
 import { Schema, Types } from 'mongoose';
+import { LocationSchema } from '@models/Location.model';
 
 export const ProtectedFields = ['hash', 'token', 'token_expire'];
+export const ImmutableFields = [
+	'email_verified',
+	'phone_verified',
+	'createdAt',
+	'updatedAt',
+	'facilities',
+	'reservations',
+	'notifications',
+];
 
 export const UserSchema: Schema = new Schema(
 	{
@@ -12,11 +22,11 @@ export const UserSchema: Schema = new Schema(
 		phone: { type: String },
 		avatar: { type: String },
 
-		location: { type: Types.ObjectId, ref: 'Location' },
+		location: LocationSchema,
 
-		facilities: [{ type: Types.ObjectId, ref: 'Facility' }],
-		reservations: [{ type: Types.ObjectId, ref: 'Reservation' }],
-		notifications: [{ type: Types.ObjectId, ref: 'Notification' }],
+		// facilities: [{ type: Types.ObjectId, ref: 'Facility' }],
+		// reservations: [{ type: Types.ObjectId, ref: 'Reservation' }],
+		// notifications: [{ type: Types.ObjectId, ref: 'Notification' }],
 
 		is_active: { type: Boolean, default: true },
 		is_deleted: { type: Boolean, default: false },

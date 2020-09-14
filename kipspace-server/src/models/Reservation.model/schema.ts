@@ -1,5 +1,8 @@
 import { Schema, Types } from 'mongoose';
 
+export const ProtectedFields = [];
+export const ImmutableFields = ['createdAt', 'updatedAt', 'user'];
+
 export const ReservationSchema = new Schema(
 	{
 		user: { type: Types.ObjectId, ref: 'User', required: true },

@@ -1,22 +1,23 @@
 import { Schema, Types } from 'mongoose';
+import { validateCountry } from './validators';
 
-const enumLocationType = {
-	USER: 'User',
-	FACILITY: 'Facility',
-};
+export const ProtectedFields = [];
+export const ImmutableFields = ['email_verified', 'phone_verified', 'user', 'facility'];
 
 export const LocationSchema = new Schema(
 	{
-		type: {
-			type: String,
-			required: true,
-			enum: Object.keys(enumLocationType),
-			description: 'Location type User or Facility',
-		},
 		address: { type: String, required: true, maxlength: 100, text: true },
 		state: { type: String, text: true },
 		city: { type: String, required: true, text: true },
-		country: { type: Types.ObjectId, ref: 'Country', required: true },
+		country: {
+			type: Types.ObjectId,
+			ref: 'Country',
+			required: true,
+			validate: {
+				validator: validateCountry,
+				message: 'Invalid country / country not supported',
+			},
+		},
 		zip_code: { type: String },
 
 		coordinates: {
@@ -24,17 +25,5 @@ export const LocationSchema = new Schema(
 			lat: { type: Number },
 		},
 	},
-	{
-		timestamps: true,
-	}
+	{ _id: false }
 );
-
-LocationSchema.set('discriminatorKey', 'type');
-
-export const UserLocationSchema = new Schema({
-	user: { type: Types.ObjectId, required: true, ref: 'User' }, // location for user ?
-});
-
-export const FacilityLocationSchema = new Schema({
-	facility: { type: Types.ObjectId, required: true, ref: 'Facility' }, // location for facility ?
-});

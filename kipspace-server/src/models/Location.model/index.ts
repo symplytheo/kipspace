@@ -1,18 +1,14 @@
 import { Model, model } from 'mongoose';
-import { composeWithMongooseDiscriminators } from 'graphql-compose-mongoose';
+import { schemaComposer } from 'graphql-compose';
+import { convertSchemaToGraphQL } from 'graphql-compose-mongoose';
+
 import { ILocation } from './types';
-import { LocationSchema, UserLocationSchema, FacilityLocationSchema } from './schema';
+import { LocationSchema } from './schema';
 
 const Location: Model<ILocation> = model('Location', LocationSchema);
 
-const UserLocation = Location.discriminator('UserLocation', UserLocationSchema);
-const FacilityLocation = Location.discriminator('FacilityLocation', FacilityLocationSchema);
-
-const LocationTC = composeWithMongooseDiscriminators(Location);
-
-const UserLocationTC = LocationTC.discriminator(UserLocation);
-const FacilityLocationTC = LocationTC.discriminator(FacilityLocation);
+const LocationTC = convertSchemaToGraphQL(LocationSchema, 'Location', schemaComposer);
 
 export * from './types';
-export { UserLocation, FacilityLocation, LocationTC, UserLocationTC, FacilityLocationTC };
+export { LocationTC, LocationSchema };
 export default Location;
