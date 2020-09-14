@@ -64,27 +64,26 @@
         class="hidden-md-and-up"
         @click="toggleDrawer"
       >
-        <v-icon large>mdi-sort-variant</v-icon>
+        <v-icon large>
+          mdi-sort-variant
+        </v-icon>
       </v-btn>
 
       <v-toolbar-title 
         @click="$router.push('/manager')"
         style="cursor: pointer"
+        class="pl-1"
       >
         <v-img src="/logo.svg" />
       </v-toolbar-title>
-
-      <v-divider vertical inset class="mx-2"/>
-
-      <span 
-        class="primary--text subtitle-1 font-weight-bold"
-      >
+      <v-divider vertical inset class="mx-1"/>
+      <span class="primary--text subtitle-1 font-weight-bold">
         Manager
       </span>
 
       <v-spacer />
 
-      <div v-if="isLoggedIn" class="d-flex align-center">
+      <div v-if="isLoggedIn">
         <v-btn
           color="primary"
           class="nav-link mr-1 hidden-sm-and-down subtitle-1 font-weight-bold"
@@ -108,17 +107,18 @@
         >
           Walk-ins
         </v-btn>
-
-        <v-spacer class="mr-10"/>
-
+      </div>
+      <v-spacer />
+      <div v-if="isLoggedIn">
         <v-btn
-          fab
-          depressed
+          icon
+          height="50"
+          width="50"
           to="/manager/profile"
           class="mx-3"
         >
-          <v-avatar size="46">
-            <v-img src="/img/mcdonald-icon.png" />
+          <v-avatar size="50">
+            <v-img src="/img/mcdonald-icon.png" alt="Kipspace"/>
           </v-avatar>
         </v-btn>
       </div>
@@ -176,7 +176,6 @@ export default {
     drawer: false,
     links: [
       {text: 'Dashboard', to: '/manager'},
-      {text: 'Profile', to: '/manager/profile'},
       {text: 'Notifications', to: '/manager/notifications'},
       {text: 'Exit Code', to: '/manager/exit'}
     ]

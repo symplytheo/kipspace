@@ -8,7 +8,7 @@ WORKDIR ${APP_ROOT}
 ADD . ${APP_ROOT}
 
 # global install & update
-RUN npm i -g npm && npm i -g yarn
+RUN npm i -g npm && npm i -g yarn; exit 0
 
 # RUN rm yarn.lock
 RUN yarn

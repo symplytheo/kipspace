@@ -3,6 +3,7 @@ import { IUser } from '@models/User.model';
 import { IFacility } from '@models/Facility.model';
 
 export interface Location {
+	type: 'USER' | 'FACILITY';
 	user?: IUser['_id'];
 	facility?: IFacility['_id'];
 	address: string;

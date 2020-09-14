@@ -39,14 +39,18 @@
     </v-sheet>
 
     <v-container class="py-10">
-      <h3 class="mb-5 ml-3">Results</h3>
+      <div class="mb-5 ml-3 title font-weight-bold">
+        Results
+      </div>
       <v-slide-group :mobile-breakpoint="900">
         <v-slide-item v-for="i in 10" :key="i">
           <v-card outlined flat width="250" class="mx-3">
             <v-img src="/img/pizza.png" :aspect-ratio="16/9" class="pt-5">
             </v-img>
-            <v-card-text class="black--text pl-10">
-              <h3>Dominos Pizza</h3>
+            <v-card-text class="black--text">
+              <div class="subtitle-1 font-weight-bold">
+                Dominos Pizza
+              </div>
               <div class="py-2">
                 No. 6 Adenuga street, Ibara-expressway, Lagos State.
               </div>
@@ -83,7 +87,9 @@
     </v-container>
 
     <v-container>
-      <h3>Top Searches</h3>
+      <div class="title font-weight-bold">
+        Top Searches
+      </div>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>

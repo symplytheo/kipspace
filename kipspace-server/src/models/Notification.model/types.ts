@@ -4,6 +4,7 @@ import { IFacility } from '@models/Facility.model';
 import { Document } from 'mongoose';
 
 export interface Notification {
+	type: 'USER' | 'FACILITY';
 	title: string;
 	description: string;
 	user: IUser['_id'];

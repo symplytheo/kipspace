@@ -1,16 +1,16 @@
 <template>
   <div class="hidden-md-and-up" id="mobile">
     <v-container class="px-sm-10">
-      <v-row>
-        <v-col cols="4" class="py-3">
+      <v-row >
+        <v-col cols="4" class="py-3 pr-0">
           <v-select
             :items="['today', 'tomorrow']"
-            label="select day"
+            label="day"
             solo
             flat
-          ></v-select>
+          />
         </v-col>
-        <v-col cols="3" class="py-3">
+        <v-col cols="3" class="py-3 pl-2">
           <v-dialog
             ref="timeModal"
             v-model="selectTime"
@@ -20,14 +20,14 @@
           >
             <template v-slot:activator="{on}">
               <v-btn
-                height="48"
+                height="50"
                 text
                 block
                 depressed
                 class="text-lowercase time-btn"
                 style="border: 1px solid #D1D1D1"
                 v-on="on"
-                :class="!time?'grey--text': ''"
+                :class="!time?'grey--text text--darken-1': ''"
               >
                 {{ time ? time : 'time' }}
                 <v-icon right>mdi-menu-down</v-icon>
@@ -105,17 +105,17 @@
             <v-img src="/img/chips.png" height="100%" />
           </v-sheet>
           <v-sheet tile elevation="3">
-            <v-container class="px-10">
+            <v-container class="px-sm-10">
               <v-row>
                 <v-col cols="5" sm="4">
                   <v-avatar
-                    size="150"
+                    size="140"
                     class="biz-logo"
                   >
                     <v-img src="/img/mcdonald-icon.png" alt="alt"/>
                   </v-avatar>
                 </v-col>
-                <v-col cols="7" sm="8" class="pt-0">
+                <v-col cols="7" sm="8" class="pt-0 pl-3">
                   <div class="title font-weight-bold">Dominos Pizza</div>
                   <div class="pt-1">
                     <v-rating
@@ -139,7 +139,7 @@
 
           <v-container class="py-10">
             <v-row justify="center">
-              <v-col cols="10">
+              <v-col sm="10">
                 <v-card outlined class="px-5 py-3">
                   <v-row>
                     <v-col cols="2">
@@ -197,14 +197,16 @@
             <v-row justify="center">
               <v-col cols="12" class="pt-0">
                 <v-card outlined class="pa-5 pb-2">
-                  <div class="title font-weight-bold">Review Summary</div>
-                  <v-row align="center" class="pb-3">
-                    <v-col cols="8" class="pt-5">
+                  <div class="title font-weight-bold">
+                    Review Summary
+                  </div>
+                  <v-row align="center" class="pb-3 pt-3">
+                    <v-col cols="8">
                       <v-row align="center" v-for="(rate, r) in rating" :key="r">
-                        <v-col cols="1" class="py-0">
+                        <v-col cols="2" sm="1" class="py-0">
                           {{rate.num}}
                         </v-col>
-                        <v-col cols="11" class="py-0">
+                        <v-col cols="10" sm="11" class="py-0">
                           <v-progress-linear 
                             :value="rate.value" 
                             color="primary" 
@@ -216,7 +218,7 @@
                       </v-row>
                     </v-col>
                     <v-col cols="4" class="text-center">
-                      <div class="display-1 font-weight-bold">
+                      <div class="display-2 font-weight-bold">
                         4.4
                       </div>
                       <v-rating
@@ -226,9 +228,11 @@
                         background-color="primary"
                         dense
                         readonly
-                        size="16"
+                        size="15"
                       />
-                      <h4 class="">1000 Reviews</h4>
+                      <div class="subtitle-2 font-weight-bold pt-1">
+                        1000 Reviews
+                      </div>
                     </v-col>
                   </v-row>
                   <div v-for="(review, w) in reviews" :key="w">

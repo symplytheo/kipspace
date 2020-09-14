@@ -7,8 +7,8 @@
         : 'background-image: url(/img/purple-bg.png);'
     "
   >
-
-  <v-navigation-drawer
+    <!-- Mobile Menu -->
+    <v-navigation-drawer
       v-model="drawer"
       app
       floating
@@ -64,6 +64,7 @@
       </div>
     </v-navigation-drawer>
 
+    <!-- Desktop Navbar -->
     <v-app-bar
       app
       absolute
@@ -80,13 +81,17 @@
         <v-icon large>mdi-sort-variant</v-icon>
       </v-btn>
 
-      <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">
+      <v-toolbar-title
+        style="cursor: pointer"
+        @click="$router.push('/')"
+        class="pl-1"
+      >
         <v-img src="/logo-white.png" alt="Kipspace" />
       </v-toolbar-title>
 
       <v-spacer />
 
-      <div v-if="isLoggedIn" class="d-flex align-center">
+      <div v-if="isLoggedIn">
         <v-btn
           v-for="(link, l) in navLinks"
           :key="l"
@@ -109,24 +114,33 @@
         >
           Make Reservation
         </v-btn>
-
-        <v-spacer class="mr-10"/>
-
-        <v-btn small icon color="white" class="mx-3" to="/search">
+      </div>
+      <v-spacer />
+      <div v-if="isLoggedIn">
+        <v-btn
+          icon
+          height="40"
+          width="40"
+          color="white"
+          class="mr-2"
+          to="/search"
+        >
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn small icon color="white" to="/notifications">
+        <v-btn icon height="40" width="40" color="white" to="/notifications">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
         <v-btn
-          fab
+          icon
+          height="50"
+          width="50"
           depressed
           to="/profile"
           class="mx-3"
         >
-          <v-avatar size="46">
-            <v-img src="/img/lamp.jpg" />
+          <v-avatar size="50">
+            <v-img src="/img/lamp.jpg" alt="Kipspace"/>
           </v-avatar>
         </v-btn>
       </div>
@@ -224,8 +238,5 @@ export default {
 }
 .nav-link:hover {
   opacity: 0.8;
-}
-#homepage .v-btn--fab.v-size--default {
-  height: 46px 
 }
 </style>

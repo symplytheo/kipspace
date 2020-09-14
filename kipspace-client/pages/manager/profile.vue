@@ -7,40 +7,38 @@
     <v-sheet tile elevation="3">
       <v-container>
         <v-row>
-          <v-col cols="4" md="3" lg="2">
+          <v-col cols="5" sm="4" md="3" lg="2">
             <v-avatar
-              size="150"
+              size="140"
               class="biz-logo"
             >
               <v-img src="/img/pizza.png" alt="alt" />
             </v-avatar>
           </v-col>
-          <v-col cols="8" md="9" lg="10" class="pt-0">
+          <v-col cols="7" sm="8" md="9" lg="10" class="pt-0">
             <div>
-              <h3 class="d-inline">Dominos Pizza</h3>
+              <div class="title font-weight-bold d-inline mr-sm-5">
+                Dominos Pizza
+              </div>
               <v-btn 
                 color="secondary" 
                 depressed 
-                class="ml-5 ml-md-10 text-capitalize"
+                class="text-capitalize"
                 to="/manager/edit-profile"
               >
                 edit profile
               </v-btn>
             </div>
-            
-            <div class="pt-1">
-              
-              <v-rating
-                :value=4
-                half-increments
-                color="primary"
-                background-color="primary"
-                dense
-                size="18"
-                class="d-inline"
-              ></v-rating>
-            </div>
-            <div class="pt-1">
+            <v-rating
+              :value=4
+              half-increments
+              color="primary"
+              background-color="primary"
+              dense
+              size="18"
+              class="my-1"
+            />
+            <div class="subtitle-1">
               No. 6 Adenuga street, Ibara-expressway, Lagos State.
             </div>
           </v-col>
@@ -48,7 +46,7 @@
       </v-container>
     </v-sheet>
 
-    <v-container class="py-10">
+    <v-container class="py-5">
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
@@ -104,14 +102,16 @@
             </v-col>
             <v-col cols="12" md="7" lg="8">
               <v-card outlined class="pa-5">
-                <h3>Review Summary</h3>
+                <div class="title font-weight-bold">
+                  Review Summary
+                </div>
                 <v-row align="center" class="pb-3">
                   <v-col cols="8" md="7" lg="9" class="pt-5">
                     <v-row align="center" v-for="(rate, r) in rating" :key="r">
-                      <v-col cols="2" md="2" lg="1" class="py-0">
+                      <v-col cols="2" sm="1" md="2" lg="1" class="py-0">
                         {{rate.num}}
                       </v-col>
-                      <v-col cols="10" md="10" lg="11" class="py-0">
+                      <v-col cols="10" sm="11" md="10" lg="11" class="py-0">
                         <v-progress-linear 
                           :value=rate.value 
                           color="primary" 
@@ -135,7 +135,9 @@
                       readonly
                       size="16"
                     />
-                    <h4 class="pt-2">1000 Reviews</h4>
+                    <div class="pt-1">
+                      1000 Reviews
+                    </div>
                   </v-col>
                 </v-row>
                 <div v-for="(review, w) in reviews" :key="w">
