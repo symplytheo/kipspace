@@ -6,6 +6,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { SERVICE_UNAVAILABLE, NOT_FOUND } from 'http-status-codes';
 import 'express-async-errors';
 
+import ApolloServer from './ApolloServer';
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
 import connectDB from './db';
@@ -15,12 +16,9 @@ import { COOKIE_SECRET } from '@config';
 const app = express();
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
-/************************************************************************************
- *                              Set basic express settings
- ***********************************************************************************/
-
+// Set basic express settings
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(COOKIE_SECRET));
@@ -35,6 +33,9 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(helmet());
 }
 
+// Integrate apollo server
+ApolloServer.applyMiddleware({ app });
+
 // Add APIs
 app.use('/', BaseRouter);
 
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 });
 
 // Print API errors
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
