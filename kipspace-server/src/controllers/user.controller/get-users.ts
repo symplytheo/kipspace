@@ -8,7 +8,9 @@ const defaultProjection: Projection = {
 
 export const getMultipleUser: GetMultipleUser = async (query, projection) => {
 	try {
-		const user = await User.find(query || {}, { ...defaultProjection, ...(projection || {}) });
+		const user = await User.find(query || {}, {
+			...(projection || defaultProjection),
+		});
 
 		return user;
 	} catch (error) {
@@ -18,7 +20,9 @@ export const getMultipleUser: GetMultipleUser = async (query, projection) => {
 
 export const getOneUser: GetOneUser = async (query, projection) => {
 	try {
-		const user = await User.findOne(query, { ...defaultProjection, ...(projection || {}) });
+		const user = await User.findOne(query, {
+			...(projection || defaultProjection),
+		});
 
 		return user;
 	} catch (error) {
