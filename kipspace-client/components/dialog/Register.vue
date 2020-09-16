@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="regDialog"
-    fullscreen
-    hide-overlay
-  >
+  <v-dialog v-model="regDialog" fullscreen hide-overlay>
     <v-card flat color="primary" tile dark>
       <v-toolbar color="transparent" flat>
         <v-btn icon color="white">
@@ -24,22 +20,25 @@
         <v-row justify="center">
           <v-col cols="10" sm="8" md="5" lg="4">
             <h2 class="white--text mb-10">Create an Account</h2>
-            <v-form ref="login" class="mt-10">
+            <v-form v-model="regForm" class="mt-10">
               <v-row>
                 <v-col cols="12" class="py-0">
                   <v-text-field
-                    v-model="reg.email"
+                    v-model="email"
                     placeholder="someone@example.com"
+                    :rules="[(v) => !!v || 'Email is required']"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" class="py-0">
                   <v-text-field
-                    v-model="reg.pwd"
+                    v-model="password"
                     placeholder="password"
                     :append-icon="showPwd ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="showPwd ? 'text' : 'password'"
+                    :rules="[(v) => !!v || 'Password is required']"
                     @click:append="showPwd = !showPwd"
-                  ></v-text-field>
+                  >
+                  </v-text-field>
                 </v-col>
                 <v-col cols="12">
                   <v-btn
@@ -48,8 +47,12 @@
                     color="secondary"
                     dark
                     class="text-capitalize"
-                    >Sign Up</v-btn
+                    :loading="processing"
+                    :disabled="!regForm"
+                    @click="processRegister"
                   >
+                    Sign Up
+                  </v-btn>
                 </v-col>
                 <v-col cols="12" class="text-center pb-0">
                   <h3 class="font-weight-medium">or sign up using</h3>
@@ -69,7 +72,7 @@
                 <v-col cols="12" class="py-0 text-center">
                   by continuing, you agree to our
                   <v-btn
-                    color="grey lighten-2"
+                    color="grey lighten-1"
                     text
                     class="pl-0 btn-term text-capitalize"
                     style="font-size: 14px"
@@ -86,28 +89,20 @@
     </v-card>
 
     <!-- Dialog -->
-    <SignIn />
-
+    <Login />
   </v-dialog>
 </template>
 
 <script>
-
 export default {
-  name: "SignUp",
-  components: {
-    SignIn: () => import('~/components/dialog/Login')
-  },
+  name: 'sign-up',
   data() {
     return {
-      reg: {
-        name: '',
-        email: '',
-        pwd: '',
-        pwd2: '',
-        rem: true,
-      },
+      email: '',
+      password: '',
       showPwd: false,
+      processing: false,
+      regForm: false,
     }
   },
   computed: {
@@ -121,6 +116,19 @@ export default {
     },
     openLogin() {
       this.$store.commit('dialog/openLogin')
+    },
+    processRegister() {
+      this.processing = true
+      const user = {
+        email: this.email,
+        password: this.password,
+      }
+      this.$store
+        .dispatch('user/register', user)
+        .then(() => {
+          this.close()
+        })
+        .catch((err) => console.log(err))
     },
   },
 }

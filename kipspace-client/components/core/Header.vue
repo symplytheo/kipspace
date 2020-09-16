@@ -1,6 +1,5 @@
 <template>
   <div id="navbar">
-
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -16,26 +15,22 @@
 
         <v-spacer />
 
-        <v-btn 
+        <v-btn
+          v-show="isLoggedIn"
           depressed
           color="secondary"
           class="text-capitalize"
           to="/make-reservation"
-          v-show="isLoggedIn"
           active-class="mkr-active"
         >
           Make Reservation
         </v-btn>
       </v-toolbar>
-      
+
       <div v-if="isLoggedIn">
-        <v-list >
-          <v-list-item 
-            v-for="(link, n) in navLinks" 
-            :key="n"
-            :to="link.href"
-          >
-            <v-list-item-title>{{link.text}}</v-list-item-title>
+        <v-list>
+          <v-list-item v-for="(link, n) in navLinks" :key="n" :to="link.href">
+            <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
           <v-list-item link @click="signOut">
             <v-list-item-title>Log Out</v-list-item-title>
@@ -53,8 +48,8 @@
           </v-list-item>
         </v-list>
 
-        <v-btn 
-          color="secondary" 
+        <v-btn
+          color="secondary"
           class="mx-3 text-capitalize"
           width="90%"
           depressed
@@ -63,45 +58,42 @@
           Sign Up
         </v-btn>
       </div>
-      
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      height="64"
-      color="white"
-      elevate-on-scroll
-    >
-      <v-btn 
-        icon 
-        color="primary" 
-        class="hidden-md-and-up mr-2"
+    <v-app-bar app color="white" elevate-on-scroll>
+      <v-btn
+        icon
+        height="36"
+        width="36"
+        color="primary"
+        class="hidden-md-and-up"
         @click="toggleDrawer"
       >
-        <v-icon large>mdi-sort-variant</v-icon>
+        <v-icon size="32">mdi-sort-variant</v-icon>
       </v-btn>
 
-      <v-toolbar-title 
-        @click="$router.push('/')"
+      <v-toolbar-title
         style="cursor: pointer"
+        class="pl-0 ml-1"
+        @click="$router.push('/')"
       >
         <v-img src="/logo.svg" />
       </v-toolbar-title>
 
       <v-spacer />
 
-      <div v-if="isLoggedIn" class="d-flex align-center">
+      <div v-if="isLoggedIn">
         <v-btn
+          v-for="(link, l) in navLinks"
+          :key="l"
           color="primary"
           class="nav-link mr-1 hidden-sm-and-down subtitle-1 font-weight-bold"
           text
-          v-for="(link, l) in navLinks"
-          :key="l"
           :to="link.href"
           active-class="link-active"
           style="text-transform: capitalize"
         >
-          {{link.text}}
+          {{ link.text }}
         </v-btn>
 
         <v-btn
@@ -114,24 +106,27 @@
         >
           Make Reservation
         </v-btn>
+      </div>
 
-        <v-spacer class="mr-10"/>
-
-        <v-btn small icon color="primary" class="mr-3" to="/search">
+      <v-spacer />
+      <div v-if="isLoggedIn">
+        <v-btn
+          icon
+          height="36"
+          width="36"
+          color="primary"
+          class=""
+          to="/search"
+        >
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn small icon color="primary" to="/notifications">
+        <v-btn icon height="36" width="36" color="primary" to="/notifications">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-btn
-          fab
-          depressed
-          to="/profile"
-          class="mx-3"
-        >
-          <v-avatar size="46">
-            <v-img src="/img/lamp.jpg" />
+        <v-btn icon height="42" width="42" to="/profile">
+          <v-avatar size="42">
+            <v-img src="/img/mcdonald-icon.png" alt="Kipspace" />
           </v-avatar>
         </v-btn>
       </div>
@@ -149,8 +144,8 @@
           color="primary"
           class="mx-1 hidden-sm-and-down subtitle-1 nav-link font-weight-bold"
           text
-          @click="openLogin"
           style="text-transform: capitalize"
+          @click="openLogin"
         >
           Login
         </v-btn>
@@ -159,8 +154,8 @@
           color="secondary"
           depressed
           class="font-weight-bold mx-2 subtitle-1 hidden-sm-and-down"
-          @click="openRegister"
           style="text-transform: capitalize"
+          @click="openRegister"
         >
           Sign Up
         </v-btn>
@@ -168,58 +163,49 @@
     </v-app-bar>
 
     <!-- Dialogs -->
-    <SignIn />
-    <SignUp />
-
+    <Login />
+    <Register />
   </div>
 </template>
 
 <script>
-import SignIn from '~/components/dialog/Login';
-import SignUp from '~/components/dialog/Register'
-
 export default {
-  name: "Header",
-  components: {
-    SignIn,
-    SignUp
-  },
   data: () => ({
     drawer: false,
     navLinks: [
-      { text: 'Home', href: '/'},
-      { text: 'My Reservations', href: '/reservations'},
-      { text: 'Scan to Exit', href: '/exit'} 
-    ]
+      { text: 'Home', href: '/' },
+      { text: 'My Reservations', href: '/reservations' },
+      { text: 'Scan to Exit', href: '/exit' },
+    ],
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    }
+      return this.$store.getters['user/isLoggedIn']
+    },
   },
   methods: {
     toggleDrawer() {
       this.drawer = !this.drawer
     },
     openLogin() {
-      this.$store.commit('dialog/openLogin');
+      this.$store.commit('dialog/openLogin')
     },
     openRegister() {
-      this.$store.commit('dialog/openRegister');
+      this.$store.commit('dialog/openRegister')
     },
     signOut() {
-      this.$store.commit('signOut');
-    }
-  }
+      this.$store.commit('signOut')
+    },
+  },
 }
 </script>
 <style scoped>
 .link-active {
-  color: #380F4F99!important;
+  color: #380f4f99 !important;
   cursor: default;
 }
 .link-active:hover {
-  opacity: 1!important;
+  opacity: 1 !important;
 }
 .nav-link::before {
   background-color: transparent !important;
@@ -228,11 +214,10 @@ export default {
   opacity: 0.7;
 }
 .mkr-active {
-  opacity: 0.8; 
+  opacity: 0.8;
 }
 
 #navbar .v-btn--fab.v-size--default {
-  height: 46px 
+  height: 46px;
 }
-
 </style>

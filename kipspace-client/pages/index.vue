@@ -3,7 +3,7 @@
     <v-container style="margin-top: 100px" class="mb-15">
       <v-row justify="center" class="text-center">
         <v-col cols="12" md="10">
-          <div class="display-1 white--text font-weight-bold">
+          <div class="headline white--text font-weight-bold">
             Make a reservation today.
             <br />Kip. Your. Space.
           </div>
@@ -57,7 +57,9 @@
                             A new way to <br />
                             kipspace<span class="secondary--text pl-0">.</span>
                           </div>
-                          <div class="py-3 subtitle-1 font-weight-bold pr-md-10">
+                          <div
+                            class="py-3 subtitle-1 font-weight-bold pr-md-10"
+                          >
                             A digital tool for making reservations and managing
                             facilities.
                           </div>
@@ -81,9 +83,7 @@
     </v-container>
 
     <v-container class="mt-lg-10">
-      <div class="title font-weight-bold">
-        Top Searches
-      </div>
+      <div class="title font-weight-bold">Top Searches</div>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>

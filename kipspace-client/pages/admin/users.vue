@@ -57,8 +57,7 @@
                   :rules="[
                     (v) => !!v || 'Email is required',
                     (v) =>
-                      /^\w+@\w+\.\w{2,4}(\.\w{2,4})?$/.test(v) ||
-                      'Email is not valid',
+                      /^\w+@\w+\.\w+(\.\w+)?$/.test(v) || 'Email is not valid',
                   ]"
                 />
               </v-col>

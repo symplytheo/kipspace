@@ -3,15 +3,13 @@
     <v-container>
       <v-card outlined flat class="pa-10">
         <v-row justify="center" class="text-center">
-          <v-col cols="6">
-            <v-avatar
-              size="160"
-            >
+          <v-col cols="12" sm="6">
+            <v-avatar size="160">
               <v-img src="/img/lamp.jpg" alt="alt">
                 <v-row align="end" justify="center" class="fill-height">
-                  <v-btn  
-                    color="rgba(255,255,255,0.35)" 
-                    class="mx-2" 
+                  <v-btn
+                    color="rgba(255,255,255,0.35)"
+                    class="mx-2"
                     depressed
                     block
                   >
@@ -33,7 +31,7 @@
               ></v-text-field>
             </label>
           </v-col>
-           <v-col cols="12" sm="6">
+          <v-col cols="12" sm="6">
             <label for="lastname">
               <b>Last name</b>
               <v-text-field
@@ -70,7 +68,7 @@
         <v-row>
           <v-col cols="12" sm="6">
             <label for="pwd">
-              <b>Old password</b> 
+              <b>Old password</b>
               <v-text-field
                 v-model="pwd"
                 outlined
@@ -78,7 +76,7 @@
               ></v-text-field>
             </label>
           </v-col>
-           <v-col cols="12" sm="6">
+          <v-col cols="12" sm="6">
             <label for="pwd2">
               <b>New password</b>
               <v-text-field
@@ -90,12 +88,7 @@
           </v-col>
         </v-row>
         <div class="text-center">
-          <v-btn 
-            color="secondary"
-            class="text-capitalize"
-            depressed
-            large
-          >
+          <v-btn color="secondary" class="text-capitalize" depressed large>
             Save Profile
           </v-btn>
         </div>
@@ -112,16 +105,14 @@ export default {
     email: '',
     location: '',
     pwd: '',
-    pwd2: ''
+    pwd2: '',
   }),
   head() {
     return {
-      title: 'User profile'
-    };
-  }
+      title: 'User profile',
+    }
+  },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

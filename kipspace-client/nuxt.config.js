@@ -22,13 +22,20 @@ export default {
     ],
   },
   loading: { color: '#EA3788' },
+  components: [
+    '~/components/',
+    { path: '~/components/make-reservation/', prefix: 'Mkr' },
+  ],
   css: [],
   plugins: [],
   buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/pwa'],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/axios'],
   vuetify: {
     customVariables: ['~/assets/style/variables.scss'],
     optionsPath: '~/plugins/vuetify.config.js',
+  },
+  axios: {
+    baseURL: 'http://kipspace.temilorun.com/api',
   },
   build: {
     /*

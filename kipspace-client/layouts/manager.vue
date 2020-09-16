@@ -25,16 +25,11 @@
           Walk-ins
         </v-btn>
       </v-toolbar>
-      
+
       <div v-if="isLoggedIn">
         <v-list>
-          <v-list-item 
-            v-for="(link, n) in links" 
-            :key="n"
-            :to="link.to"
-            exact
-          >
-            <v-list-item-title>{{link.text}}</v-list-item-title>
+          <v-list-item v-for="(link, n) in links" :key="n" :to="link.to" exact>
+            <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </div>
@@ -51,51 +46,43 @@
       </div>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      height="64"
-      color="white"
-      class="px-lg-10"
-      elevate-on-scroll
-    >
-      <v-btn 
-        icon 
-        color="primary" 
+    <v-app-bar app color="white" elevate-on-scroll>
+      <v-btn
+        icon
+        height="36"
+        width="36"
+        color="primary"
         class="hidden-md-and-up"
         @click="toggleDrawer"
       >
-        <v-icon large>
-          mdi-sort-variant
-        </v-icon>
+        <v-icon size="32"> mdi-sort-variant </v-icon>
       </v-btn>
 
-      <v-toolbar-title 
-        @click="$router.push('/manager')"
+      <v-toolbar-title
         style="cursor: pointer"
-        class="pl-1"
+        class="pl-0 ml-1"
+        @click="$router.push('/manager')"
       >
         <v-img src="/logo.svg" />
       </v-toolbar-title>
-      <v-divider vertical inset class="mx-1"/>
-      <span class="primary--text subtitle-1 font-weight-bold">
-        Manager
-      </span>
+      <v-divider vertical inset class="mx-1" />
+      <span class="primary--text subtitle-1 font-weight-bold"> Manager </span>
 
       <v-spacer />
 
       <div v-if="isLoggedIn">
         <v-btn
+          v-for="(link, l) in links"
+          :key="l"
           color="primary"
           class="nav-link mr-1 hidden-sm-and-down subtitle-1 font-weight-bold"
           text
-          v-for="(link, l) in links"
-          :key="l"
           :to="link.to"
           active-class="link-active"
           style="text-transform: capitalize"
           exact
         >
-          {{link.text}}
+          {{ link.text }}
         </v-btn>
 
         <v-btn
@@ -110,15 +97,9 @@
       </div>
       <v-spacer />
       <div v-if="isLoggedIn">
-        <v-btn
-          icon
-          height="50"
-          width="50"
-          to="/manager/profile"
-          class="mx-3"
-        >
-          <v-avatar size="50">
-            <v-img src="/img/mcdonald-icon.png" alt="Kipspace"/>
+        <v-btn icon height="42" width="42" to="/manager/profile">
+          <v-avatar size="42">
+            <v-img src="/img/mcdonald-icon.png" alt="Kipspace" />
           </v-avatar>
         </v-btn>
       </div>
@@ -137,13 +118,12 @@
           color="secondary"
           depressed
           class="font-weight-bold mx-2 hidden-sm-and-down text-capitalize"
-          @click="openRegister"
           style="font-size: 15px"
+          @click="openRegister"
         >
           Sign Up
         </v-btn>
       </div>
-            
     </v-app-bar>
 
     <!-- Content -->
@@ -157,63 +137,62 @@
     <!-- Dialog -->
     <SignIn />
     <SignUp />
-
   </v-app>
 </template>
 
 <script>
-import SignIn from "~/components/dialog/Login";
-import SignUp from "~/components/dialog/Register";
-import Footer from "~/components/core/Footer";
+import SignIn from '~/components/dialog/Login'
+import SignUp from '~/components/dialog/Register'
+import Footer from '~/components/core/Footer'
 
 export default {
   components: {
     SignIn,
     SignUp,
-    Footer
+    Footer,
   },
   data: () => ({
     drawer: false,
     links: [
-      {text: 'Dashboard', to: '/manager'},
-      {text: 'Notifications', to: '/manager/notifications'},
-      {text: 'Exit Code', to: '/manager/exit'}
-    ]
+      { text: 'Dashboard', to: '/manager' },
+      { text: 'Notifications', to: '/manager/notifications' },
+      { text: 'Exit Code', to: '/manager/exit' },
+    ],
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    }
+      return this.$store.getters.isLoggedIn
+    },
   },
   methods: {
     toggleDrawer() {
       this.drawer = !this.drawer
     },
     openLogin() {
-      this.$store.commit('dialog/openLogin');
+      this.$store.commit('dialog/openLogin')
     },
     openRegister() {
-      this.$store.commit('dialog/openRegister');
+      this.$store.commit('dialog/openRegister')
     },
     signOut() {
-      this.$store.commit('signOut');
-    }
+      this.$store.commit('signOut')
+    },
   },
   head() {
     return {
-      title: 'Dashboard / Facility Manager'
+      title: 'Dashboard / Facility Manager',
     }
-  }
+  },
 }
 </script>
 
 <style>
 #mgr .link-active {
-  color: #380F4F99!important;
+  color: #380f4f99 !important;
   cursor: default;
 }
 #mgr .link-active:hover {
-  opacity: 1!important;
+  opacity: 1 !important;
 }
 #mgr .nav-link::before {
   background-color: transparent !important;
@@ -222,6 +201,6 @@ export default {
   opacity: 0.7;
 }
 #mgr .v-btn--fab.v-size--default {
-  height: 46px 
+  height: 46px;
 }
 </style>
