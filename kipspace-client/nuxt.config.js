@@ -23,12 +23,25 @@ export default {
   },
   loading: { color: '#EA3788' },
   css: [],
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+  },
   plugins: [],
   buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/pwa'],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/axios', '@nuxtjs/apollo'],
   vuetify: {
     customVariables: ['~/assets/style/variables.scss'],
     optionsPath: '~/plugins/vuetify.config.js',
+  },
+  axios: {
+    baseURL: `${process.env.BASE_URL || 'http://localhost:3000'}/api`,
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: `${process.env.BASE_URL}/api/graphql`,
+      },
+    },
   },
   build: {
     /*
