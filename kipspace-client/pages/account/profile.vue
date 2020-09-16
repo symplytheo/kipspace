@@ -98,19 +98,31 @@
 </template>
 
 <script>
+import ProfileGql from '~/graphql/queries/profile'
+
 export default {
   middleware: ['authenticated'],
-  data: () => ({
-    firstname: '',
-    lastname: '',
-    email: '',
-    location: '',
-    pwd: '',
-    pwd2: '',
-  }),
+  data() {
+    return {
+      profile: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        location: '',
+        pwd: '',
+        pwd2: '',
+      },
+    }
+  },
+  apollo: {
+    profile: {
+      query: ProfileGql,
+      prefetch: true,
+    },
+  },
   head() {
     return {
-      title: 'User profile',
+      title: 'My profile',
     }
   },
 }
