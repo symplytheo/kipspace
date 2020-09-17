@@ -12,22 +12,34 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-slide-group 
-              :mobile-breakpoint="900"
-            >
+            <v-slide-group :mobile-breakpoint="900">
               <v-slide-item v-for="(item, i) in categories" :key="i">
-                <v-card flat class="pa-0 mx-5" style="border-radius: 50px" :to="`/category/${item.slug}`">
+                <v-card
+                  flat
+                  class="pa-0 mx-5"
+                  style="border-radius: 50px"
+                  :to="`/category/${item.slug}`"
+                >
                   <div class="category-box d-flex align-center pr-5">
-                    <div 
+                    <div
                       class="icon-box"
-                      :class="[item === category?'greyBd':'pryBd']"
+                      :class="[item === category ? 'greyBd' : 'pryBd']"
                     >
-                      <v-icon color="primary" large :disabled="item === category">
-                        {{item.icon}}
+                      <v-icon
+                        color="primary"
+                        large
+                        :disabled="item === category"
+                      >
+                        {{ item.icon }}
                       </v-icon>
                     </div>
-                    <h4 class="d-inline ml-3" :class="item === category? 'grey--text': 'primary--text'">
-                      {{item.text}}
+                    <h4
+                      class="d-inline ml-3"
+                      :class="
+                        item === category ? 'grey--text' : 'primary--text'
+                      "
+                    >
+                      {{ item.text }}
                     </h4>
                   </div>
                 </v-card>
@@ -38,17 +50,22 @@
       </v-container>
     </v-sheet>
     <v-container class="py-10">
-      <h3>{{category.text}}</h3>
+      <h3>{{ category.name }}</h3>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col cols="6" md="3" v-for="g in 8" :key="g">
-              <FacilityCard />
+            <v-col
+              v-for="(item, g) in category.facilities"
+              :key="g"
+              cols="6"
+              md="3"
+            >
+              <FacilityCard :facility="item" />
             </v-col>
             <v-col cols="12" class="my-2">
-              <v-pagination 
-                :length="6" 
-                :value=1
+              <v-pagination
+                :length="6"
+                :value="1"
                 color="primary"
                 class="pagination"
               >
@@ -62,35 +79,32 @@
 </template>
 
 <script>
-import FacilityCard from '~/components/home/FacilityCard'
-
 export default {
   async asyncData({ params }) {
-    const slug = await params.slug;
+    const slug = await params.slug
     return { slug }
   },
-  components: { FacilityCard },
   computed: {
     categories() {
-      return this.$store.getters['category/categories'];
+      return this.$store.getters['category/categories']
     },
-    category(){
-      return this.categories.find(el => (el.slug === this.slug));
-    }
+    category() {
+      return this.categories.find((el) => el.slug === this.slug)
+    },
   },
   head() {
-    const text = this.category.text;
-    const title = text.replace(/^\w|(\s\w)/g, str => str.toUpperCase())
+    const text = this.category.text
+    const title = text.replace(/^\w|(\s\w)/g, (str) => str.toUpperCase())
     return {
-      title
-    };
-  }
+      title,
+    }
+  },
 }
 </script>
 
 <style>
 #category .category-box {
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   border-radius: 50px;
   height: 70px;
 }
@@ -104,9 +118,9 @@ export default {
   align-content: center;
 }
 .pryBd {
-  border: 5px solid #360F4F
+  border: 5px solid #360f4f;
 }
-.greyBd{
-  border: 5px solid grey
+.greyBd {
+  border: 5px solid grey;
 }
 </style>

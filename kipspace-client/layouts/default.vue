@@ -3,7 +3,6 @@
     <Header />
     <v-main>
       <nuxt />
-      <Snackbar />
     </v-main>
     <Footer />
   </v-app>
@@ -25,19 +24,19 @@ export default {}
 }
 /* Vuetify typography helper classes font-family */
 .v-application .display-4,
-.v-application .display-3 {
-  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
-}
+.v-application .display-3,
 .v-application .display-2,
-.v-application .display-1 {
-  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
-}
+.v-application .display-1,
 .v-application .headline,
-.v-application .title {
-  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
-}
+.v-application .title,
 .v-application .subtitle-1,
-.v-application .subtitle-2 {
+.v-application .subtitle-2,
+.v-application .text-sm-h4,
+.v-application .text-h6,
+.v-application .text-md-h5,
+.v-application .text-h5,
+.v-application .text-caption,
+.v-application .text-sm-subtitle-1 {
   font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
 }
 

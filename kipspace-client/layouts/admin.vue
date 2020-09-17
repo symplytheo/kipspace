@@ -10,7 +10,7 @@
       hide-overlay
       app
     >
-      <v-list dark>
+      <v-list dark nav>
         <v-list-item v-for="(item, i) in links" :key="i" :to="item.to" exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>

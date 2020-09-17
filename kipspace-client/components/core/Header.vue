@@ -43,7 +43,7 @@
           <v-list-item link to="/">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
-          <v-list-item link @click="openLogin">
+          <v-list-item to="/account/login">
             <v-list-item-title>Log In</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -53,7 +53,7 @@
           class="mx-3 text-capitalize"
           width="90%"
           depressed
-          @click="openRegister"
+          to="/account/register"
         >
           Sign Up
         </v-btn>
@@ -120,13 +120,27 @@
         >
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn icon height="36" width="36" color="primary" to="/notifications">
+        <v-btn
+          icon
+          height="36"
+          width="36"
+          class="mx-sm-3"
+          color="primary"
+          to="/notifications"
+        >
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-btn icon height="42" width="42" to="/profile">
-          <v-avatar size="42">
-            <v-img src="/img/mcdonald-icon.png" alt="Kipspace" />
+        <v-btn icon height="42" width="42" to="/account/profile">
+          <v-avatar
+            size="42"
+            color="primary"
+            class="headline white--text font-weight-bold text-uppercase"
+          >
+            <v-img v-if="user.avatar" :src="user.avatar" />
+            <span v-else>
+              {{ getInitials(user.firstname ? user.firstname : user.email) }}
+            </span>
           </v-avatar>
         </v-btn>
       </div>
@@ -145,7 +159,7 @@
           class="mx-1 hidden-sm-and-down subtitle-1 nav-link font-weight-bold"
           text
           style="text-transform: capitalize"
-          @click="openLogin"
+          to="/account/login"
         >
           Login
         </v-btn>
@@ -155,20 +169,18 @@
           depressed
           class="font-weight-bold mx-2 subtitle-1 hidden-sm-and-down"
           style="text-transform: capitalize"
-          @click="openRegister"
+          to="/account/register"
         >
           Sign Up
         </v-btn>
       </div>
     </v-app-bar>
-
-    <!-- Dialogs -->
-    <Login />
-    <Register />
   </div>
 </template>
 
 <script>
+import getInitials from '~/utils/getInitials'
+
 export default {
   data: () => ({
     drawer: false,
@@ -180,21 +192,19 @@ export default {
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.getters['user/isLoggedIn']
+      return this.$store.state.user.authenticated
+    },
+    user() {
+      return this.$store.state.user.profile
     },
   },
   methods: {
+    getInitials,
     toggleDrawer() {
       this.drawer = !this.drawer
     },
-    openLogin() {
-      this.$store.commit('dialog/openLogin')
-    },
-    openRegister() {
-      this.$store.commit('dialog/openRegister')
-    },
     signOut() {
-      this.$store.commit('signOut')
+      this.$store.commit('user/logout')
     },
   },
 }

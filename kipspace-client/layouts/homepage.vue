@@ -44,11 +44,11 @@
       </div>
 
       <div v-else>
-        <v-list>
+        <v-list nav>
           <v-list-item link to="/">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
-          <v-list-item link @click="openLogin">
+          <v-list-item to="/account/login">
             <v-list-item-title>Log In</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -57,7 +57,7 @@
           class="mx-3 text-capitalize"
           width="90%"
           depressed
-          @click="openRegister"
+          to="/account/register"
         >
           Sign Up
         </v-btn>
@@ -115,23 +115,37 @@
 
       <v-spacer />
       <div v-if="isLoggedIn">
-        <v-btn icon height="36" width="36" color="white" class="" to="/search">
+        <v-btn icon height="36" width="36" color="white" to="/search">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn icon height="36" width="36" color="white" to="/notifications">
+        <v-btn
+          icon
+          height="36"
+          width="36"
+          color="white"
+          class="mx-sm-3"
+          to="/notifications"
+        >
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-btn icon height="42" width="42" to="/profile">
-          <v-avatar size="42">
-            <v-img src="/img/mcdonald-icon.png" alt="Kipspace" />
+        <v-btn icon height="42" width="42" to="/account/profile">
+          <v-avatar
+            size="42"
+            color="white"
+            class="primary--text headline font-weight-bold text-uppercase"
+          >
+            <v-img v-if="user.avatar" :src="user.avatar" />
+            <span v-else>
+              {{ getInitials(user.firstname ? user.firstname : user.email) }}
+            </span>
           </v-avatar>
         </v-btn>
       </div>
 
       <div v-else>
         <v-btn
-          color="primary"
+          color="white"
           class="nav-link text-capitalize subtitle-1 font-weight-bold"
           text
         >
@@ -139,11 +153,11 @@
         </v-btn>
 
         <v-btn
-          color="primary"
+          color="white"
           class="mx-1 hidden-sm-and-down subtitle-1 nav-link font-weight-bold"
           text
           style="text-transform: capitalize"
-          @click="openLogin"
+          to="/account/login"
         >
           Login
         </v-btn>
@@ -153,7 +167,7 @@
           depressed
           class="font-weight-bold mx-2 subtitle-1 hidden-sm-and-down"
           style="text-transform: capitalize"
-          @click="openRegister"
+          to="/account/register"
         >
           Sign Up
         </v-btn>
@@ -163,19 +177,16 @@
     <!-- Content -->
     <v-main>
       <nuxt />
-      <Snackbar />
     </v-main>
 
     <!-- Footer -->
     <Footer />
-
-    <!-- Dialogs -->
-    <Login />
-    <Register />
   </v-app>
 </template>
 
 <script>
+import getInitials from '~/utils/getInitials'
+
 export default {
   data() {
     return {
@@ -189,21 +200,19 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return this.$store.getters['user/isLoggedIn']
+      return this.$store.state.user.authenticated
+    },
+    user() {
+      return this.$store.state.user.profile
     },
   },
   methods: {
+    getInitials,
     toggleDrawer() {
       this.drawer = !this.drawer
     },
-    openLogin() {
-      this.$store.commit('dialog/openLogin')
-    },
-    openRegister() {
-      this.$store.commit('dialog/openRegister')
-    },
     signOut() {
-      this.$store.commit('signOut')
+      this.$store.commit('user/logout')
     },
   },
 }

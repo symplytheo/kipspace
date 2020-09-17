@@ -7,24 +7,24 @@
             <h3>Active Reservations</h3>
             <v-divider />
             <v-row justify="center" align="end">
-              <v-col cols="12" sm="9" md="8">
+              <v-col cols="12" sm="11" class="pa-0 pt-2">
                 <v-row align="center">
-                  <v-col cols="auto">Feb 3, 2020</v-col>
-                  <v-col cols="auto">12:00PM</v-col>
-                  <v-col cols="auto">
+                  <v-col cols="auto" class="py-0">Feb 3, 2020</v-col>
+                  <v-col cols="auto" class="py-0">12:00PM</v-col>
+                  <v-col cols="auto" class="py-0">
                     <v-icon>mdi-account-multiple</v-icon>
                     1
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" class="py-2">
                     You were at Dominos Pizza, No.6 Adenuga street,
                     ibara-expressway, lagos state.
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="5">
+                  <v-col cols="5" class="py-0 pl-0">
                     <v-img src="/img/qr-code.png" height="100" contain />
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" class="pb-0">
                     <v-dialog v-model="dialog" persistent max-width="290">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn

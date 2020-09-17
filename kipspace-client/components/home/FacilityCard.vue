@@ -1,6 +1,10 @@
 <template>
   <v-card flat>
-    <v-img :src="facility.cover" :aspect-ratio="17 / 12" class="card-cover">
+    <v-img
+      :src="facility.cover ? facility.cover : '/img/burger.png'"
+      :aspect-ratio="17 / 12"
+      class="card-cover"
+    >
       <template v-slot:placeholder>
         <v-row class="fill-height" justify="center" align="center">
           <v-progress-circular indeterminate color="primary" />
@@ -14,7 +18,7 @@
         </v-col>
         <v-col cols="auto" class="text-right pl-0">
           <v-rating
-            :value="facility.review.rating"
+            :value="facility.review && facility.review.rating"
             readonly
             half-increments
             background-color="primary"
@@ -30,7 +34,7 @@
 
 <script>
 export default {
-  name: "FacilityCard",
+  name: 'facility-card',
   props: {
     facility: {
       type: Object,
