@@ -27,15 +27,25 @@ export default {
     { path: '~/components/make-reservation/', prefix: 'Mkr' },
   ],
   css: [],
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+  },
   plugins: [],
   buildModules: ['@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/pwa', '@nuxtjs/axios'],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/axios', '@nuxtjs/apollo'],
   vuetify: {
     customVariables: ['~/assets/style/variables.scss'],
     optionsPath: '~/plugins/vuetify.config.js',
   },
   axios: {
-    baseURL: 'http://kipspace.temilorun.com/api',
+    baseURL: `${process.env.BASE_URL || 'http://localhost:3000'}/api`,
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: `${process.env.BASE_URL}/api/graphql`,
+      },
+    },
   },
   build: {
     /*

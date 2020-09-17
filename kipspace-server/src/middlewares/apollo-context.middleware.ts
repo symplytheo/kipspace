@@ -12,7 +12,7 @@ export const ApolloContext = async ({ req }: { req: Request }) => {
 	if (!token) auth = false;
 	else {
 		try {
-			decoded = verify(token, JWT_SECRET) as IUser;
+			decoded = verify(token.split(' ')[1], JWT_SECRET) as IUser;
 
 			// const await getOneUser({ email: decoded.email });
 			// TODO: Log authentication, session info and device info for user here

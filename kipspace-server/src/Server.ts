@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import cors from 'cors';
 import createError, { HttpError } from 'http-errors';
 import express, { Request, Response, NextFunction } from 'express';
 import { SERVICE_UNAVAILABLE, NOT_FOUND } from 'http-status-codes';
@@ -22,6 +23,13 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(COOKIE_SECRET));
+app.use(
+	cors({
+		origin: true, // ['http://localhost'],
+		optionsSuccessStatus: 200,
+		credentials: true,
+	})
+);
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {

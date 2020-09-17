@@ -3,7 +3,7 @@
     <v-container>
       <v-card outlined flat class="pa-10">
         <v-row justify="center" class="text-center">
-          <v-col cols="12" sm="6">
+          <v-col cols="6">
             <v-avatar size="160">
               <v-img src="/img/lamp.jpg" alt="alt">
                 <v-row align="end" justify="center" class="fill-height">
@@ -98,18 +98,31 @@
 </template>
 
 <script>
+import ProfileGql from '~/graphql/queries/profile'
+
 export default {
-  data: () => ({
-    firstname: '',
-    lastname: '',
-    email: '',
-    location: '',
-    pwd: '',
-    pwd2: '',
-  }),
+  middleware: ['authenticated'],
+  data() {
+    return {
+      profile: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        location: '',
+        pwd: '',
+        pwd2: '',
+      },
+    }
+  },
+  apollo: {
+    profile: {
+      query: ProfileGql,
+      prefetch: true,
+    },
+  },
   head() {
     return {
-      title: 'User profile',
+      title: 'My profile',
     }
   },
 }
