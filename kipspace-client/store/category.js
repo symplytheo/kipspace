@@ -1,16 +1,20 @@
 export const state = () => ({
-  categories: require('@/data/categories.json'),
+  categories: [],
 })
 
 export const getters = {
-  categories: state => {
-    for (const category of state.categories){
-      if(!category.slug){
-        category.slug = category.text.replace(/(\s\&\s)|\s|(\,\s)/g, '-').toLowerCase();
-      } else {
-        category.slug = category.slug.toLowerCase();
-      }
-    }
+  categories: (state) => {
+    state.categories.map((category) => {
+      category.slug = category.text
+        .replace(/(\s&\s)|\s|(,\s)/g, '-')
+        .toLowerCase()
+    })
     return state.categories
-  }
+  },
+}
+
+export const mutations = {
+  setCategories(state, categories) {
+    state.categories = categories
+  },
 }
