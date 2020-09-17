@@ -18,10 +18,10 @@
               </div>
               <div v-else>
                 <v-list color="rgba(0,0,0,0)" dense flat>
-                  <v-list-item link @click="openLogin">
+                  <v-list-item to="/account/register">
                     <v-list-item-title>Log In</v-list-item-title>
                   </v-list-item>
-                  <v-list-item link @click="openRegister">
+                  <v-list-item to="/account/register">
                     <v-list-item-title>Register</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -76,21 +76,15 @@ export default {
   name: 'view-footer',
   computed: {
     isLoggedIn() {
-      return this.$store.getters['user/isLoggedIn']
+      return this.$store.state.user.authenticated
     },
     getYear() {
       return new Date().getFullYear()
     },
   },
   methods: {
-    openLogin() {
-      this.$store.commit('dialog/openLogin')
-    },
-    openRegister() {
-      this.$store.commit('dialog/openRegister')
-    },
     signOut() {
-      this.$store.commit('signOut')
+      this.$store.commit('user/logout')
     },
   },
 }
