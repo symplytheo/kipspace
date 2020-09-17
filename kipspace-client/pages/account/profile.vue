@@ -120,6 +120,11 @@ export default {
       prefetch: true,
     },
   },
+  computed: {
+    user() {
+      return this.$store.state.user.profile
+    },
+  },
   head() {
     return {
       title: 'My profile',

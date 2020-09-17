@@ -1,17 +1,7 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" class="text-right">
-      <v-btn
-        depressed
-        color="secondary"
-        class="text-capitalize"
-        to="/account/register"
-      >
-        Create Account
-      </v-btn>
-    </v-col>
     <v-col cols="10" lg="4" md="6" sm="8">
-      <div class="headline white--text font-weight-bold mb-3">Log in</div>
+      <div class="headline white--text font-weight-bold mb-3">Admin Login</div>
       <v-form v-model="loginForm">
         <v-row>
           <v-col cols="12" class="py-0">
@@ -80,7 +70,7 @@ import { emailValidation } from '~/utils/validation'
 import ProfileGql from '~/graphql/queries/profile'
 
 export default {
-  layout: 'user-auth',
+  layout: 'empty',
   data() {
     return {
       email: '',
@@ -109,6 +99,8 @@ export default {
         await client.clearStore()
 
         const userData = await this.$apollo.query({ query: ProfileGql })
+
+        console.log(userData)
 
         this.$store.commit('user/setUser', userData.data.profile)
         this.$router.replace(this.$router.history.current.query.redirect || '/')

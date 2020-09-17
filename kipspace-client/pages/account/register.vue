@@ -5,14 +5,16 @@
         depressed
         color="secondary"
         class="text-capitalize"
-        to="/account/register"
+        to="/account/login"
       >
-        Create Account
+        Log in
       </v-btn>
     </v-col>
     <v-col cols="10" lg="4" md="6" sm="8">
-      <div class="headline white--text font-weight-bold mb-3">Log in</div>
-      <v-form v-model="loginForm">
+      <div class="headline white--text font-weight-bold mb-3">
+        Create Account
+      </div>
+      <v-form v-model="regForm">
         <v-row>
           <v-col cols="12" class="py-0">
             <v-text-field
@@ -61,12 +63,12 @@
               color="secondary"
               dark
               depressed
-              :disabled="!loginForm"
+              :disabled="!regForm"
               :loading="loading"
               class="text-capitalize"
-              @click="processLogin()"
+              @click="processRegister()"
             >
-              Login
+              Create Account
             </v-btn>
           </v-col>
         </v-row>
@@ -86,17 +88,17 @@ export default {
       email: '',
       password: '',
       showPassword: false,
-      loginForm: false,
+      regForm: false,
       loading: false,
     }
   },
   methods: {
     emailValidation,
-    async processLogin() {
+    async processRegister() {
       try {
         this.loading = true
 
-        const { data } = await this.$axios.post('/v1/login', {
+        const { data } = await this.$axios.post('/v1/user', {
           email: this.email,
           password: this.password,
         })
