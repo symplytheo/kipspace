@@ -1,0 +1,22 @@
+query Facility {
+  facility {
+    _id
+    name
+    short_description
+    location {
+      address
+      state
+      city
+    }
+    capacity
+    category {
+      _id
+      name
+    }
+    opening_hours {
+      day
+      from
+      to
+    }
+  }
+}
