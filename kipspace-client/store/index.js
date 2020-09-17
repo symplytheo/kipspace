@@ -1,23 +1,14 @@
-export const state = () => ({
-  isLoggedIn: true,
-  links: [
-    { text: 'Home', href: '/'},
-    { text: 'My Reservations', href: '/reservations'},
-    { text: 'Scan to Exit', href: '/exit'} 
-  ],
-})
+import FacilitiesGql from '~/graphql/queries/facilities'
+import CategoriesGql from '~/graphql/queries/categories'
 
-export const getters = {
-  isLoggedIn(state) {
-    return state.isLoggedIn;
-  },
-  links(state) {
-    return state.links;
-  }
-}
-
-export const mutations = {
-  signOut (state) {
-    state.isLoggedIn = false;
+export const actions = {
+  async nuxtServerInit({ commit }, context) {
+    const client = context.app.apolloProvider.defaultClient
+    //
+    const category = await client.query({ query: CategoriesGql })
+    const facility = await client.query({ query: FacilitiesGql })
+    //
+    commit('category/setCategories', category.data.categories.items)
+    commit('facility/setFacilities', facility.data.facilities.items)
   },
 }
