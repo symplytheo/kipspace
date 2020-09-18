@@ -47,15 +47,41 @@
 export default {
   layout: 'admin',
   data: () => ({
-    alerts: [
-      { title: 'Categories', text: 16, icon: 'mdi-tag-multiple' },
-      { title: 'Facilities', text: 48, icon: 'mdi-office-building' },
-      { title: 'Users', text: 167, icon: 'mdi-account-multiple' },
-    ],
+    //
   }),
+  computed: {
+    categories() {
+      return this.$store.state.category.categories
+    },
+    facilities() {
+      return this.$store.state.facility.facilities
+    },
+    users() {
+      return this.$store.state.user.users
+    },
+    alerts() {
+      return [
+        {
+          title: 'Categories',
+          text: this.categories.count,
+          icon: 'mdi-tag-multiple',
+        },
+        {
+          title: 'Facilities',
+          text: this.facilities.count,
+          icon: 'mdi-office-building',
+        },
+        {
+          title: 'Users',
+          text: this.users.count,
+          icon: 'mdi-account-multiple',
+        },
+      ]
+    },
+  },
   head() {
     return {
-      title: 'Dashboard | Admin',
+      title: 'Dashboard',
     }
   },
 }

@@ -93,7 +93,7 @@
     <v-container fluid>
       <v-row>
         <v-col
-          v-for="(item, i) in categories"
+          v-for="(item, i) in categories.items"
           :key="i"
           cols="12"
           sm="6"
@@ -113,10 +113,11 @@
               </v-col>
               <v-col cols="7" sm="8" class="text-right pa-5 primary--text">
                 <div class="subtitle-1 font-weight-bold pb-2 text-uppercase">
-                  {{ item.text }}
+                  {{ item.name }}
                 </div>
                 <div class="display-1 font-weight-bold">
-                  75 <span class="subtitle-2">Facilities</span>
+                  {{ item.facilities.count }}
+                  <span class="subtitle-2">Facilities</span>
                 </div>
               </v-col>
             </v-row>
@@ -124,6 +125,7 @@
         </v-col>
       </v-row>
     </v-container>
+    {{ slugged }}
   </div>
 </template>
 
@@ -140,7 +142,7 @@ export default {
   }),
   computed: {
     categories() {
-      return this.$store.getters['category/categories']
+      return this.$store.state.category.categories
     },
   },
   methods: {

@@ -13,12 +13,14 @@
           </v-col>
           <v-col cols="12">
             <v-slide-group :mobile-breakpoint="900">
-              <v-slide-item v-for="(item, i) in categories" :key="i">
+              <v-slide-item v-for="(item, i) in categories.items" :key="i">
                 <v-card
                   flat
                   class="pa-0 mx-5"
                   style="border-radius: 50px"
-                  :to="`/category/${item.slug}`"
+                  :to="`/category/${item.name
+                    .replace(/(\s&\s)|(,\s)|\s/g, '-')
+                    .toLowerCase()}`"
                 >
                   <div class="category-box d-flex align-center pr-5">
                     <div class="icon-box">
@@ -26,8 +28,8 @@
                         {{ item.icon }}
                       </v-icon>
                     </div>
-                    <h4 class="d-inline ml-3 primary--text">
-                      {{ item.text }}
+                    <h4 class="d-inline ml-3 primary--text text-capitalize">
+                      {{ item.name }}
                     </h4>
                   </div>
                 </v-card>
@@ -62,7 +64,7 @@
                   readonly
                   size="16"
                   class="d-inline"
-                ></v-rating>
+                />
               </div>
               <div>
                 <v-btn
@@ -85,7 +87,12 @@
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col v-for="(item, f) in facilities" :key="f" cols="6" md="3">
+            <v-col
+              v-for="(item, f) in facilities.items"
+              :key="f"
+              cols="6"
+              md="3"
+            >
               <FacilityCard :facility="item" />
             </v-col>
             <v-col cols="12" class="my-2">
@@ -107,10 +114,10 @@
 export default {
   computed: {
     categories() {
-      return this.$store.getters['category/categories']
+      return this.$store.state.category.categories
     },
     facilities() {
-      return this.$store.getters['facility/facilities']
+      return this.$store.state.facility.facilities
     },
   },
   head() {

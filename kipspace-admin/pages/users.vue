@@ -105,7 +105,7 @@
           >
             <div class="title font-weight-medium">All Users</div>
             <div class="font-weight-medium subtitle-1">
-              List of all active users
+              Total: {{ users.count }}
             </div>
           </v-card>
         </v-col>
@@ -117,7 +117,7 @@
             <thead>
               <tr>
                 <th
-                  v-for="i in ['s/n', 'name', 'email', 'role', ' ']"
+                  v-for="i in ['s/n', 'name', 'email', 'role']"
                   :key="i"
                   class="text-uppercase primary--text"
                 >
@@ -126,21 +126,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="i in 12" :key="i" class="tablerow">
-                <td>{{ i }}</td>
-                <td>Johnson Snowflakes</td>
-                <td>johnsnow@gmail.com</td>
-                <td>USER</td>
-                <td>
-                  <span class="btn">
-                    <v-btn class="mx-2" small icon color="primary">
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-btn class="mx-2" small icon color="error">
-                      <v-icon>mdi-window-close</v-icon>
-                    </v-btn>
-                  </span>
+              <tr v-for="(user, u) in users.items" :key="u" class="tablerow">
+                <td>{{ u + 1 }}</td>
+                <td class="text-capitalize">
+                  {{
+                    user.firstname !== null
+                      ? user.firstname + ' ' + user.lastname
+                      : '--- ---'
+                  }}
                 </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
               </tr>
             </tbody>
           </template>
@@ -176,6 +172,11 @@ export default {
     loading: false,
     addUserForm: false,
   }),
+  computed: {
+    users() {
+      return this.$store.state.user.users
+    },
+  },
   methods: {
     addUser() {
       this.loading = true

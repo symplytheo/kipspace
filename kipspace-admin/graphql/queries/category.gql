@@ -1,0 +1,21 @@
+query Category {
+  category {
+    _id
+    name
+    icon
+    description
+    facilities {
+      count
+      items {
+        _id
+        name
+        location {
+          address
+          state
+          city
+        }
+        capacity
+      }
+    }
+  }
+}

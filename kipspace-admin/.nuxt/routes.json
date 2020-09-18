@@ -1,0 +1,32 @@
+[
+  {
+    "name": "category",
+    "path": "/category",
+    "component": "C:\\\\Users\\\\Theophilus\\\\projects\\\\kipspace-web\\\\kipspace-admin\\\\pages\\\\category.vue",
+    "chunkName": "pages/category"
+  },
+  {
+    "name": "facility",
+    "path": "/facility",
+    "component": "C:\\\\Users\\\\Theophilus\\\\projects\\\\kipspace-web\\\\kipspace-admin\\\\pages\\\\facility.vue",
+    "chunkName": "pages/facility"
+  },
+  {
+    "name": "users",
+    "path": "/users",
+    "component": "C:\\\\Users\\\\Theophilus\\\\projects\\\\kipspace-web\\\\kipspace-admin\\\\pages\\\\users.vue",
+    "chunkName": "pages/users"
+  },
+  {
+    "name": "account-login",
+    "path": "/account/login",
+    "component": "C:\\\\Users\\\\Theophilus\\\\projects\\\\kipspace-web\\\\kipspace-admin\\\\pages\\\\account\\\\login.vue",
+    "chunkName": "pages/account/login"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\Theophilus\\\\projects\\\\kipspace-web\\\\kipspace-admin\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
+  }
+]

@@ -3,6 +3,7 @@
     <Header />
     <v-main>
       <nuxt />
+      <Snackbar />
     </v-main>
     <Footer />
   </v-app>
@@ -15,12 +16,6 @@ export default {}
 #app,
 .v-application {
   font-family: 'Poppins', Arial, Helvetica, sans-serif;
-}
-.logo {
-  font-family: 'Nunito';
-  text-decoration: none;
-  font-weight: 900;
-  font-style: normal;
 }
 /* Vuetify typography helper classes font-family */
 .v-application .display-4,

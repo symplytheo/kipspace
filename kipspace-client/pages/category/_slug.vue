@@ -13,12 +13,14 @@
           </v-col>
           <v-col cols="12">
             <v-slide-group :mobile-breakpoint="900">
-              <v-slide-item v-for="(item, i) in categories" :key="i">
+              <v-slide-item v-for="(item, i) in categories.items" :key="i">
                 <v-card
                   flat
                   class="pa-0 mx-5"
                   style="border-radius: 50px"
-                  :to="`/category/${item.slug}`"
+                  :to="`/category/${item.name
+                    .replace(/(\s&\s)|(,\s)|\s/g, '-')
+                    .toLowerCase()}`"
                 >
                   <div class="category-box d-flex align-center pr-5">
                     <div
@@ -34,12 +36,12 @@
                       </v-icon>
                     </div>
                     <h4
-                      class="d-inline ml-3"
+                      class="d-inline ml-3 text-capitalize"
                       :class="
                         item === category ? 'grey--text' : 'primary--text'
                       "
                     >
-                      {{ item.text }}
+                      {{ item.name }}
                     </h4>
                   </div>
                 </v-card>
@@ -86,14 +88,17 @@ export default {
   },
   computed: {
     categories() {
-      return this.$store.getters['category/categories']
+      return this.$store.state.category.categories
     },
     category() {
-      return this.categories.find((el) => el.slug === this.slug)
+      return this.categories.items.find(
+        (el) =>
+          el.name.replace(/(\s&\s)|(,\s)|\s/g, '-').toLowerCase() === this.slug
+      )
     },
   },
   head() {
-    const text = this.category.text
+    const text = this.category.name
     const title = text.replace(/^\w|(\s\w)/g, (str) => str.toUpperCase())
     return {
       title,

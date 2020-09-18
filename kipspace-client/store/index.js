@@ -1,14 +1,23 @@
-import FacilitiesGql from '~/graphql/queries/facilities'
 import CategoriesGql from '~/graphql/queries/categories'
+import ProfileGql from '~/graphql/queries/profile'
 
 export const actions = {
   async nuxtServerInit({ commit }, context) {
     const client = context.app.apolloProvider.defaultClient
     //
     const category = await client.query({ query: CategoriesGql })
-    const facility = await client.query({ query: FacilitiesGql })
+    // logged in user not showing on page refresh
+    const hasToken = !!context.app.$apolloHelpers.getToken()
+
+    const userData = await client.query({ query: ProfileGql })
+    await console.log(userData)
     //
-    commit('category/setCategories', category.data.categories.items)
-    commit('facility/setFacilities', facility.data.facilities.items)
+    if (hasToken) {
+      commit('user/setUser', userData.data.profile)
+    } else {
+      return
+    }
+    //
+    commit('category/setCategories', category.data.categories)
   },
 }

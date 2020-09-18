@@ -45,7 +45,13 @@
           </v-dialog>
         </v-col>
         <v-col cols="5" class="py-3 pl-8">
-          <v-select :items="[1, 2, 3, 4, 5]" label="seats" class="" solo flat />
+          <v-select
+            :items="['1 seat', '2 seats', '3 seats', '4 seats', '5 seats']"
+            label="seats"
+            class=""
+            solo
+            flat
+          ></v-select>
         </v-col>
         <v-col>
           <v-select
@@ -88,23 +94,18 @@
 
         <v-tab-item>
           <v-sheet tile height="160" color="grey lighten-4">
-            <v-img :src="facility.cover && facility.cover" height="100%" />
+            <v-img src="/img/chips.png" height="100%" />
           </v-sheet>
           <v-sheet tile elevation="3">
             <v-container fluid class="px-sm-10">
               <v-row>
                 <v-col cols="4" sm="3" class="pl-0">
                   <v-avatar size="120" class="biz-logo">
-                    <v-img
-                      :src="facility.avatar && facility.avatar"
-                      :alt="facility.name"
-                    />
+                    <v-img src="/img/mcdonald-icon.png" alt="alt" />
                   </v-avatar>
                 </v-col>
                 <v-col cols="8" sm="9" class="pt-0 pl-8 pl-sm-0">
-                  <div class="subtitle-1 font-weight-bold">
-                    {{ facility.name }}
-                  </div>
+                  <div class="subtitle-1 font-weight-bold">Dominos Pizza</div>
                   <v-rating
                     :value="4"
                     half-increments
@@ -116,7 +117,7 @@
                     class="d-inline"
                   />
                   <div class="pt-1 subtitle-2">
-                    {{ facilityAddress }}
+                    No. 6 Adenuga street, Ibara-expressway, Lagos State.
                   </div>
                 </v-col>
               </v-row>
@@ -201,7 +202,7 @@
                             background-color="secondary"
                             height="10"
                             rounded
-                          />
+                          ></v-progress-linear>
                         </v-col>
                       </v-row>
                     </v-col>
@@ -221,7 +222,7 @@
                       </div>
                     </v-col>
                   </v-row>
-                  <div v-for="(review, w) in facility.reviews" :key="w">
+                  <div v-for="(review, w) in reviews" :key="w">
                     <v-divider />
                     <v-card tile flat class="pt-5 pb-3">
                       <div class="subtitle-1 font-weight-bold">
@@ -255,10 +256,6 @@
 
 <script>
 export default {
-  async asyncData({ params }) {
-    const slug = await params.slug
-    return { slug }
-  },
   data: () => ({
     time: null,
     selectTime: false,
@@ -269,26 +266,44 @@ export default {
       { num: 2, value: 15 },
       { num: 1, value: 0 },
     ],
+    opening: [
+      { day: 'Monday', time: '9am - 5pm' },
+      { day: 'Tuesday', time: '9am - 5pm' },
+      { day: 'Wednesday', time: '9am - 5pm' },
+      { day: 'Thursday', time: '9am - 5pm' },
+      { day: 'Friday', time: '9am - 5pm' },
+      { day: 'Saturday', time: '9am - 5pm' },
+    ],
+    reviews: [
+      {
+        name: 'Ayobami Muyiwa',
+        rating: 4,
+        date: 'July 1, 2020',
+        text:
+          "I've used this app to booked accommodation all around lagos & have had no problems with it so far. I love showing up on the doorstep of the place I have booked & they are expecting me, everything goes smoothly & there are no issues before, during or after my stayReading the reviews from other users is also really helpful so I can get an idea of what to expect of the service/facilities/amenities & surroundings.",
+      },
+      {
+        name: 'Ahmed Sulaimon',
+        rating: 3.5,
+        date: 'August 2, 2020',
+        text: 'It was an Amazing time!',
+      },
+      {
+        name: 'Gloria Smith',
+        rating: 5,
+        date: 'August 12, 2020',
+        text:
+          'This is the best app in the market. The UI is sleek, beautiful and easy to navigate and use. The suggestions are good. Also it offers lots of filtering options for search results. I wish it had the option to list properties that have good price and are popular as well.',
+      },
+      {
+        name: 'Ubon Jeffery',
+        rating: 4.5,
+        date: 'August 15, 2020',
+        text:
+          "In general it is a good app, but has had some annoying issues. If you get a link it will be opened in the browser and not app. Sometimes you you get redirected from the app to the browser, too. It doesn't store the cvc of your card, so what is the point of storing the card if you need it anyway.",
+      },
+    ],
   }),
-  computed: {
-    facilities() {
-      return this.$store.getters['facility/facilities']
-    },
-    facility() {
-      return this.facilities.find((el) => el.slug === this.slug)
-    },
-    facilityAddress() {
-      const addr = this.facility.location
-      return addr.address + ', ' + addr.city + ', ' + addr.state
-    },
-  },
-  head() {
-    const text = this.facility.text
-    const title = text.replace(/^\w|(\s\w)/g, (str) => str.toUpperCase())
-    return {
-      title,
-    }
-  },
 }
 </script>
 
