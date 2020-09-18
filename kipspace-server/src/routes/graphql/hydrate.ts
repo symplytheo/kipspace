@@ -5,6 +5,7 @@ import { UserTC } from '@models/User.model';
 import { LocationTC } from '@models/Location.model';
 import { CountryTC } from '@models/Country.model';
 import { CategoryTC } from '@models/Category.model';
+import { ReviewTC } from '@models/Review.model';
 
 // User relations
 UserTC.addRelation('facilities', {
@@ -25,6 +26,13 @@ UserTC.addRelation('notifications', {
 	resolver: () => UserNotificationTC.getResolver('findMany'),
 	prepareArgs: {
 		filter: (source: any) => ({ user: source._id }),
+	},
+});
+
+UserTC.addRelation('my_reviews', {
+	resolver: () => ReviewTC.getResolver('findMany'),
+	prepareArgs: {
+		_filter: (source: any) => ({ user: source._id }),
 	},
 });
 
@@ -82,6 +90,13 @@ FacilityTC.addRelation('notifications', {
 	},
 });
 
+FacilityTC.addRelation('reviews', {
+	resolver: () => ReviewTC.getResolver('findMany'),
+	prepareArgs: {
+		_filter: (source: any) => ({ user: source._id }),
+	},
+});
+
 // Category relations
 CategoryTC.addRelation('facilities', {
 	resolver: FacilityTC.getResolver('pagination'),
@@ -89,3 +104,19 @@ CategoryTC.addRelation('facilities', {
 		filter: (source: any) => ({ category: source._id }),
 	},
 });
+
+// Review rolations
+// ReviewTC.addRelation('user', {
+// 	resolver: UserTC.getResolver('findById'),
+// 	prepareArgs: {
+// 		_id: (source: any) => source.user,
+// 	},
+// });
+
+// ReviewTC.addRelation('facility', {
+// 	resolver: FacilityTC.getResolver('findById'),
+// 	prepareArgs: {
+// 		_id: (source: any) => source.facility,
+// 	},
+// 	projection: { name: true },
+// });
