@@ -11,6 +11,9 @@ export const ImmutableFields = [
 	// 'location',
 	'reservations',
 	'notifications',
+	'cover',
+	'logo',
+	'gallery',
 ];
 
 export const OpeningHoursSchema = new Schema(
@@ -38,7 +41,11 @@ export const FacilitySchema: Schema = new Schema(
 	{
 		name: { type: String, required: true, maxlength: 50 },
 		short_description: { type: String, required: true, maxlength: 150 },
+		description: { type: String, maxlength: 1000 },
 		location: { type: LocationSchema, required: true },
+		logo: { type: String },
+		cover: { type: String },
+		gallery: [{ type: String }],
 
 		category: {
 			type: Types.ObjectId,
