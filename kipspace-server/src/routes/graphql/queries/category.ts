@@ -9,7 +9,7 @@ const ProtectFields = [
 	'is_deleted',
 	'notifications',
 	'reservations',
-	'category',
+	'facilities.items.category',
 ];
 
 export const CategoryQuery = {
