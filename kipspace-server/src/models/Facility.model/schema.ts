@@ -64,7 +64,7 @@ export const FacilitySchema: Schema = new Schema(
 		capacity: { type: Number, default: 10, min: 0 },
 		opening_hours: [OpeningHoursSchema],
 
-		reservations: [{ type: Types.ObjectId, ref: 'Reservation' }],
+		// reservations: [{ type: Types.ObjectId, ref: 'Reservation' }],
 		notifications: [{ type: Types.ObjectId, ref: 'Notification' }],
 
 		is_active: { type: Boolean, default: true },
