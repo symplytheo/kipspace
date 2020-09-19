@@ -32,7 +32,15 @@ UserTC.addRelation('notifications', {
 UserTC.addRelation('my_reviews', {
 	resolver: () => ReviewTC.getResolver('findMany'),
 	prepareArgs: {
-		_filter: (source: any) => ({ user: source._id }),
+		filter: (source: any) => ({ user: source._id }),
+	},
+});
+
+const UserReviewsTC = UserTC.getFieldOTC('my_reviews');
+UserReviewsTC.addRelation('facility', {
+	resolver: () => FacilityTC.getResolver('findById'),
+	prepareArgs: {
+		_id: (source: any) => source.facility,
 	},
 });
 
@@ -45,7 +53,7 @@ ReservationTC.addRelation('user', {
 });
 
 ReservationTC.addRelation('facility', {
-	resolver: () => UserTC.getResolver('findById'),
+	resolver: () => FacilityTC.getResolver('findById'),
 	prepareArgs: {
 		_id: (source: any) => source.facility,
 	},
@@ -60,14 +68,14 @@ LocationTC.addRelation('country', {
 });
 
 // Facility relations
-FacilityTC.addRelation('user', {
-	resolver: () => UserTC.getResolver('findById'),
-	prepareArgs: {
-		_id: (source: any) => source.user,
-		skip: null,
-		sort: null,
-	},
-});
+// FacilityTC.addRelation('user', {
+// 	resolver: () => UserTC.getResolver('findById'),
+// 	prepareArgs: {
+// 		_id: (source: any) => source.user,
+// 		skip: null,
+// 		sort: null,
+// 	},
+// });
 
 FacilityTC.addRelation('category', {
 	resolver: () => CategoryTC.getResolver('findById'),
@@ -93,7 +101,7 @@ FacilityTC.addRelation('notifications', {
 FacilityTC.addRelation('reviews', {
 	resolver: () => ReviewTC.getResolver('findMany'),
 	prepareArgs: {
-		_filter: (source: any) => ({ user: source._id }),
+		filter: (source: any) => ({ facility: source._id }),
 	},
 });
 

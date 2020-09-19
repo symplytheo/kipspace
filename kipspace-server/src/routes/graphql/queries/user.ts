@@ -8,11 +8,18 @@ export const UserQuery = {
 	users: UserTC.getResolver('pagination', [CheckAuth, CheckAdmin]),
 
 	profile: UserTC.getResolver('findById', [CheckAuth])
-		.wrap((resolver) => resolver, {
-			displayName: 'UserProfile',
-			description: 'Get the authenticated user profile',
-			args: {},
-		})
+		.wrap(
+			(resolver) => {
+				resolver.getOTC().removeField(['facilities.review.user']);
+
+				return resolver;
+			},
+			{
+				displayName: 'UserProfile',
+				description: 'Get the authenticated user profile',
+				args: {},
+			}
+		)
 		.wrapResolve((next) => ({ context, args, ...rp }) => {
 			if (!(context as any).auth)
 				throw new AuthenticationError('Authentication failed');
