@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import FacilityService from '@services/facility.service';
-// router.put('/update/:id/gallery', UserAuth, ImageUploader('facility/:id/gallery'), UploadFacilityGallery);
 
 const FacilityRouter = Router();
 const Facility = new FacilityService();
@@ -16,14 +15,14 @@ FacilityRouter.use((req, res, next) => {
 FacilityRouter.put(
 	'/:id/cover',
 	Facility.AuthenticateUser,
-	Facility.UploadFile('facility/:id/cover'),
+	Facility.UploadFile('facilities/:id/cover'),
 	Facility.UpdateCover
 );
 
 FacilityRouter.put(
 	'/:id/logo',
 	Facility.AuthenticateUser,
-	Facility.UploadFile('facility/:id/logo'),
+	Facility.UploadFile('facilities/:id/logo'),
 	Facility.UpdateLogo
 );
 
