@@ -20,4 +20,11 @@ FacilityRouter.put(
 	Facility.UpdateCover
 );
 
+FacilityRouter.put(
+	'/:id/logo',
+	Facility.AuthenticateUser,
+	Facility.UploadFile('facility/:id/logo'),
+	Facility.UpdateLogo
+);
+
 export default FacilityRouter;
