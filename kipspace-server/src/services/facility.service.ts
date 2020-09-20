@@ -12,8 +12,6 @@ class FacilityService extends KipspaceService<IFacility> {
 		try {
 			if (!req.file) throw new Exception(BAD_REQUEST, 'No or invalid image');
 
-			console.log(req.file);
-
 			await UpdateFacilityCover(
 				this.CurrentUser?._id,
 				req.params.id,
