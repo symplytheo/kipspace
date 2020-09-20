@@ -22,12 +22,13 @@ export type GetOneFacility = (
 	query: FacilityQuery,
 	projection?: Projection
 ) => Promise<IFacility | null>;
+
 export type GetMultipleFacility = (
 	query?: FacilityQuery,
 	projection?: Projection
 ) => Promise<IFacility[]>;
 
-// update-user controller
+// update-facility controller
 export type UpdateOneFacility = (
 	query: FacilityQuery,
 	fields: FacilityQuery
