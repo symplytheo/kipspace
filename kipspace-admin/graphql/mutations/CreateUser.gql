@@ -1,0 +1,11 @@
+mutation CreateUser($record: CreateByIdUserInput) {
+  createUser (record: $record) {
+    record {
+      _id
+      firstname
+      lastname
+      email
+      role
+    }
+  }
+}

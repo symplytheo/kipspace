@@ -4,11 +4,6 @@ query Profile {
 		firstname
 		lastname
 		email
-		phone
 		role
-		facilities {
-			_id
-			name
-		}
 	}
 }

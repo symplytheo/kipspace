@@ -19,14 +19,14 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link @click="signOut">
+        <v-list-item>
           <v-btn
             block
             color="secondary"
             class="text-capitalize"
             width="90%"
             depressed
-            to="/account/register"
+            @click="signOut"
           >
             Logout
           </v-btn>
@@ -51,7 +51,7 @@
 
       <v-spacer />
 
-      <v-btn icon height="42" width="42" to="/account/profile">
+      <v-btn icon height="42" width="42" style="cursor: default">
         <v-avatar
           size="42"
           color="primary"
@@ -69,6 +69,7 @@
     <v-main>
       <v-container fluid class="pt-0">
         <nuxt />
+        <Snackbar />
       </v-container>
     </v-main>
 
@@ -123,8 +124,10 @@ export default {
     toggleDrawer() {
       this.drawer = !this.drawer
     },
-    signOut() {
-      this.$store.commit('user/logout')
+    async signOut() {
+      await this.$apolloHelpers.onLogout().then(() => {
+        this.$router.push('/account/login')
+      })
     },
   },
 }

@@ -11,9 +11,6 @@ export const mutations = {
     state.profile = user || null
     state.authenticated = !!user
   },
-  setAllUsers(state, payload) {
-    state.users = payload
-  },
 }
 
 export const actions = {

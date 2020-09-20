@@ -2,8 +2,9 @@ query Categories {
   categories {
     count
     items {
-      _id
+     _id
       name
+      description
       icon
       facilities {
         count

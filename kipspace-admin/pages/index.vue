@@ -44,21 +44,41 @@
 </template>
 
 <script>
+import FacilitiesGql from '~/graphql/queries/facilities'
+import CategoriesGql from '~/graphql/queries/categories'
+import UsersGql from '~/graphql/queries/users'
+
 export default {
   layout: 'admin',
   data: () => ({
-    //
+    categories: {
+      count: 0,
+      items: [],
+    },
+    users: {
+      count: 0,
+      items: [],
+    },
+    facilities: {
+      count: 0,
+      items: [],
+    },
   }),
+  apollo: {
+    categories: {
+      query: CategoriesGql,
+      prefetch: true,
+    },
+    users: {
+      query: UsersGql,
+      prefetch: true,
+    },
+    facilities: {
+      query: FacilitiesGql,
+      prefetch: true,
+    },
+  },
   computed: {
-    categories() {
-      return this.$store.state.category.categories
-    },
-    facilities() {
-      return this.$store.state.facility.facilities
-    },
-    users() {
-      return this.$store.state.user.users
-    },
     alerts() {
       return [
         {

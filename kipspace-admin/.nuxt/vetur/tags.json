@@ -1,1 +1,14 @@
-{}
+{
+  "FacilityCard": {
+    "description": "Auto imported from components/FacilityCard.vue"
+  },
+  "LazyFacilityCard": {
+    "description": "Auto imported from components/FacilityCard.vue"
+  },
+  "Snackbar": {
+    "description": "Auto imported from components/Snackbar.vue"
+  },
+  "LazySnackbar": {
+    "description": "Auto imported from components/Snackbar.vue"
+  }
+}
