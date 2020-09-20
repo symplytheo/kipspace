@@ -4,7 +4,7 @@ import { OK } from 'http-status-codes';
 import { IUser } from '@models/User.model';
 import { CreateUser } from '@daos/user.dao';
 
-import KipspaceService from '@services/Kipspace.service';
+import KipspaceService from './Kipspace.service';
 
 class UserService extends KipspaceService<IUser> {
 	public CreateAccount = async (req: Request): Promise<void> => {
