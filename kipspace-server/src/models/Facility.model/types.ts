@@ -16,6 +16,9 @@ export interface Facility {
 	location: string;
 	user: IUser['_id'];
 	category: ICategory['_id'];
+	cover?: string;
+	logo?: string;
+	gallery?: string;
 	email: string;
 	phone: string;
 	capacity: string;
