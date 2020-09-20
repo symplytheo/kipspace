@@ -3,22 +3,32 @@ import {
 	OK,
 	CREATED,
 	ACCEPTED,
-	// UNAUTHORIZED,
+	UNAUTHORIZED,
 	SERVICE_UNAVAILABLE,
 	BAD_REQUEST,
 } from 'http-status-codes';
-import { validationResult } from 'express-validator';
+import { ValidationChain, validationResult } from 'express-validator';
 import { sign } from 'jsonwebtoken';
 import { ValidationError } from 'apollo-server-express';
+import cloudinary from 'cloudinary';
+import multer from 'multer';
+import cloudinaryStorage from 'multer-storage-cloudinary';
 
 import { IUser } from '@models/User.model';
-// import { IAdmin } from '@models/Admin.model';
-// import auth from '@middlewares/authentication';
+import { generateFilePath } from '@shared/functions';
 import logger from '@shared/Logger';
+import auth from '@middlewares/auth.middleware';
 
 import { JWT_SECRET } from '@config';
 
-import { SendResponse, ValidateFields } from './types';
+interface ResponseParams<M> {
+	message: string;
+	status: number;
+	payload?: M | M[] | string | number;
+	error?: Error | Error[] | ValidationError[];
+	meta?: { [x: string]: unknown };
+	token?: string;
+}
 
 class KipspaceService<Model> {
 	private _request?: Request;
@@ -69,33 +79,65 @@ class KipspaceService<Model> {
 	/**
 	 * @param request
 	 */
-	// public AuthenticateUser: AuthenticateUser = async (request) => {
-	// 	try {
-	// 		const req = request || this._request;
-	// 		const token =
-	// 			(req.body && req.body.access_token) ||
-	// 			(req.query && req.query.access_token) ||
-	// 			req.headers['x-access-token'] ||
-	// 			req.cookies.access_token;
-	// 		const user = await auth(token);
+	public AuthenticateUser = async (req: Request, _: any, next: NextFunction) => {
+		try {
+			const token =
+				(req.body && req.body.access_token) ||
+				(req.query && req.query.access_token) ||
+				(req.headers.authorization && req.headers.authorization.split(' ')[1]) ||
+				req.headers['x-access-token'] ||
+				req.cookies.access_token;
 
-	// 		if (user) {
-	// 			this._currentUser = user as IUser;
-	// 			this._next && this._next();
-	// 		}
-	// 	} catch (error) {
-	// 		this.SendResponse({
-	// 			message: error.message,
-	// 			status: UNAUTHORIZED,
-	// 			error,
-	// 		});
-	// 	}
-	// };
+			const user = await auth(token);
+
+			this._currentUser = user;
+			next();
+		} catch (error) {
+			this.SendResponse({
+				message: error.message,
+				status: UNAUTHORIZED,
+				error,
+			});
+		}
+	};
+
+	/**
+	 * UploadFile
+	 */
+	public UploadFile = (folder = '', field = 'image') => {
+		return async (req: Request, res: Response, next: NextFunction) => {
+			try {
+				const storage = cloudinaryStorage({
+					cloudinary: cloudinary as any,
+					params: {
+						folder: generateFilePath(
+							req.params.id ? req.params.id : this._currentUser?._id,
+							folder
+						),
+						allowed_formats: ['jpg', 'png', 'svg'],
+					},
+				});
+
+				const uploader = multer({
+					storage,
+					limits: { fileSize: 1500000 },
+				}).single(field);
+
+				uploader(req, res, next);
+			} catch (error) {
+				return this.SendResponse({
+					message: 'File upload error.',
+					status: SERVICE_UNAVAILABLE,
+					error,
+				});
+			}
+		};
+	};
 
 	/**
 	 * validate
 	 */
-	public ValidateFields: ValidateFields = (validationChain) => {
+	public ValidateFields = (validationChain: ValidationChain[]) => {
 		return async (
 			req: Request,
 			_: Response,
@@ -135,13 +177,13 @@ class KipspaceService<Model> {
 	/**
 	 * Send response
 	 */
-	public SendResponse: SendResponse<Model> = ({
+	public SendResponse = ({
 		message,
 		status,
 		payload,
 		error,
 		token,
-	}) => {
+	}: ResponseParams<Model>) => {
 		error && logger.error(error);
 
 		this._response &&
