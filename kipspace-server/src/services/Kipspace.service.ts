@@ -6,6 +6,7 @@ import {
 	UNAUTHORIZED,
 	SERVICE_UNAVAILABLE,
 	BAD_REQUEST,
+	FORBIDDEN,
 } from 'http-status-codes';
 import { ValidationChain, validationResult } from 'express-validator';
 import { sign } from 'jsonwebtoken';
@@ -99,6 +100,19 @@ class KipspaceService<Model> {
 				error,
 			});
 		}
+	};
+
+	/**
+	 * CheckAdmin
+	 */
+	public CheckAdmin = (_: any, __: any, next: NextFunction) => {
+		if (this._currentUser && this._currentUser.role === 'ADMIN') next();
+		else
+			this.SendResponse({
+				message: 'You do not have access to perform this operation.',
+				status: FORBIDDEN,
+				error: new Error('Permission denied'),
+			});
 	};
 
 	/**
