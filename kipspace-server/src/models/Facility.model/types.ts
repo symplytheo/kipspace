@@ -21,7 +21,8 @@ export interface Facility {
 	gallery?: string;
 	email: string;
 	phone: string;
-	capacity: string;
+	capacity: number;
+	available_seats: number;
 	opening_hours: OpeningHour[];
 	// reservations: IReservation['_id'][];
 	notifications: INotification['_id'][];

@@ -14,6 +14,7 @@ export const ImmutableFields = [
 	'cover',
 	'logo',
 	'gallery',
+	'available_seats',
 ];
 
 export const OpeningHoursSchema = new Schema(
@@ -61,7 +62,8 @@ export const FacilitySchema: Schema = new Schema(
 
 		email: { type: String },
 		phone: { type: String },
-		capacity: { type: Number, default: 10, min: 0 },
+		capacity: { type: Number, default: 10, min: 0, required: true },
+		available_seats: { type: Number, default: 10, min: 0, required: true },
 		opening_hours: [OpeningHoursSchema],
 
 		// reservations: [{ type: Types.ObjectId, ref: 'Reservation' }],
