@@ -8,6 +8,7 @@ export const StatusSchema = new Schema(
 		status: {
 			type: String,
 			required: true,
+			default: 'PENDING',
 			enum: ['COMPLETED', 'CANCELED', 'PENDING', 'MISSED'],
 		},
 	},
@@ -22,13 +23,18 @@ export const ReservationSchema = new Schema(
 		facility: { type: Types.ObjectId, ref: 'Facility', required: true },
 
 		code: { type: String, unique: true, required: true },
+		barcode_url: { type: String },
 
 		seats: { type: Number, required: true, default: 1, min: 1 },
 		// notifications: [],
 		date_reserved: { type: Date, required: true },
 		time_reserved: { type: String },
 
-		current_status: { type: StatusSchema, required: true },
+		current_status: {
+			type: String,
+			enum: ['COMPLETED', 'CANCELED', 'PENDING', 'MISSED'],
+			default: 'PENDING',
+		},
 		statuses: [StatusSchema],
 	},
 	{
