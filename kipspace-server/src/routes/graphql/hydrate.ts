@@ -85,9 +85,9 @@ FacilityTC.addRelation('category', {
 });
 
 FacilityTC.addRelation('reservations', {
-	resolver: () => ReservationTC.getResolver('findByIds'),
+	resolver: () => ReservationTC.getResolver('findMany'),
 	prepareArgs: {
-		_ids: (source: any) => source.reservations,
+		filter: (source: any) => ({ facility: source._id }),
 	},
 });
 

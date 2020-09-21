@@ -21,7 +21,7 @@ const ProtectFields = [
 	'facilities.items.notifications',
 	'facilities.items.reviews.user',
 	'facilities.items.reviews.facility',
-	'facilities.items.reservations',
+	// 'facilities.items.reservations',
 ];
 
 export const CategoryQuery = {
