@@ -8,6 +8,7 @@ import {
 	CountryQuery,
 	FacilityQuery,
 	ReservationQueries,
+	ReviewQuery,
 } from './queries';
 
 import {
@@ -16,6 +17,7 @@ import {
 	CountryMutation,
 	FacilityMutation,
 	ReservationMutation,
+	ReviewMutation,
 } from './mutations';
 
 const schemaComposer = new SchemaComposer();
@@ -26,6 +28,7 @@ schemaComposer.Query.addFields({
 	...CountryQuery,
 	...FacilityQuery,
 	...ReservationQueries,
+	...ReviewQuery,
 });
 
 schemaComposer.Mutation.addFields({
@@ -34,6 +37,7 @@ schemaComposer.Mutation.addFields({
 	...CountryMutation,
 	...FacilityMutation,
 	...ReservationMutation,
+	...ReviewMutation,
 });
 
 export const schema = schemaComposer.buildSchema();
