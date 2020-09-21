@@ -884,6 +884,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/bwip-js@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@types/bwip-js/-/bwip-js-1.7.0.tgz#fa34fbb567487eea862a34366dc1478ee88869fe"
+  integrity sha512-WJpXV9BctE+lYVnI/k2iRRp/onEKY3krxT53wFq1F2VGgd7vcB9KMckgMXEf5+y6NRcr7SLNHCr77oinvJBLcA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -1102,6 +1109,13 @@
   integrity sha512-2j5IKrgJpEP6xw/uiVb2Xfga0W0sSVD9JP9t7EZLvpBENdB0OKgcnoKS8IsjNeNnZ/86robdZ61Orl0QCFGOXg==
   dependencies:
     "@types/node" "*"
+
+"@types/multer@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@types/multer/-/multer-1.4.4.tgz#bb5d9abc410da82726ceca74008bb81813349a88"
+  integrity sha512-wdfkiKBBEMTODNbuF3J+qDDSqJxt50yB9pgDiTcFew7f97Gcc7/sM4HR66ofGgpJPOALWOqKAch4gPyqEXSkeQ==
+  dependencies:
+    "@types/express" "*"
 
 "@types/node-fetch@2.5.7":
   version "2.5.7"
@@ -1906,6 +1920,11 @@ busboy@^0.3.1:
   integrity sha512-y7tTxhGKXcyBxRKAni+awqx8uqaJKrSFSNFSeRG5CsWNdmy2BIK+6VGWEW7TZnIO/533mtMEA4rOevQV815YJw==
   dependencies:
     dicer "0.3.0"
+
+bwip-js@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/bwip-js/-/bwip-js-2.0.10.tgz#94e0ba37aee824b279d06db5970b7db2bae0e86d"
+  integrity sha512-aF+f2fVmK+gmvUPUR0oPY36pDW0haIWB/ktE9fc6oX0vr5qmquA0o4ItDHDLbe24PezDM5yqdjkhuHJkxLsyaQ==
 
 bytes@3.1.0:
   version "3.1.0"
@@ -5731,6 +5750,11 @@ static-extend@^0.1.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
+
+streamifier@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/streamifier/-/streamifier-0.1.1.tgz#97e98d8fa4d105d62a2691d1dc07e820db8dfc4f"
+  integrity sha1-l+mNj6TRBdYqJpHR3AfoINuN/E8=
 
 streamsearch@0.1.2:
   version "0.1.2"

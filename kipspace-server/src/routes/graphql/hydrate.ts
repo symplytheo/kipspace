@@ -5,6 +5,7 @@ import { UserTC } from '@models/User.model';
 import { LocationTC } from '@models/Location.model';
 import { CountryTC } from '@models/Country.model';
 import { CategoryTC } from '@models/Category.model';
+import { ReviewTC } from '@models/Review.model';
 
 // User relations
 UserTC.addRelation('facilities', {
@@ -28,6 +29,21 @@ UserTC.addRelation('notifications', {
 	},
 });
 
+UserTC.addRelation('my_reviews', {
+	resolver: () => ReviewTC.getResolver('findMany'),
+	prepareArgs: {
+		filter: (source: any) => ({ user: source._id }),
+	},
+});
+
+const UserReviewsTC = UserTC.getFieldOTC('my_reviews');
+UserReviewsTC.addRelation('facility', {
+	resolver: () => FacilityTC.getResolver('findById'),
+	prepareArgs: {
+		_id: (source: any) => source.facility,
+	},
+});
+
 // Reservations reations
 ReservationTC.addRelation('user', {
 	resolver: () => UserTC.getResolver('findById'),
@@ -37,7 +53,7 @@ ReservationTC.addRelation('user', {
 });
 
 ReservationTC.addRelation('facility', {
-	resolver: () => UserTC.getResolver('findById'),
+	resolver: () => FacilityTC.getResolver('findById'),
 	prepareArgs: {
 		_id: (source: any) => source.facility,
 	},
@@ -52,14 +68,14 @@ LocationTC.addRelation('country', {
 });
 
 // Facility relations
-FacilityTC.addRelation('user', {
-	resolver: () => UserTC.getResolver('findById'),
-	prepareArgs: {
-		_id: (source: any) => source.user,
-		skip: null,
-		sort: null,
-	},
-});
+// FacilityTC.addRelation('user', {
+// 	resolver: () => UserTC.getResolver('findById'),
+// 	prepareArgs: {
+// 		_id: (source: any) => source.user,
+// 		skip: null,
+// 		sort: null,
+// 	},
+// });
 
 FacilityTC.addRelation('category', {
 	resolver: () => CategoryTC.getResolver('findById'),
@@ -69,9 +85,9 @@ FacilityTC.addRelation('category', {
 });
 
 FacilityTC.addRelation('reservations', {
-	resolver: () => ReservationTC.getResolver('findByIds'),
+	resolver: () => ReservationTC.getResolver('findMany'),
 	prepareArgs: {
-		_ids: (source: any) => source.reservations,
+		filter: (source: any) => ({ facility: source._id }),
 	},
 });
 
@@ -82,6 +98,13 @@ FacilityTC.addRelation('notifications', {
 	},
 });
 
+FacilityTC.addRelation('reviews', {
+	resolver: () => ReviewTC.getResolver('findMany'),
+	prepareArgs: {
+		filter: (source: any) => ({ facility: source._id }),
+	},
+});
+
 // Category relations
 CategoryTC.addRelation('facilities', {
 	resolver: FacilityTC.getResolver('pagination'),
@@ -89,3 +112,19 @@ CategoryTC.addRelation('facilities', {
 		filter: (source: any) => ({ category: source._id }),
 	},
 });
+
+// Review rolations
+// ReviewTC.addRelation('user', {
+// 	resolver: UserTC.getResolver('findById'),
+// 	prepareArgs: {
+// 		_id: (source: any) => source.user,
+// 	},
+// });
+
+// ReviewTC.addRelation('facility', {
+// 	resolver: FacilityTC.getResolver('findById'),
+// 	prepareArgs: {
+// 		_id: (source: any) => source.facility,
+// 	},
+// 	projection: { name: true },
+// });

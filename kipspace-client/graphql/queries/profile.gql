@@ -1,0 +1,13 @@
+query Profile {
+	profile {
+		_id
+		firstname
+		lastname
+		email
+		phone
+		facilities {
+			_id
+			name
+		}
+	}
+}
