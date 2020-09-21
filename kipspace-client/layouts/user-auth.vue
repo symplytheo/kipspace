@@ -27,6 +27,7 @@
             </v-row>
           </v-col>
         </v-row>
+        <Snackbar />
       </v-container>
     </v-row>
   </v-app>

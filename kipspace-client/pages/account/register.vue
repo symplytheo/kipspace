@@ -97,25 +97,33 @@ export default {
     async processRegister() {
       try {
         this.loading = true
-
+        //
         const { data } = await this.$axios.post('/v1/user', {
           email: this.email,
           password: this.password,
         })
-
+        //
         this.$apolloHelpers.onLogin(data.token)
-
         // hack to clear graphql store
         const client = this.$apollo.provider.defaultClient
         await client.queryManager.fetchQueryRejectFns
         await client.clearStore()
-
+        //
         const userData = await this.$apollo.query({ query: ProfileGql })
-
         this.$store.commit('user/setUser', userData.data.profile)
+        this.$store.commit('snackbar/show', {
+          text: 'Registration was successfull',
+          icon: 'success',
+        })
         this.$router.replace(this.$router.history.current.query.redirect || '/')
+        //
       } catch (error) {
-        // process error
+        // eslint-disable-next-line no-unused-vars
+        const { response, message } = error
+        this.$store.commit('snackbar/show', {
+          text: response.data.message,
+          icon: 'error',
+        })
       } finally {
         this.loading = false
       }
