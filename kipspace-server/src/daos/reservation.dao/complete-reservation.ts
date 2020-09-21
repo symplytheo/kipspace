@@ -1,7 +1,8 @@
-import { GetOneFacility } from '@daos/facility.dao';
-import Reservation from '@models/Reservation.model';
-import { Exception } from '@shared/functions';
 import { BAD_REQUEST, NOT_FOUND } from 'http-status-codes';
+
+import Reservation from '@models/Reservation.model';
+import { GetOneFacility } from '@daos/facility.dao';
+import { Exception } from '@shared/functions';
 
 // TODO: Do a check to ensure only facility managers can complete a reservation
 
@@ -28,7 +29,7 @@ export const CompleteReservation = async (code: string, facilityId: string) => {
 
 				const layover = 900000; // 15 mins layover before closing reservation
 
-				if (reservationDate.getTime() > Date.now() + layover) {
+				if (reservationDate.getTime() < Date.now() + layover) {
 					await reservation.updateOne({
 						current_status: 'MISSED',
 						$addToSet: { status: 'MISSED' },
@@ -52,6 +53,8 @@ export const CompleteReservation = async (code: string, facilityId: string) => {
 					current_status: 'COMPLETED',
 					$addToSet: { status: 'COMPLETED' },
 				});
+
+				reservation.current_status = 'COMPLETED';
 
 				return reservation;
 
