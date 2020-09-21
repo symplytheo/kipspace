@@ -1,7 +1,11 @@
 import { UserInputError } from 'apollo-server-express';
 import { ReservationTC } from '@models/Reservation.model';
 import { CheckAdmin, CheckAuth } from '@middlewares/resolver.middleware';
-import { CompleteReservation, MakeReservation } from '@daos/reservation.dao';
+import {
+	MakeReservation,
+	CompleteReservation,
+	CancelReservation,
+} from '@daos/reservation.dao';
 
 ReservationTC.addResolver({
 	name: 'complete',
@@ -11,6 +15,24 @@ ReservationTC.addResolver({
 	type: () => ReservationTC,
 	resolve: async ({ args }: { args: any }) => {
 		const reservation = await CompleteReservation(args.code, args.facility).catch(
+			({ message }) => {
+				throw new UserInputError(message);
+			}
+		);
+
+		// create reservation event here
+		return reservation;
+	},
+});
+
+ReservationTC.addResolver({
+	name: 'cancel',
+	displayName: 'CancelReservation',
+	description: 'cancel a reservation.',
+	args: { code: 'String!' },
+	type: () => ReservationTC,
+	resolve: async ({ context, args }: { context: any; args: any }) => {
+		const reservation = await CancelReservation(args.code, context.user._id).catch(
 			({ message }) => {
 				throw new UserInputError(message);
 			}
@@ -56,5 +78,6 @@ export const ReservationMutation = {
 		)
 		.withMiddlewares([CheckAuth]),
 	completeReservation: ReservationTC.getResolver('complete', [CheckAuth]),
+	cancelReservation: ReservationTC.getResolver('cancel', [CheckAuth]),
 	updateReservation: ReservationTC.getResolver('updateById', [CheckAuth, CheckAdmin]),
 };
