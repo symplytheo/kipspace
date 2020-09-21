@@ -3,7 +3,9 @@ import Reservation from '@models/Reservation.model';
 import { Exception } from '@shared/functions';
 import { BAD_REQUEST, NOT_FOUND } from 'http-status-codes';
 
-export const CompleteReservation = async (code: string) => {
+// TODO: Do a check to ensure only facility managers can complete a reservation
+
+export const CompleteReservation = async (code: string, facilityId: string) => {
 	try {
 		const reservation = await Reservation.findOne({ code });
 
@@ -38,6 +40,9 @@ export const CompleteReservation = async (code: string) => {
 				const facility = await GetOneFacility(reservation.facility);
 
 				if (!facility) throw new Exception(NOT_FOUND, 'Facility not found'); // this error should never be thrown
+
+				if (`${facility._id}` !== `${facilityId}`)
+					throw new Exception(BAD_REQUEST, 'Facility mismatch');
 
 				await facility.updateOne({
 					available_seats: facility.available_seats + reservation.seats,

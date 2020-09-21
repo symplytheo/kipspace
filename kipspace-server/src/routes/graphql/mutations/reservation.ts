@@ -1,7 +1,25 @@
 import { UserInputError } from 'apollo-server-express';
 import { ReservationTC } from '@models/Reservation.model';
-import { AttachUserToArg, CheckAdmin, CheckAuth } from '@middlewares/resolver.middleware';
-import { MakeReservation } from '@daos/reservation.dao';
+import { CheckAdmin, CheckAuth } from '@middlewares/resolver.middleware';
+import { CompleteReservation, MakeReservation } from '@daos/reservation.dao';
+
+ReservationTC.addResolver({
+	name: 'complete',
+	displayName: 'CompleteReservation',
+	description: 'Complete a pending reservation.',
+	args: { code: 'String!', facility: 'MongoID!' },
+	type: () => ReservationTC,
+	resolve: async ({ args }: { args: any }) => {
+		const reservation = await CompleteReservation(args.code, args.facility).catch(
+			({ message }) => {
+				throw new UserInputError(message);
+			}
+		);
+
+		// create reservation event here
+		return reservation;
+	},
+});
 
 export const ReservationMutation = {
 	makeReservation: ReservationTC.getResolver('createOne')
@@ -37,5 +55,6 @@ export const ReservationMutation = {
 			}
 		)
 		.withMiddlewares([CheckAuth]),
+	completeReservation: ReservationTC.getResolver('complete', [CheckAuth]),
 	updateReservation: ReservationTC.getResolver('updateById', [CheckAuth, CheckAdmin]),
 };
