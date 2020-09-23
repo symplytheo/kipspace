@@ -260,39 +260,50 @@ export default {
       this.loading = true
       const record = {
         _id: this.item._id,
-        name: 'New Man',
-        short_description: this.item.short_descriptione,
+        name: this.item.name,
+        short_description: this.item.short_description,
         capacity: this.item.capacity,
-        opening_hours: this.opening,
-        location: {
-          address: this.item.location.address,
-          city: this.item.location.city,
-          state: this.item.location.state,
-        },
+        // opening_hours: this.opening,
+        // location: {
+        //   address: this.item.location.address,
+        //   city: this.item.location.city,
+        //   state: this.item.location.state,
+        // },
       }
-      try {
-        await this.$apollo
-          .mutate({
-            mutation: UpdateFacilityGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.$store.commit('snackbar/show', {
-              text: 'Facility was updated successfully',
-              icon: 'success',
-            })
-            this.$router.go(0)
-          })
-      } catch (error) {
-        // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
-        this.$store.commit('snackbar/show', {
-          text: response.data.message,
-          icon: 'error',
+      // try {
+      await this.$apollo
+        .mutate({
+          mutation: UpdateFacilityGql,
+          variables: {
+            record: { _id: '5f69cf30365def0012299d2f', name: 'Chicken & Tinz' },
+          },
         })
-      } finally {
-        this.loading = false
-      }
+        .then(() => {
+          this.$store.commit('snackbar/show', {
+            text: 'Facility was updated successfully',
+            icon: 'success',
+          })
+          this.$router.go(0)
+        })
+        .catch((error) => {
+          console.log('response ' + error)
+        })
+        .finally(() => {
+          this.loading = false
+          console.log(record)
+        })
+      //   }) catch (error) {
+      //     console.log(error)
+      //     // eslint-disable-next-line no-unused-var
+      //     const { response, message } = error
+      //     this.$store.commit('snackbar/show', {
+      //       text: response.data.message,
+      //       icon: 'error',
+      //     })
+      //   } finally {
+      //     this.loading = false
+      //   }
+      // },
     },
   },
   head() {
