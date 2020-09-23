@@ -252,7 +252,6 @@
 </template>
 
 <script>
-import CreateUserGql from '~/graphql/mutations/CreateUser'
 import UpdateUserGql from '~/graphql/mutations/UpdateUser'
 import UsersGql from '~/graphql/queries/users'
 import { emailValidation } from '~/utils/validation'
@@ -283,39 +282,37 @@ export default {
   },
   methods: {
     emailValidation,
-    async addUser() {
-      this.loading = true
-      const record = {
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.password,
-        role: this.role,
-      }
-      try {
-        await this.$apollo
-          .mutate({
-            mutation: CreateUserGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.$store.commit('snackbar/show', {
-              text: 'User was added successfully',
-              icon: 'success',
-            })
-            this.$router.go(0)
-          })
-      } catch (error) {
-        // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
-        this.$store.commit('snackbar/show', {
-          text: response.data.message,
-          icon: 'error',
-        })
-      } finally {
-        this.loading = false
-      }
-    },
+    // async addUser() {
+    //   this.loading = true
+    //   const record = {
+    //     firstname: this.firstname,
+    //     lastname: this.lastname,
+    //     email: this.email,
+    //     password: this.password,
+    //     role: this.role,
+    //   }
+    //   try {
+    //     await this.$apollo.mutate({
+    //       mutation: CreateUserGql,
+    //       variables: { record },
+    //     })
+
+    //     this.$store.commit('snackbar/show', {
+    //       text: 'User was added successfully',
+    //       icon: 'success',
+    //     })
+    //     this.$router.go(0)
+    //   } catch (error) {
+    //     // eslint-disable-next-line no-unused-vars
+    //     const { response, message } = error
+    //     this.$store.commit('snackbar/show', {
+    //       text: response.data.message,
+    //       icon: 'error',
+    //     })
+    //   } finally {
+    //     this.loading = false
+    //   }
+    // },
     async updateUser(user, u) {
       this.loading = true
       const record = {

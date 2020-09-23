@@ -113,10 +113,10 @@
                 <div class="subtitle-1 font-weight-bold pb-2 text-uppercase">
                   {{ item.name }}
                 </div>
-                <div class="display-1 font-weight-bold">
+                <!-- <div class="display-1 font-weight-bold">
                   {{ item.facilities.count }}
                   <span class="subtitle-2">Facilities</span>
-                </div>
+                </div> -->
               </v-col>
             </v-row>
             <v-card-text class="pa-0 pb-2">
