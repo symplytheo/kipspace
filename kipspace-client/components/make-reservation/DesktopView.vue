@@ -1,8 +1,11 @@
 <template>
-  <div class="hidden-sm-and-down" id="desktop">
+  <div id="desktop" class="hidden-sm-and-down">
     <v-container fluid class="pa-0">
       <v-sheet tile height="180" color="grey lighten-5">
-        <v-img src="/img/chips.png" height="180">
+        <v-img
+          :src="facility.cover ? facility.cover : '/img/chips.png'"
+          height="180"
+        >
           <v-row justify="center" align="center" class="fill-height">
             <v-col md="10" lg="8">
               <v-card class="reserve-box pa-0 pl-8 mb-5" height="48" flat>
@@ -33,17 +36,17 @@
                           height="48"
                           width="100%"
                           class="time-btn"
-                          v-on="on"
                           :color="!time ? 'grey darken-1' : 'black'"
                           style="border-right: 2px solid #dedede"
+                          v-on="on"
                         >
                           {{ time ? time : 'pick time' }}
                           <v-icon right>mdi-menu-down</v-icon>
                         </v-btn>
                       </template>
                       <v-time-picker
-                        v-model="time"
                         v-if="selectTime"
+                        v-model="time"
                         color="primary"
                         ampm-in-title
                       >
@@ -51,16 +54,16 @@
                         <v-btn
                           text
                           color="primary"
-                          @click="selectTime = false"
                           class="font-weight-bold text-capitalize"
+                          @click="selectTime = false"
                         >
                           Cancel
                         </v-btn>
                         <v-btn
                           text
                           color="primary"
-                          @click="$refs.timeModal.save(time)"
                           class="font-weight-bold text-capitalize"
+                          @click="$refs.timeModal.save(time)"
                         >
                           Save
                         </v-btn>
@@ -121,14 +124,19 @@
         <v-row>
           <v-col md="3" lg="2">
             <v-avatar size="160" class="biz-logo">
-              <img src="/img/mcdonald-icon.png" alt="alt" />
+              <v-img
+                :src="facility.logo ? facility.logo : '/img/mcdonald-icon.png'"
+                alt="alt"
+              />
             </v-avatar>
           </v-col>
           <v-col md="9" lg="10" class="pt-0">
-            <h3>Dominos Pizza</h3>
+            <div class="title font-weight-bold">
+              {{ facility.name }}
+            </div>
             <div class="pt-1">
               <v-rating
-                :value="4"
+                :value="averageRating"
                 half-increments
                 color="primary"
                 background-color="primary"
@@ -136,11 +144,9 @@
                 readonly
                 size="18"
                 class="d-inline"
-              ></v-rating>
+              />
             </div>
-            <div class="pt-1">
-              No. 6 Adenuga street, Ibara-expressway, Lagos State.
-            </div>
+            <div class="pt-1">{{ facilityAddress }}</div>
           </v-col>
         </v-row>
       </v-container>
@@ -155,12 +161,22 @@
                 <v-icon color="primary" size="28">mdi-clock-outline</v-icon>
               </v-col>
               <v-col cols="10">
-                <v-row v-for="(open, h) in opening" :key="h">
-                  <v-col cols="7" class="pt-1">
+                <v-row v-for="(open, h) in facility.opening_hours" :key="h">
+                  <v-col cols="4" class="pt-1">
                     {{ open.day }}
                   </v-col>
-                  <v-col cols="5" class="pt-1">
-                    {{ open.time }}
+                  <v-col cols="8" class="pt-1">
+                    <v-row>
+                      <v-col cols="5" class="py-0">
+                        {{ open.from }}
+                      </v-col>
+                      <v-col cols="2" class="py-0">
+                        <span>-</span>
+                      </v-col>
+                      <v-col cols="5" class="py-0">
+                        {{ open.to }}
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
               </v-col>
@@ -187,7 +203,7 @@
               </v-col>
               <v-col cols="10" class="pt-0">
                 <v-chip color="grey lighten-3" label class="px-10 py-5">
-                  1000
+                  {{ facility.capacity }}
                 </v-chip>
               </v-col>
             </v-row>
@@ -195,10 +211,10 @@
         </v-col>
         <v-col md="7" lg="8">
           <v-card outlined class="pa-5">
-            <h3>Review Summary</h3>
+            <div class="title font-weight-bold">Review Summary</div>
             <v-row align="center" class="pb-3">
               <v-col md="7" lg="9" class="pt-5">
-                <v-row align="center" v-for="(rate, r) in rating" :key="r">
+                <v-row v-for="(rate, r) in rating" :key="r" align="center">
                   <v-col md="2" lg="1" class="py-0">
                     {{ rate.num }}
                   </v-col>
@@ -209,39 +225,43 @@
                       background-color="secondary"
                       height="10"
                       rounded
-                    ></v-progress-linear>
+                    />
                   </v-col>
                 </v-row>
               </v-col>
               <v-col md="5" lg="3" class="text-center">
-                <h1 style="font-size: 60px">4.4</h1>
+                <div class="display-1 font-weight-bold">
+                  {{ averageRating }}
+                </div>
                 <v-rating
-                  :value="4"
+                  :value="averageRating"
                   half-increments
                   color="primary"
                   background-color="primary"
                   dense
                   size="18"
-                ></v-rating>
-                <h4>1000 Reviews</h4>
+                />
+                <div class="subtitle-1 font-weight-bold">100 Reviews</div>
               </v-col>
             </v-row>
-            <div v-for="(review, w) in reviews" :key="w">
-              <v-divider></v-divider>
+            <div v-for="(item, w) in facility.reviews" :key="w">
+              <v-divider />
               <v-card tile flat class="pt-5 pb-3">
-                <div class="subtitle-1 font-weight-bold">{{ review.name }}</div>
-                <span class="grey--text">{{ review.date }}</span>
+                <div class="subtitle-1 font-weight-bold">
+                  {{ item.display_name }}
+                </div>
+                <span class="grey--text">{{ item.createdAt }}</span>
                 <v-rating
-                  :value="review.rating"
+                  :value="item.rating"
                   half-increments
                   color="primary"
                   background-color="primary"
                   dense
                   size="16"
                   class="d-inline mx-2"
-                ></v-rating>
+                />
                 <div class="py-2">
-                  {{ review.text }}
+                  {{ item.review }}
                 </div>
               </v-card>
             </div>
@@ -254,6 +274,12 @@
 
 <script>
 export default {
+  props: {
+    facility: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data: () => ({
     time: null,
     selectTime: false,
@@ -264,44 +290,29 @@ export default {
       { num: 2, value: 15 },
       { num: 1, value: 0 },
     ],
-    opening: [
-      { day: 'Monday', time: '9am - 5pm' },
-      { day: 'Tuesday', time: '9am - 5pm' },
-      { day: 'Wednesday', time: '9am - 5pm' },
-      { day: 'Thursday', time: '9am - 5pm' },
-      { day: 'Friday', time: '9am - 5pm' },
-      { day: 'Saturday', time: '9am - 5pm' },
-    ],
-    reviews: [
-      {
-        name: 'Ayobami Muyiwa',
-        rating: 4,
-        date: 'July 1, 2020',
-        text:
-          "I've used this app to booked accommodation all around lagos & have had no problems with it so far. I love showing up on the doorstep of the place I have booked & they are expecting me, everything goes smoothly & there are no issues before, during or after my stayReading the reviews from other users is also really helpful so I can get an idea of what to expect of the service/facilities/amenities & surroundings.",
-      },
-      {
-        name: 'Ahmed Sulaimon',
-        rating: 3,
-        date: 'August 2, 2020',
-        text: 'It was an Amazing time!',
-      },
-      {
-        name: 'Gloria Smith',
-        rating: 5,
-        date: 'August 12, 2020',
-        text:
-          'This is the best app in the market. The UI is sleek, beautiful and easy to navigate and use. The suggestions are good. Also it offers lots of filtering options for search results. I wish it had the option to list properties that have good price and are popular as well.',
-      },
-      {
-        name: 'Ubon Jeffery',
-        rating: 4,
-        date: 'August 15, 2020',
-        text:
-          "In general it is a good app, but has had some annoying issues. If you get a link it will be opened in the browser and not app. Sometimes you you get redirected from the app to the browser, too. It doesn't store the cvc of your card, so what is the point of storing the card if you need it anyway.",
-      },
-    ],
   }),
+  computed: {
+    facilityAddress() {
+      return (
+        this.facility.location.address +
+        ', ' +
+        this.facility.location.city +
+        ', ' +
+        this.facility.location.state +
+        ', ' +
+        this.facility.location.country.name
+      )
+    },
+    averageRating() {
+      let sum = 0
+      for (const item in this.facility.reviews) {
+        sum += item.rating
+      }
+      const length = this.facility.reviews.length
+      const average = sum / (length !== 0 ? length : 1)
+      return average > 0 ? average : average + 1
+    },
+  },
 }
 </script>
 

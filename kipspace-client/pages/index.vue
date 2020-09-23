@@ -88,12 +88,17 @@
       </v-row>
     </v-container>
 
-    <v-container class="mt-lg-10">
+    <v-container>
       <div class="title font-weight-bold">Top Searches</div>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col v-for="(item, f) in facilities" :key="f" cols="6" md="3">
+            <v-col
+              v-for="(item, f) in facilities.items"
+              :key="f"
+              cols="6"
+              md="3"
+            >
               <FacilityCard :facility="item" />
             </v-col>
             <v-col cols="12" class="my-2">
@@ -112,11 +117,19 @@
 </template>
 
 <script>
+import FacilitiesGql from '~/graphql/queries/facilities'
+
 export default {
   layout: 'homepage',
-  computed: {
-    facilities() {
-      return this.$store.getters['facility/facilities']
+  data: () => ({
+    facilities: {
+      items: [],
+    },
+  }),
+  apollo: {
+    facilities: {
+      query: FacilitiesGql,
+      prefetch: true,
     },
   },
   head() {

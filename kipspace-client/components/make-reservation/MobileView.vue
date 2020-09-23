@@ -94,20 +94,30 @@
 
         <v-tab-item>
           <v-sheet tile height="160" color="grey lighten-4">
-            <v-img src="/img/chips.png" height="100%" />
+            <v-img
+              :src="facility.cover ? facility.cover : '/img/chips.png'"
+              height="100%"
+            />
           </v-sheet>
           <v-sheet tile elevation="3">
             <v-container fluid class="px-sm-10">
               <v-row>
                 <v-col cols="4" sm="3" class="pl-0">
                   <v-avatar size="120" class="biz-logo">
-                    <v-img src="/img/mcdonald-icon.png" alt="alt" />
+                    <v-img
+                      :src="
+                        facility.logo ? facility.logo : '/img/mcdonald-icon.png'
+                      "
+                      alt="alt"
+                    />
                   </v-avatar>
                 </v-col>
                 <v-col cols="8" sm="9" class="pt-0 pl-8 pl-sm-0">
-                  <div class="subtitle-1 font-weight-bold">Dominos Pizza</div>
+                  <div class="subtitle-1 font-weight-bold">
+                    {{ facility.name }}
+                  </div>
                   <v-rating
-                    :value="4"
+                    :value="averageRating"
                     half-increments
                     color="primary"
                     background-color="primary"
@@ -117,7 +127,7 @@
                     class="d-inline"
                   />
                   <div class="pt-1 subtitle-2">
-                    No. 6 Adenuga street, Ibara-expressway, Lagos State.
+                    {{ facilityAddress }}
                   </div>
                 </v-col>
               </v-row>
@@ -127,20 +137,33 @@
           <v-container class="py-10">
             <v-row justify="center">
               <v-col sm="10">
-                <v-card outlined class="px-5 py-3">
+                <v-card outlined class="px-3 py-3">
                   <v-row>
                     <v-col cols="2">
                       <v-icon color="primary" size="28">
                         mdi-clock-outline
                       </v-icon>
                     </v-col>
-                    <v-col cols="10" class="pt-3">
-                      <v-row v-for="(open, h) in opening" :key="h">
-                        <v-col cols="7" class="pt-1">
+                    <v-col cols="10">
+                      <v-row
+                        v-for="(open, h) in facility.opening_hours"
+                        :key="h"
+                      >
+                        <v-col cols="4" class="pt-1 px-0">
                           {{ open.day }}
                         </v-col>
-                        <v-col cols="5" class="pt-1">
-                          {{ open.time }}
+                        <v-col cols="8" class="pt-1">
+                          <v-row>
+                            <v-col cols="5" class="py-0">
+                              {{ open.from }}
+                            </v-col>
+                            <v-col cols="2" class="py-0">
+                              <span>-</span>
+                            </v-col>
+                            <v-col cols="5" class="py-0">
+                              {{ open.to }}
+                            </v-col>
+                          </v-row>
                         </v-col>
                       </v-row>
                     </v-col>
@@ -169,7 +192,7 @@
                     </v-col>
                     <v-col cols="10" class="pt-2">
                       <v-chip color="grey lighten-3" label class="px-10 py-5">
-                        1000
+                        {{ facility.capacity }}
                       </v-chip>
                     </v-col>
                   </v-row>
@@ -202,14 +225,16 @@
                             background-color="secondary"
                             height="10"
                             rounded
-                          ></v-progress-linear>
+                          />
                         </v-col>
                       </v-row>
                     </v-col>
                     <v-col cols="4" class="text-center">
-                      <div class="display-2 font-weight-bold">4.4</div>
+                      <div class="display-2 font-weight-bold">
+                        {{ averageRating }}
+                      </div>
                       <v-rating
-                        :value="4"
+                        :value="averageRating"
                         half-increments
                         color="primary"
                         background-color="primary"
@@ -218,19 +243,19 @@
                         size="15"
                       />
                       <div class="subtitle-2 font-weight-bold pt-1">
-                        1000 Reviews
+                        {{ facility.reviews.length }} Reviews
                       </div>
                     </v-col>
                   </v-row>
-                  <div v-for="(review, w) in reviews" :key="w">
+                  <div v-for="(item, w) in facility.reviews" :key="w">
                     <v-divider />
                     <v-card tile flat class="pt-5 pb-3">
                       <div class="subtitle-1 font-weight-bold">
-                        {{ review.name }}
+                        {{ item.display_name }}
                       </div>
-                      <span class="grey--text">{{ review.date }}</span>
+                      <span class="grey--text">{{ item.createdAt }}</span>
                       <v-rating
-                        :value="review.rating"
+                        :value="item.rating"
                         half-increments
                         color="primary"
                         background-color="primary"
@@ -238,9 +263,9 @@
                         readonly
                         size="16"
                         class="d-inline mx-2"
-                      ></v-rating>
+                      />
                       <div class="py-2 subtitle-2">
-                        {{ review.text }}
+                        {{ item.review }}
                       </div>
                     </v-card>
                   </div>
@@ -256,6 +281,12 @@
 
 <script>
 export default {
+  props: {
+    facility: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data: () => ({
     time: null,
     selectTime: false,
@@ -266,44 +297,29 @@ export default {
       { num: 2, value: 15 },
       { num: 1, value: 0 },
     ],
-    opening: [
-      { day: 'Monday', time: '9am - 5pm' },
-      { day: 'Tuesday', time: '9am - 5pm' },
-      { day: 'Wednesday', time: '9am - 5pm' },
-      { day: 'Thursday', time: '9am - 5pm' },
-      { day: 'Friday', time: '9am - 5pm' },
-      { day: 'Saturday', time: '9am - 5pm' },
-    ],
-    reviews: [
-      {
-        name: 'Ayobami Muyiwa',
-        rating: 4,
-        date: 'July 1, 2020',
-        text:
-          "I've used this app to booked accommodation all around lagos & have had no problems with it so far. I love showing up on the doorstep of the place I have booked & they are expecting me, everything goes smoothly & there are no issues before, during or after my stayReading the reviews from other users is also really helpful so I can get an idea of what to expect of the service/facilities/amenities & surroundings.",
-      },
-      {
-        name: 'Ahmed Sulaimon',
-        rating: 3.5,
-        date: 'August 2, 2020',
-        text: 'It was an Amazing time!',
-      },
-      {
-        name: 'Gloria Smith',
-        rating: 5,
-        date: 'August 12, 2020',
-        text:
-          'This is the best app in the market. The UI is sleek, beautiful and easy to navigate and use. The suggestions are good. Also it offers lots of filtering options for search results. I wish it had the option to list properties that have good price and are popular as well.',
-      },
-      {
-        name: 'Ubon Jeffery',
-        rating: 4.5,
-        date: 'August 15, 2020',
-        text:
-          "In general it is a good app, but has had some annoying issues. If you get a link it will be opened in the browser and not app. Sometimes you you get redirected from the app to the browser, too. It doesn't store the cvc of your card, so what is the point of storing the card if you need it anyway.",
-      },
-    ],
   }),
+  computed: {
+    facilityAddress() {
+      return (
+        this.facility.location.address +
+        ', ' +
+        this.facility.location.city +
+        ', ' +
+        this.facility.location.state +
+        ', ' +
+        this.facility.location.country.name
+      )
+    },
+    averageRating() {
+      let sum = 0
+      for (const item in this.facility.reviews) {
+        sum += item.rating
+      }
+      const length = this.facility.reviews.length
+      const average = sum / (length !== 0 ? length : 1)
+      return average > 0 ? average : average + 1
+    },
+  },
 }
 </script>
 

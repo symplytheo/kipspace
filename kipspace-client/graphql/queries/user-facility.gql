@@ -1,5 +1,5 @@
-query Facility ($filter: FacilityPublicFilter) {
-  facilityOverview(filter: $filter) {
+query UserFacility($_id: MongoID!) {
+  facility(_id: $_id) {
     _id
     name
     short_description

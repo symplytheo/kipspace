@@ -1,104 +1,94 @@
 <template>
-  <div id="profile">
-    <v-container>
-      <v-card outlined flat class="pa-10">
-        <v-row justify="center" class="text-center">
-          <v-col cols="6">
-            <v-avatar size="160">
-              <v-img src="/img/lamp.jpg" alt="alt">
-                <v-row align="end" justify="center" class="fill-height">
-                  <v-btn
-                    color="rgba(255,255,255,0.35)"
-                    class="mx-2"
-                    depressed
-                    block
-                  >
-                    <v-icon size="30" color="primary">mdi-camera</v-icon>
-                  </v-btn>
-                </v-row>
-              </v-img>
-            </v-avatar>
-          </v-col>
-        </v-row>
-        <v-row class="pt-5">
-          <v-col cols="12" sm="6">
-            <label for="firstname">
-              <b>First name</b>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" sm="10" md="8" lg="7">
+        <v-card outlined flat class="pa-10">
+          <v-row justify="center" class="text-center">
+            <v-col cols="6">
+              <v-avatar size="160">
+                <v-img src="/img/lamp.jpg" alt="alt">
+                  <v-row align="end" justify="center" class="fill-height">
+                    <v-btn
+                      color="rgba(255,255,255,0.35)"
+                      class="mx-2"
+                      depressed
+                      block
+                    >
+                      <v-icon size="30" color="primary">mdi-camera</v-icon>
+                    </v-btn>
+                  </v-row>
+                </v-img>
+              </v-avatar>
+            </v-col>
+          </v-row>
+          <v-row class="pt-5">
+            <v-col cols="12" sm="6">
               <v-text-field
-                v-model="firstname"
+                v-model="user.firstname"
+                label="First name"
+                counter="32"
                 outlined
-                placeholder="enter first name"
-              ></v-text-field>
-            </label>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <label for="lastname">
-              <b>Last name</b>
+                :rules="[
+                  (v) => !!v || 'First name is required',
+                  (v) =>
+                    (!!v && v.length <= 32) || 'Not more than 32 characters',
+                ]"
+              />
+            </v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
-                v-model="lastname"
+                v-model="user.lastname"
+                label="Last name"
+                counter="32"
                 outlined
-                placeholder="enter last name"
-              ></v-text-field>
-            </label>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <label for="email">
-              <b>Email</b>
+                :rules="[
+                  (v) => !!v || 'Last name is required',
+                  (v) =>
+                    (!!v && v.length <= 32) || 'Not more than 32 characters',
+                ]"
+              />
+            </v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
-                v-model="email"
+                v-model="user.email"
+                label="Email"
                 outlined
-                placeholder="someone@exmaple.com"
-              ></v-text-field>
-            </label>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <label for="location">
-              <b>Location</b>
+                :rules="[
+                  (v) => !!v || 'Email is required',
+                  (v) => (!!v && emailValidation(v)) || 'Email is invalid',
+                ]"
+              />
+            </v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
-                v-model="location"
+                v-model="user.phone"
+                label="Phone"
                 outlined
-                placeholder="enter location"
-              ></v-text-field>
-            </label>
+                :rules="[(v) => /^\d+$/.test(v) || 'Must be digits (0-9)']"
+              />
+            </v-col>
+          </v-row>
+          <v-col cols="12" class="text-center">
+            <v-btn
+              large
+              depressed
+              :loading="loading"
+              color="secondary"
+              @click="updateProfile()"
+            >
+              Update Profile
+            </v-btn>
           </v-col>
-        </v-row>
-        <div class="text-center pb-5 pt-3">
-          <h3>Change password?</h3>
-        </div>
-        <v-row>
-          <v-col cols="12" sm="6">
-            <label for="pwd">
-              <b>Old password</b>
-              <v-text-field
-                v-model="pwd"
-                outlined
-                placeholder="enter old password"
-              ></v-text-field>
-            </label>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <label for="pwd2">
-              <b>New password</b>
-              <v-text-field
-                v-model="pwd2"
-                outlined
-                placeholder="enter new password"
-              ></v-text-field>
-            </label>
-          </v-col>
-        </v-row>
-        <div class="text-center">
-          <v-btn color="secondary" class="text-capitalize" depressed large>
-            Save Profile
-          </v-btn>
-        </div>
-      </v-card>
-    </v-container>
-  </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import ProfileGql from '~/graphql/queries/profile'
+import UpdateProfileGql from '~/graphql/mutations/UpdateProfile'
+import { emailValidation } from '~/utils/validation'
 
 export default {
   middleware: ['authenticated'],
@@ -108,10 +98,9 @@ export default {
         firstname: '',
         lastname: '',
         email: '',
-        location: '',
-        pwd: '',
-        pwd2: '',
+        phone: '',
       },
+      loading: false,
     }
   },
   apollo: {
@@ -122,7 +111,43 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.user.profile
+      const user = this.profile
+      return user
+    },
+  },
+  methods: {
+    emailValidation,
+    async updateProfile() {
+      this.loading = true
+      const record = {
+        firstname: this.user.firstname,
+        lastname: this.user.lastname,
+        email: this.user.email,
+        phone: this.user.phone,
+      }
+      try {
+        await this.$apollo
+          .mutate({
+            mutation: UpdateProfileGql,
+            variables: { record },
+          })
+          .then(() => {
+            this.$store.commit('snackbar/show', {
+              text: 'Profile was updated successfully',
+              icon: 'success',
+            })
+            this.$router.go(0)
+          })
+      } catch (error) {
+        // eslint-disable-next-line no-unused-vars
+        const { response, message } = error
+        this.$store.commit('snackbar/show', {
+          text: response.data.message,
+          icon: 'error',
+        })
+      } finally {
+        this.loading = false
+      }
     },
   },
   head() {

@@ -48,7 +48,4 @@ export default {}
   background: transparent !important;
   color: #ea3788 !important;
 }
-.v-app-bar--fixed.v-app-bar--hide-shadow.white > .v-toolbar__content {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
 </style>

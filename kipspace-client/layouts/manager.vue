@@ -19,7 +19,7 @@
           color="secondary"
           depressed
           class="mr-2 font-weight-bold text-capitalize"
-          to="/manager/walk-ins"
+          :to="`/account/facilities/${id}/walk-ins`"
         >
           Walk-ins
         </v-btn>
@@ -31,7 +31,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="white" elevate-on-scroll>
+    <v-app-bar app color="white" hide-on-scroll :elevation="1">
       <v-btn
         icon
         height="36"
@@ -46,12 +46,12 @@
       <v-toolbar-title
         style="cursor: pointer"
         class="pl-0 ml-1"
-        @click="$router.push('/manager')"
+        @click="$router.push(`/account/facilities/${id}`)"
       >
         <v-img src="/logo.svg" />
       </v-toolbar-title>
       <v-divider vertical inset class="mx-1" />
-      <span class="primary--text subtitle-1 font-weight-bold"> Manager </span>
+      <span class="primary--text font-weight-bold"> Manager </span>
 
       <v-spacer />
 
@@ -73,22 +73,79 @@
         color="secondary"
         depressed
         class="hidden-sm-and-down font-weight-bold subtitle-1"
-        to="/manager/walk-ins"
+        :to="`/account/facilities/${id}/walk-ins`"
         style="text-transform: capitalize"
       >
         Walk-ins
       </v-btn>
       <v-spacer />
-      <v-btn icon height="42" width="42" to="/manager/profile">
-        <v-avatar size="42">
-          <v-img src="/img/mcdonald-icon.png" alt="Kipspace" />
-        </v-avatar>
-      </v-btn>
+      <v-menu offset-y min-width="250" open-on-hover>
+        <template v-slot:activator="{ on }">
+          <v-btn icon height="42" width="42" v-on="on">
+            <v-avatar
+              size="42"
+              color="primary"
+              class="headline white--text font-weight-bold text-uppercase"
+            >
+              <v-img v-if="user.avatar" :src="user.avatar" />
+              <span v-else>
+                {{ getInitials(user.firstname ? user.firstname : user.email) }}
+              </span>
+            </v-avatar>
+          </v-btn>
+        </template>
+        <v-card color="white">
+          <!-- User Faciities' Link -->
+          <v-list
+            v-show="user.facilities"
+            light
+            color="grey lighten-5"
+            class="pa-0"
+          >
+            <v-list-item
+              v-for="(item, f) in user.facilities"
+              :key="f"
+              :to="`/account/facilities/${item._id}`"
+              style="border-bottom: 1px solid #ccc"
+              active-class="primary white--text"
+            >
+              <v-list-item-content>
+                <v-list-item-title class="subtitle-1 text-capitalize">
+                  {{ item.name }}
+                </v-list-item-title>
+                <div class="subtitle-2">Go to Dashboard</div>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <!-- User profile menu -->
+          <v-list class="pa-0">
+            <v-list-item to="/account/profile">
+              <v-list-item-title>My Profile</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/account/change-password">
+              <v-list-item-title>Change password</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-btn
+                block
+                color="secondary"
+                class="text-capitalize"
+                width="90%"
+                depressed
+                @click="signOut()"
+              >
+                Logout
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
     </v-app-bar>
 
     <!-- Content -->
     <v-main>
       <nuxt />
+      <Snackbar />
     </v-main>
 
     <!-- Footer -->
@@ -97,28 +154,47 @@
 </template>
 
 <script>
+import getInitials from '~/utils/getInitials'
+
 export default {
   middleware: ['authenticated'],
-  data: () => ({
-    drawer: false,
-    links: [
-      { text: 'Dashboard', to: '/manager' },
-      { text: 'Notifications', to: '/manager/notifications' },
-      { text: 'Exit Code', to: '/manager/exit' },
-    ],
-  }),
+  data() {
+    return {
+      id: this.$route.params.id,
+      drawer: false,
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.profile
+    },
+    links() {
+      return [
+        { text: 'Dashboard', to: `/account/facilities/${this.id}` },
+        { text: 'Profile', to: `/account/facilities/${this.id}/profile` },
+        {
+          text: 'Notifications',
+          to: `/account/facilities/${this.id}/notifications`,
+        },
+        { text: 'Exit Code', to: `/account/facilities/${this.id}/exit` },
+      ]
+    },
+  },
   methods: {
+    getInitials,
     toggleDrawer() {
       this.drawer = !this.drawer
     },
-    signOut() {
-      this.$store.commit('user/logout')
+    async signOut() {
+      await this.$apolloHelpers.onLogout().then(() => {
+        this.$store.commit('user/setUser', null)
+        this.$store.commit('snackbar/show', {
+          text: 'Logged out successfully',
+          icon: 'success',
+        })
+        this.$router.go('/')
+      })
     },
-  },
-  head() {
-    return {
-      title: 'Dashboard / Facility Manager',
-    }
   },
 }
 </script>

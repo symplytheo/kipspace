@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat :to="`/facilities/${facility._id}`">
     <v-img
       :src="facility.cover ? facility.cover : '/img/burger.png'"
       :aspect-ratio="17 / 12"

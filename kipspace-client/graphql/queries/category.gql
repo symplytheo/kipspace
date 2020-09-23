@@ -1,20 +1,14 @@
-query Category {
-  category {
+query Category($filter: CategoryPublicFilter) {
+  category(filter: $filter) {
     _id
     name
-    icon
     description
+    icon
     facilities {
       count
       items {
         _id
         name
-        location {
-          address
-          state
-          city
-        }
-        capacity
       }
     }
   }

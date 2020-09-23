@@ -1,0 +1,8 @@
+mutation UpdateFacility($record: UpdateByIdFacilityInput) {
+  updateFacility(record: $record) {
+    record {
+      _id
+      name
+    }
+  }
+}

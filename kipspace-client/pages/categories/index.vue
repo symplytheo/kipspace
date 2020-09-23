@@ -1,16 +1,8 @@
 <template>
-  <div id="search">
+  <div>
     <v-sheet tile width="100%" elevation="3">
       <v-container>
         <v-row justify="center">
-          <v-col cols="11" sm="8" lg="6" class="pt-5">
-            <v-text-field
-              outlined
-              rounded
-              placeholder="search or type location"
-              append-icon="mdi-magnify"
-            />
-          </v-col>
           <v-col cols="12">
             <v-slide-group :mobile-breakpoint="900">
               <v-slide-item v-for="(item, i) in categories.items" :key="i">
@@ -38,50 +30,8 @@
       </v-container>
     </v-sheet>
 
-    <v-container class="py-10">
-      <div class="mb-5 ml-3 title font-weight-bold">Results</div>
-      <v-slide-group :mobile-breakpoint="900">
-        <v-slide-item v-for="i in 10" :key="i">
-          <v-card outlined flat width="250" class="mx-3">
-            <v-img src="/img/pizza.png" :aspect-ratio="16 / 9" class="pt-5">
-            </v-img>
-            <v-card-text class="black--text">
-              <div class="subtitle-1 font-weight-bold">Dominos Pizza</div>
-              <div class="py-2">
-                No. 6 Adenuga street, Ibara-expressway, Lagos State.
-              </div>
-              <div><b>Capacity:</b> 250</div>
-              <div class="py-2">
-                <b>Rating:</b>
-                <v-rating
-                  :value="4"
-                  half-increments
-                  color="primary"
-                  background-color="primary"
-                  dense
-                  readonly
-                  size="16"
-                  class="d-inline"
-                />
-              </div>
-              <div>
-                <v-btn
-                  color="secondary"
-                  class="text-capitalize"
-                  depressed
-                  to="/make-reservation"
-                >
-                  Reserve
-                </v-btn>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-    </v-container>
-
     <v-container>
-      <div class="title font-weight-bold">Top Searches</div>
+      <div class="title font-weight-bold">Top Facilities</div>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
@@ -133,7 +83,7 @@ export default {
   },
   head() {
     return {
-      title: 'Search',
+      title: 'All Categories',
     }
   },
 }

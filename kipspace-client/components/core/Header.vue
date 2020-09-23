@@ -20,7 +20,7 @@
           depressed
           color="secondary"
           class="text-capitalize"
-          to="/make-reservation"
+          to="/categories"
           active-class="mkr-active"
         >
           Make Reservation
@@ -28,12 +28,9 @@
       </v-toolbar>
 
       <div v-if="isLoggedIn">
-        <v-list>
+        <v-list dark nav>
           <v-list-item v-for="(link, n) in navLinks" :key="n" :to="link.href">
             <v-list-item-title>{{ link.text }}</v-list-item-title>
-          </v-list-item>
-          <v-list-item link @click="signOut">
-            <v-list-item-title>Log Out</v-list-item-title>
           </v-list-item>
         </v-list>
       </div>
@@ -60,7 +57,7 @@
       </div>
     </v-navigation-drawer>
 
-    <v-app-bar app color="white" elevate-on-scroll>
+    <v-app-bar app color="white" hide-on-scroll :elevation="1">
       <v-btn
         icon
         height="36"
@@ -131,18 +128,70 @@
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-btn icon height="42" width="42" to="/account/profile">
-          <v-avatar
-            size="42"
-            color="primary"
-            class="headline white--text font-weight-bold text-uppercase"
-          >
-            <v-img v-if="user.avatar" :src="user.avatar" />
-            <span v-else>
-              {{ getInitials(user.firstname ? user.firstname : user.email) }}
-            </span>
-          </v-avatar>
-        </v-btn>
+        <v-menu offset-y min-width="250" open-on-hover>
+          <template v-slot:activator="{ on }">
+            <v-btn icon height="42" width="42" v-on="on">
+              <v-avatar
+                size="42"
+                color="primary"
+                class="headline white--text font-weight-bold text-uppercase"
+              >
+                <v-img v-if="user.avatar" :src="user.avatar" />
+                <span v-else>
+                  {{
+                    getInitials(user.firstname ? user.firstname : user.email)
+                  }}
+                </span>
+              </v-avatar>
+            </v-btn>
+          </template>
+          <v-card color="white">
+            <!-- User Faciities' Link -->
+            <v-list
+              v-show="user.facilities"
+              light
+              color="grey lighten-5"
+              class="pa-0"
+            >
+              <v-list-item
+                v-for="(item, f) in user.facilities"
+                :key="f"
+                :to="`/account/facilities/${item._id}`"
+                style="border-bottom: 1px solid #ccc"
+              >
+                <v-list-item-content>
+                  <v-list-item-title class="subtitle-1 text-capitalize">
+                    {{ item.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle class="subtitle-2">
+                    Go to Dashboard
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <!-- User profile menu -->
+            <v-list class="pa-0">
+              <v-list-item to="/account/profile">
+                <v-list-item-title>My Profile</v-list-item-title>
+              </v-list-item>
+              <v-list-item to="/account/change-password">
+                <v-list-item-title>Change password</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-btn
+                  block
+                  color="secondary"
+                  class="text-capitalize"
+                  width="90%"
+                  depressed
+                  @click="signOut()"
+                >
+                  Logout
+                </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-menu>
       </div>
 
       <div v-else>
@@ -203,8 +252,15 @@ export default {
     toggleDrawer() {
       this.drawer = !this.drawer
     },
-    signOut() {
-      this.$store.commit('user/logout')
+    async signOut() {
+      await this.$apolloHelpers.onLogout().then(() => {
+        this.$store.commit('user/setUser', null)
+        this.$store.commit('snackbar/show', {
+          text: 'Logged out successfully',
+          icon: 'success',
+        })
+        this.$router.go(0)
+      })
     },
   },
 }
@@ -225,9 +281,5 @@ export default {
 }
 .mkr-active {
   opacity: 0.8;
-}
-
-#navbar .v-btn--fab.v-size--default {
-  height: 46px;
 }
 </style>
