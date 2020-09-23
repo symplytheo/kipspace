@@ -32,7 +32,7 @@ export const FacilityQuery = {
 				throw new UserInputError(message, { invalidArgs: ['_id'] });
 			});
 
-			if (facility.user !== c.user._id)
+			if (`${facility.user}` !== `${c.user._id}`)
 				throw new ForbiddenError('Facility does not belong to you.');
 
 			const res = next(s, a, c, i);

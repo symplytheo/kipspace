@@ -1,0 +1,39 @@
+query UserFacility($_id: MongoID!) {
+  facility(_id: $_id) {
+    _id
+    name
+    short_description
+    description
+    logo
+    cover
+    gallery
+    location {
+      address
+      state
+      city
+      country {
+        _id
+        name
+        flag_url
+      }
+    }
+    capacity
+    category {
+      _id
+      name
+    }
+    available_seats
+    opening_hours {
+      day
+      from
+      to
+    }
+    reviews {
+      _id
+      display_name
+      rating
+      review
+      createdAt
+    }
+  }
+}

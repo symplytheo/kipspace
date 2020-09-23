@@ -1,0 +1,10 @@
+mutation createCategory($record: CreateOneCategoryInput!)  {
+  createCategory(record: $record) {
+    record {
+      _id
+      name
+      description
+      icon
+    }
+  }
+}

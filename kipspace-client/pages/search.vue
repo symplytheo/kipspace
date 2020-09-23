@@ -3,33 +3,31 @@
     <v-sheet tile width="100%" elevation="3">
       <v-container>
         <v-row justify="center">
-          <v-col cols="10" sm="8" lg="6" class="pt-5">
+          <v-col cols="11" sm="8" lg="6" class="pt-5">
             <v-text-field
               outlined
               rounded
               placeholder="search or type location"
               append-icon="mdi-magnify"
-            ></v-text-field>
+            />
           </v-col>
           <v-col cols="12">
-            <v-slide-group 
-              :mobile-break-point="900"
-            >
-              <v-slide-item v-for="(item, i) in categories" :key="i">
-                <v-card 
-                  flat 
-                  class="pa-0 mx-5" 
-                  style="border-radius: 50px" 
-                  :to="`/category/${item.slug}`"
+            <v-slide-group :mobile-breakpoint="900">
+              <v-slide-item v-for="(item, i) in categories.items" :key="i">
+                <v-card
+                  flat
+                  class="pa-0 mx-5"
+                  style="border-radius: 50px"
+                  :to="`/categories/${item._id}`"
                 >
                   <div class="category-box d-flex align-center pr-5">
                     <div class="icon-box">
                       <v-icon color="primary" large>
-                        {{item.icon}}
+                        {{ item.icon }}
                       </v-icon>
                     </div>
-                    <h4 class="d-inline ml-3 primary--text">
-                      {{item.text}}
+                    <h4 class="d-inline ml-3 primary--text text-capitalize">
+                      {{ item.name }}
                     </h4>
                   </div>
                 </v-card>
@@ -41,34 +39,33 @@
     </v-sheet>
 
     <v-container class="py-10">
-      <h3 class="mb-5 ml-3">Results</h3>
-      <v-slide-group>
+      <div class="mb-5 ml-3 title font-weight-bold">Results</div>
+      <v-slide-group :mobile-breakpoint="900">
         <v-slide-item v-for="i in 10" :key="i">
           <v-card outlined flat width="250" class="mx-3">
-            <v-img src="/img/pizza.png" :aspect-ratio="16/9" class="pt-5">
+            <v-img src="/img/pizza.png" :aspect-ratio="16 / 9" class="pt-5">
             </v-img>
-            <v-card-text class="black--text pl-10">
-              <h3>Dominos Pizza</h3>
+            <v-card-text class="black--text">
+              <div class="subtitle-1 font-weight-bold">Dominos Pizza</div>
               <div class="py-2">
                 No. 6 Adenuga street, Ibara-expressway, Lagos State.
               </div>
-              <div>
-                <b>Capacity:</b> 250
-              </div>
+              <div><b>Capacity:</b> 250</div>
               <div class="py-2">
-                <b>Rating:</b> 
+                <b>Rating:</b>
                 <v-rating
-                  value=4
+                  :value="4"
                   half-increments
                   color="primary"
                   background-color="primary"
                   dense
+                  readonly
                   size="16"
                   class="d-inline"
-                ></v-rating>
+                />
               </div>
               <div>
-                <v-btn 
+                <v-btn
                   color="secondary"
                   class="text-capitalize"
                   depressed
@@ -84,38 +81,25 @@
     </v-container>
 
     <v-container>
-      <h3>Top Searches</h3>
+      <div class="title font-weight-bold">Top Searches</div>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col cols="6" md="3" v-for="g in 8" :key="g">
-              <v-card flat link>
-                <v-img src="/img/burger.png" :aspect-ratio="17/12"/>
-              </v-card>
-              <v-row>
-                <v-col cols="7">
-                  <h4>Dominos Pizza</h4>
-                </v-col>
-                <v-col cols="5" class="text-right">
-                  <v-rating
-                    :value=3
-                    half-increments
-                    background-color="primary"
-                    color="primary"
-                    dense
-                    size="14"
-                  ></v-rating>
-                </v-col>
-              </v-row>
+            <v-col
+              v-for="(item, f) in facilities.items"
+              :key="f"
+              cols="6"
+              md="3"
+            >
+              <FacilityCard :facility="item" />
             </v-col>
             <v-col cols="12" class="my-2">
-              <v-pagination 
-                :length="6" 
-                :value=1
+              <v-pagination
+                :length="6"
+                :value="1"
                 color="primary"
                 class="pagination"
-              >
-              </v-pagination>
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -125,28 +109,44 @@
 </template>
 
 <script>
+import CategoriesGql from '~/graphql/queries/categories'
+import FacilitiesGql from '~/graphql/queries/facilities'
+
 export default {
-  computed: {
-    categories() {
-      return this.$store.getters['category/categories'];
-    }
+  data: () => ({
+    categories: {
+      items: [],
+    },
+    facilities: {
+      items: [],
+    },
+  }),
+  apollo: {
+    categories: {
+      query: CategoriesGql,
+      prefetch: true,
+    },
+    facilities: {
+      query: FacilitiesGql,
+      prefetch: true,
+    },
   },
   head() {
     return {
-      title: 'Search'
-    };
-  }
+      title: 'Search',
+    }
+  },
 }
 </script>
 
 <style>
 .category-box {
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   border-radius: 50px;
   height: 70px;
 }
 .icon-box {
-  border: 5px solid #360F4F;
+  border: 5px solid #360f4f;
   height: 69px;
   width: 69px;
   display: inline-flex;

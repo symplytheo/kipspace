@@ -1,0 +1,12 @@
+query Users {
+  users {
+    count
+    items {
+      _id
+      firstname
+      lastname
+      email
+      role
+    }
+  }
+}
