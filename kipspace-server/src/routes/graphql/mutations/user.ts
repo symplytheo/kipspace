@@ -1,12 +1,10 @@
-import { AuthenticationError } from 'apollo-server-express';
-
 import { UserTC } from '@models/User.model';
 import { CheckAdmin, CheckAuth } from '@middlewares/resolver.middleware';
 
 export const UserMutation = {
 	updateUser: UserTC.getResolver('updateById', [CheckAuth, CheckAdmin]),
 
-	updateProfile: UserTC.getResolver('updateById', [CheckAuth])
+	updateProfile: UserTC.getResolver('updateById')
 		.wrap(
 			(resolver) => {
 				resolver.cloneArg('record', 'userProfile');
@@ -23,10 +21,8 @@ export const UserMutation = {
 			}
 		)
 		.wrapResolve((next) => ({ context, args, ...rp }) => {
-			if (!(context as any).auth)
-				throw new AuthenticationError('Authentication failed');
-
 			args.record._id = (context as any).user._id;
 			return next({ args, context, ...rp });
-		}),
+		})
+		.withMiddlewares([CheckAuth]),
 };

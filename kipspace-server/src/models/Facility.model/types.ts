@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { ICategory } from '@models/Category.model';
-import { IReservation } from '@models/Reservation.model';
+// import { IReservation } from '@models/Reservation.model';
 import { INotification } from '@models/Notification.model';
 import { IUser } from '@models/User.model';
 
@@ -16,11 +16,15 @@ export interface Facility {
 	location: string;
 	user: IUser['_id'];
 	category: ICategory['_id'];
+	cover?: string;
+	logo?: string;
+	gallery?: string;
 	email: string;
 	phone: string;
-	capacity: string;
+	capacity: number;
+	available_seats: number;
 	opening_hours: OpeningHour[];
-	reservations: IReservation['_id'][];
+	// reservations: IReservation['_id'][];
 	notifications: INotification['_id'][];
 	is_active: boolean;
 	is_deleted: boolean;
