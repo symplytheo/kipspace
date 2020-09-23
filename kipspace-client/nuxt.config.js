@@ -22,6 +22,10 @@ export default {
     ],
   },
   loading: { color: '#EA3788' },
+  components: [
+    '~/components/',
+    { path: '~/components/make-reservation/', prefix: 'Mkr' },
+  ],
   css: [],
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'http://localhost:3000',

@@ -1,0 +1,15 @@
+query Category($filter: CategoryPublicFilter) {
+  category(filter: $filter) {
+    _id
+    name
+    description
+    icon
+    facilities {
+      count
+      items {
+        _id
+        name
+      }
+    }
+  }
+}

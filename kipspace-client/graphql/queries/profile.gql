@@ -5,6 +5,7 @@ query Profile {
 		lastname
 		email
 		phone
+		role
 		facilities {
 			_id
 			name

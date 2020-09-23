@@ -1,0 +1,10 @@
+mutation UpdateCategory($record: UpdateByIdCategoryInput!) {
+  updateCategory (record: $record) {
+    record {
+      _id
+      name
+      description
+      icon
+    }
+  }
+}

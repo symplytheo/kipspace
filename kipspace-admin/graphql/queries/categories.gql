@@ -1,0 +1,14 @@
+query Categories {
+  categories {
+    count
+    items {
+     _id
+      name
+      description
+      icon
+      facilities {
+        count
+      }
+    }
+  }
+}
