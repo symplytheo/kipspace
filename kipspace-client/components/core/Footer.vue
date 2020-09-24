@@ -13,19 +13,20 @@
                     v-for="(item, f) in user.facilities"
                     v-show="user.facilities"
                     :key="f"
-                    :to="`/account/facilities/${item._id}`"
+                    link
+                    :href="`/account/facilities/${item._id}`"
                   >
-                    <v-list-item-title class="subtitle-1 text-capitalize">
+                    <v-list-item-title class="text-capitalize">
                       {{ item.name }}
                     </v-list-item-title>
                   </v-list-item>
-                  <!-- <v-list-item link @click="openCreateFacility">
-                    <v-list-item-title class="subtitle-1 text-capitalize">
+                  <v-list-item link @click.stop="openCreateFacility = true">
+                    <v-list-item-title class="text-capitalize">
                       Create Facility
                     </v-list-item-title>
-                  </v-list-item> -->
+                  </v-list-item>
                   <v-list-item link @click="signOut">
-                    <v-list-item-title class="subtitle-1 text-capitalize">
+                    <v-list-item-title class="text-capitalize">
                       Log out
                     </v-list-item-title>
                   </v-list-item>
@@ -84,13 +85,24 @@
         </v-col>
       </v-row>
     </v-container>
-    <CreateFacilityDialog />
+
+    <!-- Create Facility dialog -->
+    <CreateFacilityDialog
+      :visible="openCreateFacility"
+      @close="openCreateFacility = false"
+    />
+    <!--  -->
   </v-footer>
 </template>
 
 <script>
 export default {
   name: 'view-footer',
+  data() {
+    return {
+      openCreateFacility: false,
+    }
+  },
   computed: {
     isLoggedIn() {
       return this.$store.state.user.authenticated
@@ -103,9 +115,6 @@ export default {
     },
   },
   methods: {
-    openCreateFacility() {
-      this.$store.commit('facility/openDialog')
-    },
     async signOut() {
       await this.$apolloHelpers.onLogout().then(() => {
         this.$store.commit('user/setUser', null)
@@ -113,7 +122,7 @@ export default {
           text: 'Logged out successfully',
           icon: 'success',
         })
-        this.$router.go(0)
+        // this.$router.go(0)
       })
     },
   },
