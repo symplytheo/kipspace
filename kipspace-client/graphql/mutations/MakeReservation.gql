@@ -1,0 +1,16 @@
+mutation ($record: NewReservation) {
+  makeReservation (record: $record) {
+    record {
+      _id
+      facility {
+        _id
+        name
+      }
+      seats
+      statuses {
+        _id
+        status
+      }
+    }
+  }
+}

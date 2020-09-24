@@ -14,11 +14,11 @@
     <v-card-text class="px-0">
       <v-row no-gutters align="center">
         <v-col>
-          <h4 class="text-truncate">{{ facility.name }}</h4>
+          <h4 class="text-truncate text-capitalize">{{ facility.name }}</h4>
         </v-col>
         <v-col cols="auto" class="text-right pl-0">
           <v-rating
-            :value="facility.review && facility.review.rating"
+            :value="4.2"
             readonly
             half-increments
             background-color="primary"
@@ -42,9 +42,6 @@ export default {
         return {
           name: 'Dominos Pizza',
           cover: '/img/burger.png',
-          review: {
-            rating: 4.6,
-          },
         }
       },
     },

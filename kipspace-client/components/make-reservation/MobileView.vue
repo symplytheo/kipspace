@@ -3,57 +3,84 @@
     <v-container class="px-sm-10">
       <v-row>
         <v-col cols="4" class="py-3 pr-0">
-          <v-select :items="['today', 'tomorrow']" label="day" solo flat />
-        </v-col>
-        <v-col cols="3" class="py-3 pl-2">
           <v-dialog
-            ref="timeModal"
-            v-model="selectTime"
-            :return-value.sync="time"
+            ref="date"
+            v-model="datepicker"
+            :return-value.sync="date_reserved"
             persistent
-            width="290px"
+            width="290"
+            hide-overlay
           >
-            <template v-slot:activator="{ on }">
-              <v-btn
-                height="50"
-                text
-                block
-                depressed
-                class="text-lowercase time-btn"
-                style="border: 1px solid #d1d1d1"
-                :class="!time ? 'grey--text text--darken-1' : ''"
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="date_reserved"
+                label="date"
+                readonly
+                outlined
+                v-bind="attrs"
                 v-on="on"
-              >
-                {{ time ? time : 'time' }}
-                <v-icon right>mdi-menu-down</v-icon>
-              </v-btn>
+              />
             </template>
-            <v-time-picker
-              v-if="selectTime"
-              v-model="time"
-              color="primary"
-              ampm-in-title
-            >
-              <v-spacer></v-spacer>
-              <v-btn text color="primary" @click="selectTime = false">
-                Cancel
+            <v-date-picker v-model="date_reserved" scrollable>
+              <v-spacer />
+              <v-btn text small color="secondary" @click="datepicker = false">
+                cancel
               </v-btn>
-              <v-btn text color="primary" @click="$refs.timeModal.save(time)">
-                Save
+              <v-btn
+                text
+                small
+                color="secondary"
+                @click="$refs.date.save(date_reserved)"
+              >
+                save
+              </v-btn>
+            </v-date-picker>
+          </v-dialog>
+        </v-col>
+        <v-col cols="4" class="pr-0">
+          <v-dialog
+            ref="time"
+            v-model="timepicker"
+            :return-value.sync="time_reserved"
+            persistent
+            width="290"
+            hide-overlay
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="time_reserved"
+                label="time"
+                readonly
+                outlined
+                v-bind="attrs"
+                v-on="on"
+              />
+            </template>
+            <v-time-picker v-model="time_reserved" scrollable>
+              <v-spacer />
+              <v-btn text small color="secondary" @click="timepicker = false">
+                cancel
+              </v-btn>
+              <v-btn
+                text
+                small
+                color="secondary"
+                @click="$refs.time.save(time_reserved)"
+              >
+                save
               </v-btn>
             </v-time-picker>
           </v-dialog>
         </v-col>
-        <v-col cols="5" class="py-3 pl-8">
+        <v-col cols="4">
           <v-select
-            :items="['1 seat', '2 seats', '3 seats', '4 seats', '5 seats']"
+            v-model="seats"
+            :items="[1, 2, 3, 4, 5]"
             label="seats"
-            class=""
-            solo
-            flat
-          ></v-select>
+            outlined
+          />
         </v-col>
-        <v-col>
+        <!-- <v-col>
           <v-select
             :items="[
               '15 mins before',
@@ -65,7 +92,7 @@
             solo
             flat
           ></v-select>
-        </v-col>
+        </v-col> -->
         <v-col>
           <v-btn
             x-large
@@ -74,7 +101,8 @@
             height="48"
             class="text-capitalize"
             color="secondary"
-            to="/success"
+            :loading="loading"
+            @click="makeReservation()"
           >
             Reserve
           </v-btn>
@@ -102,8 +130,8 @@
           <v-sheet tile elevation="3">
             <v-container fluid class="px-sm-10">
               <v-row>
-                <v-col cols="4" sm="3" class="pl-0">
-                  <v-avatar size="120" class="biz-logo">
+                <v-col cols="3" sm="3" class="pl-0">
+                  <v-avatar size="110" class="biz-logo">
                     <v-img
                       :src="
                         facility.logo ? facility.logo : '/img/mcdonald-icon.png'
@@ -112,7 +140,7 @@
                     />
                   </v-avatar>
                 </v-col>
-                <v-col cols="8" sm="9" class="pt-0 pl-8 pl-sm-0">
+                <v-col cols="9" sm="9" class="pt-0 pl-8 pl-sm-0">
                   <div class="subtitle-1 font-weight-bold">
                     {{ facility.name }}
                   </div>
@@ -280,6 +308,8 @@
 </template>
 
 <script>
+import MakeReservationGql from '~/graphql/mutations/MakeReservation'
+
 export default {
   props: {
     facility: {
@@ -287,19 +317,28 @@ export default {
       default: () => ({}),
     },
   },
-  data: () => ({
-    time: null,
-    selectTime: false,
-    rating: [
-      { num: 5, value: 100 },
-      { num: 4, value: 50 },
-      { num: 3, value: 30 },
-      { num: 2, value: 15 },
-      { num: 1, value: 0 },
-    ],
-  }),
+  data() {
+    return {
+      seats: '',
+      date_reserved: '',
+      time_reserved: '',
+      // for dialogs
+      datepicker: false,
+      timepicker: false,
+      loading: false,
+      //
+      rating: [
+        { num: 5, value: 100 },
+        { num: 4, value: 50 },
+        { num: 3, value: 30 },
+        { num: 2, value: 15 },
+        { num: 1, value: 0 },
+      ],
+    }
+  },
   computed: {
     facilityAddress() {
+      // join address, city, state & country
       return (
         this.facility.location.address +
         ', ' +
@@ -311,6 +350,8 @@ export default {
       )
     },
     averageRating() {
+      // calculate the average rating for facility
+      // returns 1 if result is zero to avoid NaN when 0/0
       let sum = 0
       for (const item in this.facility.reviews) {
         sum += item.rating
@@ -318,6 +359,39 @@ export default {
       const length = this.facility.reviews.length
       const average = sum / (length !== 0 ? length : 1)
       return average > 0 ? average : average + 1
+    },
+  },
+  methods: {
+    async makeReservation() {
+      this.loading = true
+      //
+      const record = {
+        facility: this.facility._id,
+        seats: this.seats,
+        date_reserved: this.date_reserved,
+        time_reserved: this.time_reserved,
+      }
+      try {
+        await this.$apollo.mutate({
+          mutation: MakeReservationGql,
+          variables: { record },
+        })
+        this.$store.commit('snackbar/show', {
+          text: 'Reservation was successfully made',
+          icon: 'success',
+        })
+        this.$router.push('/success')
+      } catch (error) {
+        // log error in console
+        // snackbar for error not perfected yet
+        console.log(error)
+        this.$store.commit('snackbar/show', {
+          text: error,
+          icon: 'success',
+        })
+      } finally {
+        this.loading = false
+      }
     },
   },
 }
