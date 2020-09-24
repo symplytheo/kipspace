@@ -13,12 +13,10 @@
 
       <v-spacer />
 
-      <v-btn color="primary" class="text-capitalize" @click="dialog = !dialog">
-        Add User
-      </v-btn>
+      <v-btn color="primary" class="text-capitalize"> Add User </v-btn>
     </v-toolbar>
 
-    <v-dialog v-model="dialog" persistent max-width="600">
+    <!-- <v-dialog v-model="dialog" persistent max-width="600">
       <v-card>
         <v-toolbar color="transparent" dense flat>
           <v-toolbar-title class="font-weight-bold">
@@ -104,7 +102,7 @@
           </v-form>
         </v-card-text>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
 
     <v-card elevation="3" class="mt-10">
       <v-row align="center">
@@ -244,7 +242,7 @@
             color="primary"
             circle
             class="ma-2 pagination"
-          ></v-pagination>
+          />
         </v-col>
       </v-row>
     </v-card>
@@ -252,7 +250,7 @@
 </template>
 
 <script>
-import CreateUserGql from '~/graphql/mutations/CreateUser'
+// import CreateUserGql from '~/graphql/mutations/CreateUser'
 import UpdateUserGql from '~/graphql/mutations/UpdateUser'
 import UsersGql from '~/graphql/queries/users'
 import { emailValidation } from '~/utils/validation'
@@ -264,15 +262,15 @@ export default {
       count: 0,
       items: [],
     },
-    dialog: false,
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    role: '',
-    showPwd: false,
+    // dialog: false,
+    // firstname: '',
+    // lastname: '',
+    // email: '',
+    // password: '',
+    // role: '',
+    // showPwd: false,
     loading: false,
-    addUserForm: false,
+    // addUserForm: false,
     menu: [],
   }),
   apollo: {
@@ -283,39 +281,37 @@ export default {
   },
   methods: {
     emailValidation,
-    async addUser() {
-      this.loading = true
-      const record = {
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.password,
-        role: this.role,
-      }
-      try {
-        await this.$apollo
-          .mutate({
-            mutation: CreateUserGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.$store.commit('snackbar/show', {
-              text: 'User was added successfully',
-              icon: 'success',
-            })
-            this.$router.go(0)
-          })
-      } catch (error) {
-        // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
-        this.$store.commit('snackbar/show', {
-          text: response.data.message,
-          icon: 'error',
-        })
-      } finally {
-        this.loading = false
-      }
-    },
+    // async addUser() {
+    //   this.loading = true
+    //   const record = {
+    //     firstname: this.firstname,
+    //     lastname: this.lastname,
+    //     email: this.email,
+    //     password: this.password,
+    //     role: this.role,
+    //   }
+    //   try {
+    //     await this.$apollo
+    //       .mutate({
+    //         mutation: CreateUserGql,
+    //         variables () { return { record } },
+    //       })
+    //         this.$store.commit('snackbar/show', {
+    //           text: 'User was added successfully',
+    //           icon: 'success',
+    //         })
+    //         this.$router.go(0)
+    //   } catch (error) {
+    //     // eslint-disable-next-line no-unused-vars
+    //     console.log(error)
+    //     this.$store.commit('snackbar/show', {
+    //       text: error,
+    //       icon: 'error',
+    //     })
+    //   } finally {
+    //     this.loading = false
+    //   }
+    // },
     async updateUser(user, u) {
       this.loading = true
       const record = {
@@ -326,23 +322,20 @@ export default {
         role: user.role,
       }
       try {
-        await this.$apollo
-          .mutate({
-            mutation: UpdateUserGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.menu[u] = false
-            this.$store.commit('snackbar/show', {
-              text: 'User was updated successfully',
-              icon: 'success',
-            })
-          })
+        await this.$apollo.mutate({
+          mutation: UpdateUserGql,
+          variables: { record },
+        })
+        this.menu[u] = false
+        this.$store.commit('snackbar/show', {
+          text: 'User was updated successfully',
+          icon: 'success',
+        })
       } catch (error) {
         // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
+        console.log(error)
         this.$store.commit('snackbar/show', {
-          text: response.data.message,
+          text: error,
           icon: 'error',
         })
       } finally {
