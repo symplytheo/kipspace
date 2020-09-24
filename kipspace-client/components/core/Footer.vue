@@ -25,6 +25,11 @@
                       Create Facility
                     </v-list-item-title>
                   </v-list-item>
+                  <!-- <v-list-item link @click="openCreateFacility">
+                    <v-list-item-title class="subtitle-1 text-capitalize">
+                      Create Facility
+                    </v-list-item-title>
+                  </v-list-item> -->
                   <v-list-item link @click="signOut">
                     <v-list-item-title class="text-capitalize">
                       Log out
