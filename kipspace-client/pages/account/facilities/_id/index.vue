@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-toolbar flat>
-        <v-toolbar-title class="font-weight-bold primary--text">
+        <v-toolbar-title class="font-weight-bold primary--text text-capitalize">
           {{ facility.name }}
         </v-toolbar-title>
       </v-toolbar>

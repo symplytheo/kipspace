@@ -1,16 +1,7 @@
-query Profile {
-	profile {
-		_id
-		firstname
-		lastname
-		email
-		phone
-		role
-		facilities {
-			_id
-			name
-		}
-    reservations {
+query Reservations ($filter: FilterFindManyReservationInput) {
+  reservations (filter: $filter) {
+    count
+    items {
       _id
       facility {
         _id
@@ -27,8 +18,10 @@ query Profile {
       }
       seats
       date_reserved
-      time_reserved
-      current_status
+      statuses {
+        _id
+        status
+      }
     }
-	}
+  }
 }

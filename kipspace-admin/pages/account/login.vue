@@ -98,12 +98,20 @@ export default {
         await client.clearStore()
         //
         const userData = await this.$apollo.query({ query: ProfileGql })
-        this.$store.commit('user/setUser', userData.data.profile)
-        this.$store.commit('snackbar/show', {
-          text: 'Login was successfull',
-          icon: 'success',
-        })
-        this.$router.replace('/')
+        if (userData.data.profile !== 'ADMIN') {
+          this.$store.commit('user/setUser', null)
+          this.$store.commit('snackbar/show', {
+            text: 'User is not an admin',
+            icon: 'success',
+          })
+        } else {
+          this.$store.commit('user/setUser', userData.data.profile)
+          this.$store.commit('snackbar/show', {
+            text: 'Login was successfull',
+            icon: 'success',
+          })
+          this.$router.replace('/')
+        }
       } catch (error) {
         // eslint-disable-next-line no-unused-vars
         const { response, message } = error

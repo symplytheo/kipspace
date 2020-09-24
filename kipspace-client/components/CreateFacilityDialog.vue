@@ -1,12 +1,12 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600">
+  <v-dialog v-model="show" max-width="600">
     <v-card>
       <v-toolbar color="transparent" dense flat>
         <v-toolbar-title class="font-weight-bold">
           Create New Facility
         </v-toolbar-title>
         <v-spacer />
-        <v-btn icon color="primary" @click.stop="close">
+        <v-btn icon color="primary" @click.stop="show = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -17,18 +17,20 @@
               <v-text-field
                 v-model="name"
                 label="Name"
+                outlined
                 counter="32"
                 :rules="[(v) => !!v || 'Name is required']"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="pt-0">
               <v-text-field
                 v-model="short_description"
                 label="Short Description"
+                outlined
                 :rules="[(v) => !!v || 'Short description is required']"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="pt-0">
               <v-select
                 v-model="category"
                 outlined
@@ -38,7 +40,7 @@
                 label="Category"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="pt-0">
               <v-text-field
                 v-model="address"
                 outlined
@@ -46,7 +48,7 @@
                 :rules="[(v) => !!v || 'Facility Address is required']"
               />
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pt-0">
               <v-text-field
                 v-model="city"
                 outlined
@@ -54,7 +56,7 @@
                 :rules="[(v) => !!v || 'City is required']"
               />
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pt-0">
               <v-text-field
                 v-model="state"
                 outlined
@@ -62,7 +64,7 @@
                 :rules="[(v) => !!v || 'State is required']"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="pt-0">
               <v-select
                 v-model="country"
                 outlined
@@ -72,9 +74,9 @@
                 label="Country"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="pt-0">
               <v-text-field
-                v-model="capacity"
+                v-model.number="capacity"
                 outlined
                 label="Capacity"
                 :rules="[
@@ -83,7 +85,7 @@
                 ]"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="pt-0">
               <v-btn
                 block
                 large
@@ -91,7 +93,7 @@
                 :loading="loading"
                 :disabled="!addFacilityForm"
                 color="secondary"
-                @click="createFacility"
+                @click="createFacility()"
               >
                 Create Facility
               </v-btn>
@@ -109,6 +111,7 @@ import CategoriesGql from '~/graphql/queries/categories'
 import CreateFacilityGql from '~/graphql/mutations/CreateFacility'
 
 export default {
+  props: ['visible'],
   data() {
     return {
       name: '',
@@ -119,6 +122,7 @@ export default {
       country: '',
       category: '',
       capacity: '',
+      loading: false,
       addFacilityForm: false,
       categories: {
         items: [],
@@ -139,14 +143,18 @@ export default {
     },
   },
   computed: {
-    dialog() {
-      return this.$store.state.facility.dialog
+    show: {
+      get() {
+        return this.visible
+      },
+      set(value) {
+        if (!value) {
+          this.$emit('close')
+        }
+      },
     },
   },
-  method: {
-    close() {
-      this.$store.commit('facility/toggleDialog')
-    },
+  methods: {
     async createFacility() {
       this.loading = true
       const record = {
@@ -159,20 +167,24 @@ export default {
           country: this.country,
         },
         category: this.category,
-        capacity: this.country,
+        capacity: Number(this.capacity),
       }
       try {
-        await this.$apollo.mutate({
+        const { data } = await this.$apollo.mutate({
           mutation: CreateFacilityGql,
-          variables() {
-            return { record }
-          },
+          variables: { record },
         })
+        console.log(data)
+        //
+        this.show = false
         this.$store.commit('snackbar/show', {
           text: 'Facility was created successfully',
           icon: 'success',
         })
-        this.$router.go(0)
+        this.$router.push(
+          `/account/facilities/${data.createFacility.record._id}`
+        )
+        //
       } catch (error) {
         // eslint-disable-next-line no-unused-vars
         console.log(error)
