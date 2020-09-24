@@ -1,7 +1,7 @@
 <template>
   <div id="mgr-edit">
     <v-container>
-      <v-card outlined flat>
+      <v-card outlined flat class="my-5">
         <v-sheet tile height="150" color="grey lighten-4">
           <v-img height="100%" src="/img/chips.png">
             <v-row align="end" justify="end" class="fill-height">
@@ -72,11 +72,13 @@
             />
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
-              v-model="item.location.country.name"
+            <v-select
+              v-model="country"
               outlined
+              :items="countries.items"
+              item-text="name"
+              item-value="_id"
               label="Country"
-              readonly
             />
           </v-col>
           <v-col cols="12" md="6">
@@ -187,7 +189,7 @@
               depressed
               large
               :loading="loading"
-              @click="updateFacility"
+              @click="updateFacility(item)"
             >
               Update facility
             </v-btn>
@@ -201,6 +203,7 @@
 
 <script>
 import UserFacilityGql from '~/graphql/queries/user-facility'
+import CountriesGql from '~/graphql/queries/countries'
 import UpdateFacilityGql from '~/graphql/mutations/UpdateFacility'
 import { emailValidation } from '~/utils/validation'
 
@@ -225,6 +228,9 @@ export default {
         capacity: 0,
         reviews: [],
       },
+      countries: {
+        items: [],
+      },
       opening: [
         { day: 'Monday', from: '', to: '' },
         { day: 'Tuesday', from: '', to: '' },
@@ -236,6 +242,7 @@ export default {
       ],
       menu: [],
       menu2: [],
+      country: '',
     }
   },
   apollo: {
@@ -247,6 +254,10 @@ export default {
         }
       },
     },
+    countries: {
+      query: CountriesGql,
+      prefetch: true,
+    },
   },
   computed: {
     item() {
@@ -256,54 +267,42 @@ export default {
   },
   methods: {
     emailValidation,
-    async updateFacility() {
+    async updateFacility(item) {
       this.loading = true
       const record = {
-        _id: this.item._id,
-        name: this.item.name,
-        short_description: this.item.short_description,
-        capacity: this.item.capacity,
-        // opening_hours: this.opening,
+        _id: item._id,
+        name: item.name,
+        short_description: item.short_description,
         // location: {
-        //   address: this.item.location.address,
-        //   city: this.item.location.city,
-        //   state: this.item.location.state,
+        //   address: item.address,
+        //   city: item.city,
+        //   state: item.state,
         // },
+        // country: item.country,
+        capacity: item.capacity,
+        description: item.description,
       }
-      // try {
-      await this.$apollo
-        .mutate({
+      try {
+        console.log(record.country)
+        await this.$apollo.mutate({
           mutation: UpdateFacilityGql,
-          variables: {
-            record: { _id: '5f69cf30365def0012299d2f', name: 'Chicken & Tinz' },
-          },
+          variables: { record },
         })
-        .then(() => {
-          this.$store.commit('snackbar/show', {
-            text: 'Facility was updated successfully',
-            icon: 'success',
-          })
-          this.$router.go(0)
+        this.$store.commit('snackbar/show', {
+          text: 'Facility was updated successfully',
+          icon: 'success',
         })
-        .catch((error) => {
-          console.log('response ' + error)
+      } catch (error) {
+        console.log('Error ' + error.message)
+        // eslint-disable-next-line no-unused-vars
+        const { response, message } = error
+        this.$store.commit('snackbar/show', {
+          text: response.data.message,
+          icon: 'error',
         })
-        .finally(() => {
-          this.loading = false
-          console.log(record)
-        })
-      //   }) catch (error) {
-      //     console.log(error)
-      //     // eslint-disable-next-line no-unused-var
-      //     const { response, message } = error
-      //     this.$store.commit('snackbar/show', {
-      //       text: response.data.message,
-      //       icon: 'error',
-      //     })
-      //   } finally {
-      //     this.loading = false
-      //   }
-      // },
+      } finally {
+        this.loading = false
+      }
     },
   },
   head() {

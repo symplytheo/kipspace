@@ -100,7 +100,7 @@
         >
           <v-card class="px-3">
             <v-row>
-              <v-col cols="5" sm="4">
+              <v-col cols="5" sm="4" class="pb-0">
                 <v-card
                   class="mx-auto py-5 text-center v-sheet--offset"
                   color="primary"
@@ -109,13 +109,9 @@
                   <v-icon size="50" color="white">{{ item.icon }}</v-icon>
                 </v-card>
               </v-col>
-              <v-col cols="7" sm="8" class="text-right pa-5 primary--text">
+              <v-col cols="7" sm="8" class="text-right pa-5 pb-0 primary--text">
                 <div class="subtitle-1 font-weight-bold pb-2 text-uppercase">
                   {{ item.name }}
-                </div>
-                <div class="display-1 font-weight-bold">
-                  {{ item.facilities.count }}
-                  <span class="subtitle-2">Facilities</span>
                 </div>
               </v-col>
             </v-row>
@@ -221,6 +217,7 @@ export default {
   apollo: {
     categories: {
       query: CategoriesGql,
+      prefetch: true,
     },
   },
   computed: {},
@@ -233,23 +230,23 @@ export default {
         icon: this.icon,
       }
       try {
-        await this.$apollo
-          .mutate({
-            mutation: CreateCategoryGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.$store.commit('snackbar/show', {
-              text: 'Category was added successfully',
-              icon: 'success',
-            })
-            this.$router.go(0)
-          })
+        await this.$apollo.mutate({
+          mutation: CreateCategoryGql,
+          variables() {
+            return { record }
+          },
+        })
+        this.$store.commit('snackbar/show', {
+          text: 'Category was added successfully',
+          icon: 'success',
+        })
+        this.dialog = false
+        this.$router.go(0)
       } catch (error) {
         // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
+        console.log(error)
         this.$store.commit('snackbar/show', {
-          text: response.data.message,
+          text: error,
           icon: 'error',
         })
       } finally {
@@ -265,23 +262,20 @@ export default {
         icon: item.icon,
       }
       try {
-        await this.$apollo
-          .mutate({
-            mutation: UpdateCategoryGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.menu[i] = false
-            this.$store.commit('snackbar/show', {
-              text: 'Category was updated successfully',
-              icon: 'success',
-            })
-          })
+        await this.$apollo.mutate({
+          mutation: UpdateCategoryGql,
+          variables: { record },
+        })
+        this.menu[i] = false
+        this.$store.commit('snackbar/show', {
+          text: 'Category was updated successfully',
+          icon: 'success',
+        })
       } catch (error) {
         // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
+        console.log(error)
         this.$store.commit('snackbar/show', {
-          text: response.data.message,
+          text: error,
           icon: 'error',
         })
       } finally {

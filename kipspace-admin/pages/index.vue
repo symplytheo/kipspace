@@ -49,7 +49,6 @@ import CategoriesGql from '~/graphql/queries/categories'
 import UsersGql from '~/graphql/queries/users'
 
 export default {
-  layout: 'admin',
   data: () => ({
     categories: {
       count: 0,

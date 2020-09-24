@@ -97,7 +97,7 @@
           color="secondary"
           depressed
           class="mr-2 hidden-sm-and-down subtitle-1 font-weight-bold"
-          to="/make-reservation"
+          to="/categories"
           active-class="mkr-active"
           style="text-transform: capitalize"
         >
