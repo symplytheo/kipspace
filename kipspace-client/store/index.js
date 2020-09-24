@@ -1,23 +1,14 @@
-export const state = () => ({
-  isLoggedIn: true,
-  links: [
-    { text: 'Home', href: '/'},
-    { text: 'My Reservations', href: '/reservations'},
-    { text: 'Scan to Exit', href: '/exit'} 
-  ],
-})
+// logged-in user not showing on page refresh
+import ProfileGql from '~/graphql/queries/profile'
 
-export const getters = {
-  isLoggedIn(state) {
-    return state.isLoggedIn;
-  },
-  links(state) {
-    return state.links;
-  }
-}
-
-export const mutations = {
-  signOut (state) {
-    state.isLoggedIn = false;
+export const actions = {
+  async nuxtServerInit({ commit }, context) {
+    const client = context.app.apolloProvider.defaultClient
+    const hasToken = !!context.app.$apolloHelpers.getToken()
+    //
+    if (hasToken) {
+      const userData = await client.query({ query: ProfileGql })
+      commit('user/setUser', userData.data.profile)
+    }
   },
 }

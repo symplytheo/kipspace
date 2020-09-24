@@ -17,8 +17,8 @@ export const actions = {
     setUserInCookie(user)
     commit('setUser', user || null)
   },
-  logout: ({ commit }, { $apollo, $router }) => {
-    return $apollo.onLogout().then(() => {
+  logout({ commit }, { $router }) {
+    return this.$apollo.onLogout().then(() => {
       commit('setUser', null)
       $router.replace('/account/login')
     })

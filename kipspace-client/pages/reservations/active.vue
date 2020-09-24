@@ -8,26 +8,34 @@
           </div>
           <v-card outlined class="my-2">
             <div v-for="v in 7" :key="v">
-              <div class="pa-5">
+              <div class="py-2 px-5">
                 <v-row justify="center" align="end">
-                  <v-col cols="8" sm="9" md="8">
+                  <v-col cols="12" sm="9" md="8">
                     <v-row align="center">
-                      <v-col cols>Feb 3, 2020</v-col>
-                      <v-col cols>12:00PM</v-col>
-                      <v-col cols>
+                      <v-col cols="auto">Feb 3, 2020</v-col>
+                      <v-col cols="auto">12:00PM</v-col>
+                      <v-col cols="auto">
                         <v-icon>mdi-account-multiple</v-icon>
                         1
                       </v-col>
                       <v-col cols="12" class="grey--text">
-                        You were at Dominos Pizza, No.6 Adenuga street, ibara-expressway, lagos state.
+                        You were at Dominos Pizza, No.6 Adenuga street,
+                        ibara-expressway, lagos state.
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col class="py-0">
-                        <v-btn 
-                          color="secondary" 
+                      <v-col cols="5">
+                        <v-img
+                          src="/img/qr-code-black.png"
+                          height="100"
+                          contain
+                        />
+                      </v-col>
+                      <v-col cols="12" class="py-0">
+                        <v-btn
+                          color="secondary"
                           depressed
-                          large 
+                          large
                           class="text-capitalize font-weight-bold"
                         >
                           Cancel Reservation
@@ -35,17 +43,12 @@
                       </v-col>
                     </v-row>
                   </v-col>
-                  <v-col cols="4" sm="3" md="2">
-                    <v-img src="/img/qr-code-black.png" height="100" contain />
-                  </v-col>
                 </v-row>
               </div>
               <v-divider v-if="v != 7"></v-divider>
             </div>
           </v-card>
-          <div class="grey--text py-5 text-center">
-            No active reservations
-          </div>
+          <div class="grey--text py-5 text-center">No active reservations</div>
         </v-col>
       </v-row>
     </v-container>
@@ -55,16 +58,14 @@
 <script>
 export default {
   data: () => ({
-  //
+    //
   }),
   head() {
     return {
-      title: 'Active Reservations'
-    };
-  }
+      title: 'Active Reservations',
+    }
+  },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

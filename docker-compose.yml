@@ -14,6 +14,19 @@ services:
       networks:
          - kipspace-network
 
+   # kipspace-admin:
+   #    container_name: kipspace-admin
+   #    build: ./kipspace-admin/
+   #    restart: unless-stopped
+   #    command:
+   #       "npm run start"
+   #    ports:
+   #       - "8080:8080"
+   #    environment:
+   #       HOST: 0.0.0.0
+   #    networks:
+   #       - kipspace-network
+
    kipspace-server:
       container_name: kipspace-server
       build: ./kipspace-server/
@@ -45,6 +58,7 @@ services:
          - kipspace-network
       depends_on:
          - kipspace-client
+         # - kipspace-admin
          - kipspace-server
 
 networks:
