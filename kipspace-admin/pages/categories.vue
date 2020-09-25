@@ -224,6 +224,7 @@ export default {
   methods: {
     async addCategory() {
       this.loading = true
+      //
       const record = {
         name: this.name,
         description: this.description,
@@ -232,25 +233,24 @@ export default {
       try {
         await this.$apollo.mutate({
           mutation: CreateCategoryGql,
-          variables() {
-            return { record }
-          },
+          variables: { record },
         })
         this.$store.commit('snackbar/show', {
           text: 'Category was added successfully',
           icon: 'success',
         })
         this.dialog = false
-        this.$router.go(0)
+        this.loading = false
+        this.$router.go(0) // reload page
+        //
       } catch (error) {
+        this.loading = false
         // eslint-disable-next-line no-unused-vars
         console.log(error)
         this.$store.commit('snackbar/show', {
           text: error,
           icon: 'error',
         })
-      } finally {
-        this.loading = false
       }
     },
     async updateCategory(item, i) {

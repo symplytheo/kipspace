@@ -99,12 +99,12 @@ export default {
         {
           icon: 'mdi-tag-multiple',
           title: 'Categories',
-          to: '/category',
+          to: '/categories',
         },
         {
           icon: 'mdi-office-building',
           title: 'Facilities',
-          to: '/facility',
+          to: '/facilities',
         },
         {
           icon: 'mdi-account-multiple',
