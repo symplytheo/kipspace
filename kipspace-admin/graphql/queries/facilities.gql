@@ -4,6 +4,7 @@ query Facilities {
 		items {
 			_id
 			name
+			cover
 			location {
 				address
 				state
