@@ -105,11 +105,14 @@
             <v-list-item
               v-for="(item, f) in user.facilities"
               :key="f"
-              :to="`/account/facilities/${item._id}`"
+              link
+              :href="`/account/facilities/${item._id}`"
               style="border-bottom: 1px solid #ccc"
-              active-class="primary white--text"
+              :class="item._id === id ? 'primary' : ''"
             >
-              <v-list-item-content>
+              <v-list-item-content
+                :class="item._id === id ? 'white--text' : ''"
+              >
                 <v-list-item-title class="subtitle-1 text-capitalize">
                   {{ item.name }}
                 </v-list-item-title>

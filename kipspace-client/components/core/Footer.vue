@@ -7,12 +7,33 @@
             <v-col cols="12" md="4" class="px-0">
               <h5 class="ml-3">Facility Managers</h5>
               <div v-if="isLoggedIn">
+                <!-- User Faciities' Link -->
                 <v-list color="rgba(0,0,0,0)" dense flat>
-                  <v-list-item to="/manager">
-                    <v-list-item-title>Dashboard</v-list-item-title>
+                  <v-list-item
+                    v-for="(item, f) in user.facilities"
+                    v-show="user.facilities"
+                    :key="f"
+                    link
+                    :href="`/account/facilities/${item._id}`"
+                  >
+                    <v-list-item-title class="text-capitalize">
+                      {{ item.name }}
+                    </v-list-item-title>
                   </v-list-item>
+                  <v-list-item link @click.stop="openCreateFacility = true">
+                    <v-list-item-title class="text-capitalize">
+                      Create Facility
+                    </v-list-item-title>
+                  </v-list-item>
+                  <!-- <v-list-item link @click="openCreateFacility">
+                    <v-list-item-title class="subtitle-1 text-capitalize">
+                      Create Facility
+                    </v-list-item-title>
+                  </v-list-item> -->
                   <v-list-item link @click="signOut">
-                    <v-list-item-title>Logout</v-list-item-title>
+                    <v-list-item-title class="text-capitalize">
+                      Log out
+                    </v-list-item-title>
                   </v-list-item>
                 </v-list>
               </div>
@@ -63,17 +84,30 @@
       <v-row class="text-center pt-5">
         <v-col>
           <span class="subtitle-2">
-            Kipspace &copy; {{ getYear }}. All Rights Reserved.
+            <a href="/" style="color: white">Kipspace</a> &copy; {{ getYear }}.
+            All Rights Reserved.
           </span>
         </v-col>
       </v-row>
     </v-container>
+
+    <!-- Create Facility dialog -->
+    <CreateFacilityDialog
+      :visible="openCreateFacility"
+      @close="openCreateFacility = false"
+    />
+    <!--  -->
   </v-footer>
 </template>
 
 <script>
 export default {
   name: 'view-footer',
+  data() {
+    return {
+      openCreateFacility: false,
+    }
+  },
   computed: {
     isLoggedIn() {
       return this.$store.state.user.authenticated
@@ -81,10 +115,20 @@ export default {
     getYear() {
       return new Date().getFullYear()
     },
+    user() {
+      return this.$store.state.user.profile
+    },
   },
   methods: {
-    signOut() {
-      this.$store.dispatch('user/logout')
+    async signOut() {
+      await this.$apolloHelpers.onLogout().then(() => {
+        this.$store.commit('user/setUser', null)
+        this.$store.commit('snackbar/show', {
+          text: 'Logged out successfully',
+          icon: 'success',
+        })
+        // this.$router.go(0)
+      })
     },
   },
 }

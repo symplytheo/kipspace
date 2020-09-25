@@ -18,8 +18,13 @@
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
           <v-row>
-            <v-col v-for="g in 8" :key="g" cols="6" md="3">
-              <FacilityCard />
+            <v-col
+              v-for="(item, f) in facilities.items"
+              :key="f"
+              cols="6"
+              md="3"
+            >
+              <FacilityCard :facility="item" />
             </v-col>
             <v-col cols="12" class="my-2">
               <v-pagination
@@ -27,8 +32,7 @@
                 :value="1"
                 color="primary"
                 class="pagination"
-              >
-              </v-pagination>
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -38,7 +42,20 @@
 </template>
 
 <script>
+import FacilitiesGql from '~/graphql/queries/facilities'
+
 export default {
+  data: () => ({
+    facilities: {
+      items: [],
+    },
+  }),
+  apollo: {
+    facilities: {
+      query: FacilitiesGql,
+      prefetch: true,
+    },
+  },
   head() {
     return {
       title: 'Congratulations',

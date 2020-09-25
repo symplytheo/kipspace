@@ -89,6 +89,7 @@
           :to="link.href"
           active-class="link-active"
           style="text-transform: capitalize"
+          exact
         >
           {{ link.text }}
         </v-btn>
@@ -97,7 +98,7 @@
           color="secondary"
           depressed
           class="mr-2 hidden-sm-and-down subtitle-1 font-weight-bold"
-          to="/make-reservation"
+          to="/categories"
           active-class="mkr-active"
           style="text-transform: capitalize"
         >
@@ -123,7 +124,7 @@
           width="36"
           class="mx-sm-3"
           color="primary"
-          to="/notifications"
+          to="/account/notifications"
         >
           <v-icon>mdi-bell</v-icon>
         </v-btn>
@@ -235,7 +236,7 @@ export default {
     drawer: false,
     navLinks: [
       { text: 'Home', href: '/' },
-      { text: 'My Reservations', href: '/reservations' },
+      { text: 'My Reservations', href: '/account/reservations' },
       { text: 'Scan to Exit', href: '/exit' },
     ],
   }),

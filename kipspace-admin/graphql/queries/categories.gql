@@ -6,9 +6,6 @@ query Categories {
       name
       description
       icon
-      facilities {
-        count
-      }
     }
   }
 }

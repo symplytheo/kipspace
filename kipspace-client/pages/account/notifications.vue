@@ -1,7 +1,6 @@
 <template>
   <div id="notifications">
     <v-container class="text-center pt-5 pb-10 my-10">
-      {{ user }}
       <v-row justify="center">
         <v-col cols="9" sm="7" md="6" lg="5">
           <h4>You have a new notification!</h4>
@@ -17,11 +16,6 @@
 
 <script>
 export default {
-  computed: {
-    user() {
-      return this.$store.state.user.profile
-    },
-  },
   head() {
     return {
       title: 'Notifications',

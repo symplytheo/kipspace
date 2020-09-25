@@ -97,6 +97,7 @@
           :to="link.href"
           active-class="link-active"
           style="text-transform: capitalize"
+          exact
         >
           {{ link.text }}
         </v-btn>
@@ -124,23 +125,75 @@
           width="36"
           color="white"
           class="mx-sm-3"
-          to="/notifications"
+          to="/account/notifications"
         >
           <v-icon>mdi-bell</v-icon>
         </v-btn>
 
-        <v-btn icon height="42" width="42" to="/account/profile">
-          <v-avatar
-            size="42"
-            color="white"
-            class="primary--text headline font-weight-bold text-uppercase"
-          >
-            <v-img v-if="user.avatar" :src="user.avatar" />
-            <span v-else>
-              {{ getInitials(user.firstname ? user.firstname : user.email) }}
-            </span>
-          </v-avatar>
-        </v-btn>
+        <v-menu offset-y min-width="250" open-on-hover>
+          <template v-slot:activator="{ on }">
+            <v-btn icon height="42" width="42" v-on="on">
+              <v-avatar
+                size="42"
+                color="white"
+                class="headline primary--text font-weight-bold text-uppercase"
+              >
+                <v-img v-if="user.avatar" :src="user.avatar" />
+                <span v-else>
+                  {{
+                    getInitials(user.firstname ? user.firstname : user.email)
+                  }}
+                </span>
+              </v-avatar>
+            </v-btn>
+          </template>
+          <v-card color="white">
+            <!-- User Faciities' Link -->
+            <v-list
+              v-show="user.facilities"
+              light
+              color="grey lighten-5"
+              class="pa-0"
+            >
+              <v-list-item
+                v-for="(item, f) in user.facilities"
+                :key="f"
+                :to="`/account/facilities/${item._id}`"
+                style="border-bottom: 1px solid #ccc"
+              >
+                <v-list-item-content>
+                  <v-list-item-title class="subtitle-1 text-capitalize">
+                    {{ item.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle class="subtitle-2">
+                    Go to Dashboard
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <!-- User profile menu -->
+            <v-list class="pa-0">
+              <v-list-item to="/account/profile">
+                <v-list-item-title>My Profile</v-list-item-title>
+              </v-list-item>
+              <v-list-item to="/account/change-password">
+                <v-list-item-title>Change password</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-btn
+                  block
+                  color="secondary"
+                  class="text-capitalize"
+                  width="90%"
+                  depressed
+                  @click="signOut()"
+                >
+                  Logout
+                </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-menu>
       </div>
 
       <div v-else>
@@ -193,7 +246,7 @@ export default {
       drawer: false,
       navLinks: [
         { text: 'Home', href: '/' },
-        { text: 'My Reservations', href: '/reservations' },
+        { text: 'My Reservations', href: '/account/reservations' },
         { text: 'Scan to Exit', href: '/exit' },
       ],
     }

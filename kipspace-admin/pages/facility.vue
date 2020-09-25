@@ -15,7 +15,14 @@
       <v-row justify="center">
         <v-col cols="11" md="12" class="py-0">
           <v-row>
-            <v-col v-for="v in 12" :key="v" cols="12" sm="6" md="4" lg="3">
+            <v-col
+              v-for="(facility, v) in facilities.items"
+              :key="v"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+            >
               <FacilityCard />
             </v-col>
             <v-col cols="12">

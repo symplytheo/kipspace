@@ -1,8 +1,9 @@
-mutation UpdateFacility {
-  updateFacility(record: {_id: "5f69cf30365def0012299d2f", name: "Chicken & Tinz"}) {
+mutation UpdateFacility($record: UpdateByIdFacilityInput!) {
+  updateFacility (record: $record) {
     record {
       _id
       name
+      short_description
     }
   }
 }
