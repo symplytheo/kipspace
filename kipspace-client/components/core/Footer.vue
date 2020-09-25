@@ -34,7 +34,7 @@
               </div>
               <div v-else>
                 <v-list color="rgba(0,0,0,0)" dense flat>
-                  <v-list-item to="/account/register">
+                  <v-list-item to="/account/login">
                     <v-list-item-title>Log In</v-list-item-title>
                   </v-list-item>
                   <v-list-item to="/account/register">
