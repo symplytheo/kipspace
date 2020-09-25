@@ -1,16 +1,17 @@
 <template>
-  <v-card flat :to="`/facilities/${facility._id}`">
-    <v-img
-      :src="facility.cover ? facility.cover : '/img/burger.png'"
-      :aspect-ratio="17 / 12"
-      class="card-cover"
-    >
-      <template v-slot:placeholder>
-        <v-row class="fill-height" justify="center" align="center">
-          <v-progress-circular indeterminate color="primary" />
-        </v-row>
-      </template>
-    </v-img>
+  <v-card flat>
+    <v-card flat :to="`/facilities/${facility._id}`">
+      <v-img
+        :src="facility.logo ? facility.logo : '/img/burger.png'"
+        :aspect-ratio="17 / 12"
+      >
+        <template v-slot:placeholder>
+          <v-row class="fill-height" justify="center" align="center">
+            <v-progress-circular indeterminate color="primary" />
+          </v-row>
+        </template>
+      </v-img>
+    </v-card>
     <v-card-text class="px-0">
       <v-row no-gutters align="center">
         <v-col>
@@ -18,7 +19,7 @@
         </v-col>
         <v-col cols="auto" class="text-right pl-0">
           <v-rating
-            :value="4.2"
+            :value="averageRating"
             readonly
             half-increments
             background-color="primary"
@@ -38,19 +39,19 @@ export default {
   props: {
     facility: {
       type: Object,
-      default() {
-        return {
-          name: 'Dominos Pizza',
-          cover: '/img/burger.png',
-        }
-      },
+      default: () => {},
+    },
+  },
+  computed: {
+    averageRating() {
+      let sum = 0
+      for (const item in this.facility.reviews) sum += item.rating
+      const length = this.facility.reviews.length
+      const average = sum / (length !== 0 ? length : 1) // 0/0 is NaN
+      return average
     },
   },
 }
 </script>
 
-<style>
-.card-cover {
-  border-radius: 5px;
-}
-</style>
+<style></style>
