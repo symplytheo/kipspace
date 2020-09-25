@@ -9,112 +9,128 @@
           <v-row justify="center" align="center" class="fill-height">
             <v-col md="10" lg="8">
               <v-card class="reserve-box pa-0 pl-8 mb-5" height="48" flat>
-                <v-row>
-                  <v-col class="pa-0">
-                    <v-dialog
-                      ref="date"
-                      v-model="datepicker"
-                      :return-value.sync="date_reserved"
-                      persistent
-                      width="290"
-                      hide-overlay
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
+                <v-form v-model="MkrForm">
+                  <v-row>
+                    <v-col class="pa-0">
+                      <v-dialog
+                        ref="date"
+                        v-model="datepicker"
+                        :return-value.sync="date_reserved"
+                        persistent
+                        width="290"
+                        hide-overlay
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="date_reserved"
+                            label="date"
+                            readonly
+                            solo
+                            flat
+                            append-icon="mdi-menu-down"
+                            v-bind="attrs"
+                            :rules="[(v) => !!v || 'Date is required']"
+                            v-on="on"
+                          />
+                        </template>
+                        <v-date-picker
                           v-model="date_reserved"
-                          label="select day"
-                          readonly
-                          solo
-                          flat
-                          v-bind="attrs"
-                          v-on="on"
-                        />
-                      </template>
-                      <v-date-picker v-model="date_reserved" scrollable>
-                        <v-spacer />
-                        <v-btn
-                          text
-                          small
-                          color="secondary"
-                          @click="datepicker = false"
-                          >cancel</v-btn
+                          scrollable
+                          color="primary"
                         >
-                        <v-btn
-                          text
-                          small
-                          color="secondary"
-                          @click="$refs.date.save(date_reserved)"
-                          >save</v-btn
-                        >
-                      </v-date-picker>
-                    </v-dialog>
-                  </v-col>
-                  <v-col class="pa-0">
-                    <v-dialog
-                      ref="time"
-                      v-model="timepicker"
-                      :return-value.sync="time_reserved"
-                      persistent
-                      width="290"
-                      hide-overlay
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
+                          <v-spacer />
+                          <v-btn
+                            text
+                            small
+                            color="secondary"
+                            @click="datepicker = false"
+                            >cancel</v-btn
+                          >
+                          <v-btn
+                            text
+                            small
+                            color="secondary"
+                            @click="$refs.date.save(date_reserved)"
+                            >save</v-btn
+                          >
+                        </v-date-picker>
+                      </v-dialog>
+                    </v-col>
+                    <v-col class="pa-0">
+                      <v-dialog
+                        ref="time"
+                        v-model="timepicker"
+                        :return-value.sync="time_reserved"
+                        persistent
+                        width="290"
+                        hide-overlay
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="time_reserved"
+                            label="time"
+                            readonly
+                            solo
+                            flat
+                            append-icon="mdi-menu-down"
+                            v-bind="attrs"
+                            :rules="[(v) => !!v || 'Time is required']"
+                            v-on="on"
+                          />
+                        </template>
+                        <v-time-picker
                           v-model="time_reserved"
-                          label="select time"
-                          readonly
-                          solo
-                          flat
-                          v-bind="attrs"
-                          v-on="on"
-                        />
-                      </template>
-                      <v-time-picker v-model="time_reserved" scrollable>
-                        <v-spacer />
-                        <v-btn
-                          text
-                          small
-                          color="secondary"
-                          @click="timepicker = false"
-                          >cancel</v-btn
+                          scrollable
+                          ampm-in-title
+                          color="primary"
                         >
-                        <v-btn
-                          text
-                          small
-                          color="secondary"
-                          @click="$refs.time.save(time_reserved)"
-                          >save</v-btn
-                        >
-                      </v-time-picker>
-                    </v-dialog>
-                  </v-col>
-                  <v-col class="pa-0">
-                    <v-select
-                      v-model="seats"
-                      :items="[1, 2, 3, 4, 5]"
-                      label="no. of seats"
-                      solo
-                      flat
-                    />
-                  </v-col>
-                  <v-col class="pa-0 reserve-btn-col">
-                    <v-btn
-                      color="white"
-                      text
-                      large
-                      class="reserve-btn text-capitalize"
-                      width="100%"
-                      height="48"
-                      :loading="loading"
-                      @click="makeReservation()"
-                    >
-                      Reserve
-                    </v-btn>
-                  </v-col>
-                </v-row>
+                          <v-spacer />
+                          <v-btn
+                            text
+                            small
+                            color="secondary"
+                            @click="timepicker = false"
+                            >cancel</v-btn
+                          >
+                          <v-btn
+                            text
+                            small
+                            color="secondary"
+                            @click="$refs.time.save(time_reserved)"
+                            >save</v-btn
+                          >
+                        </v-time-picker>
+                      </v-dialog>
+                    </v-col>
+                    <v-col class="pa-0">
+                      <v-select
+                        v-model="seats"
+                        :items="[1, 2, 3, 4, 5]"
+                        label="no. of seats"
+                        solo
+                        flat
+                        :rules="[(v) => !!v || 'Seat is required']"
+                      />
+                    </v-col>
+                    <v-col class="pa-0 reserve-btn-col">
+                      <v-btn
+                        color="white"
+                        text
+                        large
+                        class="reserve-btn text-capitalize"
+                        width="100%"
+                        height="48"
+                        :disabled="!MkrForm"
+                        :loading="loading"
+                        @click="makeReservation()"
+                      >
+                        Reserve
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-form>
               </v-card>
             </v-col>
-            {{ facility }}
           </v-row>
         </v-img>
       </v-sheet>
@@ -147,7 +163,14 @@
                 class="d-inline"
               />
             </div>
-            <div class="pt-1">{{ facilityAddress }}</div>
+            <div class="pt-1">
+              {{
+                `${facility.location.address}, 
+                ${facility.location.city}, 
+                ${facility.location.state},  
+                ${facility.location.country.name}`
+              }}
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -288,10 +311,11 @@ export default {
       seats: '',
       date_reserved: '',
       time_reserved: '',
+      MkrForm: false,
+      loading: false,
       // for dialogs
       datepicker: false,
       timepicker: false,
-      loading: false,
       //
       rating: [
         { num: 5, value: 100 },
@@ -303,28 +327,12 @@ export default {
     }
   },
   computed: {
-    facilityAddress() {
-      // join address, city, state & country
-      return (
-        this.facility.location.address +
-        ', ' +
-        this.facility.location.city +
-        ', ' +
-        this.facility.location.state +
-        ', ' +
-        this.facility.location.country.name
-      )
-    },
     averageRating() {
-      // calculate the average rating for facility
-      // returns 1 if result is zero to avoid NaN when 0/0
       let sum = 0
-      for (const item in this.facility.reviews) {
-        sum += item.rating
-      }
+      for (const item in this.facility.reviews) sum += item.rating
       const length = this.facility.reviews.length
-      const average = sum / (length !== 0 ? length : 1)
-      return average > 0 ? average : average + 1
+      const average = sum / (length !== 0 ? length : 1) // 0/0 is NaN
+      return average
     },
   },
   methods: {
@@ -353,7 +361,7 @@ export default {
         console.log(error)
         this.$store.commit('snackbar/show', {
           text: error,
-          icon: 'success',
+          icon: 'error',
         })
       } finally {
         this.loading = false
