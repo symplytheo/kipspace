@@ -77,7 +77,7 @@ export const MakeReservation = async (
 		await reservation.save();
 
 		await reservation.updateOne({
-			$addToSet: currentStatus,
+			$addToSet: { statuses: currentStatus },
 		});
 
 		await facility.updateOne({
