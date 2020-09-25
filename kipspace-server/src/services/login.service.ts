@@ -9,7 +9,10 @@ import KipspaceService from './Kipspace.service';
 class LoginService extends KipspaceService<IUser> {
 	public LoginEmail = async (req: Request) => {
 		try {
-			const user = await CheckUserPassword(req.body.email, req.body.password);
+			const user = await CheckUserPassword(
+				req.body.email.toLowerCase(),
+				req.body.password
+			);
 
 			this.CurrentUser = user;
 			const token = this.UserToken || '';

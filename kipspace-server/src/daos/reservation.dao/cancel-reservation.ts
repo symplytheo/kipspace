@@ -31,7 +31,7 @@ export const CancelReservation = async (code: string, user: string) => {
 
 				await reservation.updateOne({
 					current_status: 'CANCELED',
-					$addToSet: { status: 'CANCELED' },
+					$addToSet: { statuses: { status: 'CANCELED' } },
 				});
 
 				reservation.current_status = 'CANCELED';
