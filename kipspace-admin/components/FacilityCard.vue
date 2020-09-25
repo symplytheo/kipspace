@@ -1,6 +1,9 @@
 <template>
   <v-card outlined>
-    <v-img :src="facility.cover" height="200">
+    <v-img
+      :src="facility.cover ? facility.cover : '/img/burger.png'"
+      height="200"
+    >
       <template v-slot:placeholder>
         <v-row justify="center" align="center" class="fill-height">
           <v-progress-circular indeterminate color="primary" />
@@ -11,7 +14,7 @@
       <div class="subtitle-1 font-weight-bold">{{ facility.name }}</div>
       <div>
         <v-rating
-          :value="facility.rating"
+          :value="averageRating"
           color="primary"
           background-color="primary"
           half-increments
@@ -19,7 +22,14 @@
           size="20"
         />
       </div>
-      <div class="py-1">{{ facility.address }}</div>
+      <div class="py-1">
+        {{
+          `${facility.location.address}, 
+          ${facility.location.city}, 
+          ${facility.location.state},  
+          ${facility.location.country.name}`
+        }}
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -29,12 +39,16 @@ export default {
   props: {
     facility: {
       type: Object,
-      default: () => ({
-        name: 'Dominos Pizza',
-        cover: '/burger.png',
-        rating: 4.2,
-        address: '23 Adesanya Street, Ibara-expressway, Lagos State.',
-      }),
+      default: () => {},
+    },
+  },
+  computed: {
+    averageRating() {
+      let sum = 0
+      for (const item in this.facility.reviews) sum += item.rating
+      const length = this.facility.reviews.length
+      const average = sum / (length !== 0 ? length : 1) // 0/0 is NaN
+      return average
     },
   },
 }
