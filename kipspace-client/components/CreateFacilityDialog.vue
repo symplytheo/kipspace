@@ -13,7 +13,7 @@
       <v-card-text class="pt-0">
         <v-form v-model="addFacilityForm">
           <v-row>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-text-field
                 v-model="name"
                 label="Name"
@@ -22,7 +22,7 @@
                 :rules="[(v) => !!v || 'Name is required']"
               />
             </v-col>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-text-field
                 v-model="short_description"
                 label="Short Description"
@@ -30,7 +30,7 @@
                 :rules="[(v) => !!v || 'Short description is required']"
               />
             </v-col>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-select
                 v-model="category"
                 outlined
@@ -38,17 +38,18 @@
                 item-text="name"
                 item-value="_id"
                 label="Category"
+                :rules="[(v) => !!v || 'Category is required']"
               />
             </v-col>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-text-field
                 v-model="address"
                 outlined
                 label="Address"
-                :rules="[(v) => !!v || 'Facility Address is required']"
+                :rules="[(v) => !!v || 'Address is required']"
               />
             </v-col>
-            <v-col cols="6" class="pt-0">
+            <v-col cols="6" class="py-0">
               <v-text-field
                 v-model="city"
                 outlined
@@ -56,7 +57,7 @@
                 :rules="[(v) => !!v || 'City is required']"
               />
             </v-col>
-            <v-col cols="6" class="pt-0">
+            <v-col cols="6" class="py-0">
               <v-text-field
                 v-model="state"
                 outlined
@@ -64,7 +65,7 @@
                 :rules="[(v) => !!v || 'State is required']"
               />
             </v-col>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-select
                 v-model="country"
                 outlined
@@ -74,18 +75,18 @@
                 label="Country"
               />
             </v-col>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-text-field
                 v-model.number="capacity"
                 outlined
                 label="Capacity"
                 :rules="[
-                  (v) => !!v || 'Facility City is required',
+                  (v) => !!v || 'Capacity is required',
                   (v) => /^\d+$/.test(v) || 'Must be numbers only',
                 ]"
               />
             </v-col>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" class="py-0">
               <v-btn
                 block
                 large
@@ -111,7 +112,12 @@ import CategoriesGql from '~/graphql/queries/categories'
 import CreateFacilityGql from '~/graphql/mutations/CreateFacility'
 
 export default {
-  props: ['visible'],
+  props: {
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       name: '',
@@ -119,7 +125,7 @@ export default {
       address: '',
       state: '',
       city: '',
-      country: '',
+      country: '5f69ce61365def0012299d2d', // default id => Nigeria
       category: '',
       capacity: '',
       loading: false,
@@ -182,7 +188,7 @@ export default {
           icon: 'success',
         })
         this.$router.push(
-          `/account/facilities/${data.createFacility.record._id}`
+          `/account/facilities/${data.createFacility.record._id}/edit-profile`
         )
         //
       } catch (error) {
