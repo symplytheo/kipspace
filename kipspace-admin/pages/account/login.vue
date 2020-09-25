@@ -98,12 +98,14 @@ export default {
         await client.clearStore()
         //
         const userData = await this.$apollo.query({ query: ProfileGql })
-        if (userData.data.profile !== 'ADMIN') {
+        //
+        if (userData.data.profile.role !== 'ADMIN') {
           this.$store.commit('user/setUser', null)
           this.$store.commit('snackbar/show', {
             text: 'User is not an admin',
-            icon: 'success',
+            icon: 'error',
           })
+          //
         } else {
           this.$store.commit('user/setUser', userData.data.profile)
           this.$store.commit('snackbar/show', {
