@@ -406,16 +406,20 @@ export default {
     // upload facility logo
     async uploadFacilityLogo() {
       this.logoUploading = true
+      //
       const formData = new FormData()
-      formData.append('file', this.logo)
-      console.log('>> formData >> ', formData)
+      formData.append('image', this.logo)
+      const token = this.$apolloHelpers.getToken()
+      //
       await this.$axios
-        .put(`/v1/facility/${this.id}/logo`, formData)
+        .put(`/v1/facility/${this.id}/logo`, formData, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then(({ data }) => {
           this.logoUploading = false
           console.log(data)
           this.$store.commit('snackbar/show', {
-            text: 'Logo was uploaded successfully',
+            text: 'Logo updated successfully',
             icon: 'success',
           })
           this.logoDialog = false
@@ -425,23 +429,26 @@ export default {
           this.logoUploading = false
         })
     },
-    // upload facility cover
+    // upload facility logo
     async uploadFacilityCover() {
       this.coverUploading = true
-      const data = new FormData()
-      data.append('file', this.cover)
-      console.log(data)
-      console.log(this.cover)
+      //
+      const formData = new FormData()
+      formData.append('image', this.cover)
+      const token = this.$apolloHelpers.getToken()
+      //
       await this.$axios
-        .put(`/v1/facility/${this.id}/cover`, data)
+        .put(`/v1/facility/${this.id}/cover`, formData, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then(({ data }) => {
           this.coverUploading = false
           console.log(data)
           this.$store.commit('snackbar/show', {
-            text: data.message,
+            text: 'Cover updated successfully',
             icon: 'success',
           })
-          this.logoDialog = true
+          this.coverDialog = false
         })
         .catch((err) => {
           console.log(err)

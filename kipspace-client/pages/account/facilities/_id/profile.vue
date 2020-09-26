@@ -1,10 +1,7 @@
 <template>
   <div id="mgr-profile">
-    <v-sheet tile height="160" color="grey lighten-4">
-      <v-img
-        :src="facility.cover ? facility.cover : '/img/chips.png'"
-        height="100%"
-      >
+    <v-sheet tile height="160" color="grey lighten-3">
+      <v-img :src="facility.cover && facility.cover" height="100%">
         <v-row justify="end" align="end" class="fill-height pb-3 pr-5">
           <v-btn
             color="secondary"
@@ -22,11 +19,8 @@
       <v-container>
         <v-row>
           <v-col cols="5" md="3" lg="2">
-            <v-avatar size="140" class="biz-logo">
-              <v-img
-                :src="facility.logo ? facility.logo : '/img/mcdonald-icon.png'"
-                alt="alt"
-              />
+            <v-avatar size="140" class="biz-logo" color="grey lighten-3">
+              <v-img :src="facility.logo && facility.logo" />
             </v-avatar>
           </v-col>
           <v-col cols="7" md="9" lg="10" class="pt-0">

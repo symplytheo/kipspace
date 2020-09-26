@@ -20,25 +20,28 @@
         <v-btn icon color="white" @click="toggleDrawer">
           <v-icon size="30">mdi-close</v-icon>
         </v-btn>
-        <v-spacer />
-        <v-btn
-          v-show="isLoggedIn"
-          depressed
-          color="secondary"
-          to="/make-reservation"
-          class="text-capitalize"
-        >
-          Make Reservation
-        </v-btn>
       </v-toolbar>
 
       <div v-if="isLoggedIn">
-        <v-list>
-          <v-list-item v-for="(link, n) in navLinks" :key="n" :to="link.href">
+        <v-list nav>
+          <v-list-item
+            v-for="(link, n) in navLinks"
+            :key="n"
+            :to="link.href"
+            exact
+          >
             <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
-          <v-list-item link @click="signOut">
-            <v-list-item-title>Log Out</v-list-item-title>
+          <v-list-item class="pl-0">
+            <v-btn
+              depressed
+              block
+              color="secondary"
+              to="/categories"
+              class="text-capitalize"
+            >
+              Make Reservation
+            </v-btn>
           </v-list-item>
         </v-list>
       </div>
@@ -51,16 +54,18 @@
           <v-list-item to="/account/login">
             <v-list-item-title>Log In</v-list-item-title>
           </v-list-item>
+          <v-list-item class="pl-0">
+            <v-btn
+              color="secondary"
+              class="text-capitalize"
+              block
+              depressed
+              to="/account/register"
+            >
+              Sign Up
+            </v-btn>
+          </v-list-item>
         </v-list>
-        <v-btn
-          color="secondary"
-          class="mx-3 text-capitalize"
-          width="90%"
-          depressed
-          to="/account/register"
-        >
-          Sign Up
-        </v-btn>
       </div>
     </v-navigation-drawer>
 
@@ -248,7 +253,6 @@ export default {
       navLinks: [
         { text: 'Home', href: '/' },
         { text: 'My Reservations', href: '/account/reservations' },
-        { text: 'Scan to Exit', href: '/exit' },
       ],
     }
   },

@@ -1,10 +1,7 @@
 <template>
   <v-card flat>
-    <v-card flat :to="`/facilities/${facility._id}`">
-      <v-img
-        :src="facility.logo ? facility.logo : '/img/burger.png'"
-        :aspect-ratio="17 / 12"
-      >
+    <v-card flat :to="`/facilities/${facility._id}`" color="grey lighten-3">
+      <v-img :src="facility.cover && facility.cover" :aspect-ratio="17 / 12">
         <template v-slot:placeholder>
           <v-row class="fill-height" justify="center" align="center">
             <v-progress-circular indeterminate color="primary" />

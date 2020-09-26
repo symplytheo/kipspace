@@ -1,12 +1,14 @@
 <template>
   <v-card outlined>
-    <v-img :src="facility.cover ? facility.cover : '/burger.png'" height="200">
-      <template v-slot:placeholder>
-        <v-row justify="center" align="center" class="fill-height">
-          <v-progress-circular indeterminate color="primary" />
-        </v-row>
-      </template>
-    </v-img>
+    <v-card flat color="grey lighten-3">
+      <v-img :src="facility.cover && facility.cover" height="200">
+        <template v-slot:placeholder>
+          <v-row class="fill-height" justify="center" align="center">
+            <v-progress-circular indeterminate color="primary" />
+          </v-row>
+        </template>
+      </v-img>
+    </v-card>
     <v-card-text class="text--primary">
       <div class="subtitle-1 font-weight-bold text-capitalize">
         {{ facility.name }}

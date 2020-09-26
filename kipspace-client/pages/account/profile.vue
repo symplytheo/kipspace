@@ -17,16 +17,6 @@
                   }}
                 </span>
               </v-avatar>
-              <v-btn
-                text
-                color="primary"
-                class="subtitle-2 text-lowercase font-weight-bold"
-              >
-                <v-icon size="16" color="primary" class="mr-1">
-                  mdi-cloud-upload
-                </v-icon>
-                upload
-              </v-btn>
             </v-col>
           </v-row>
           <v-row class="pt-5">

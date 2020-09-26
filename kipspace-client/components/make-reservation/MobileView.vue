@@ -119,23 +119,15 @@
         </v-tab>
 
         <v-tab-item>
-          <v-sheet tile height="150" color="grey lighten-4">
-            <v-img
-              :src="facility.cover ? facility.cover : '/img/chips.png'"
-              height="100%"
-            />
+          <v-sheet tile height="150" color="grey lighten-3">
+            <v-img :src="facility.cover && facility.cover" height="100%" />
           </v-sheet>
           <v-sheet tile elevation="3">
             <v-container fluid class="px-sm-10">
               <v-row>
                 <v-col cols="3" sm="3" class="pl-0">
-                  <v-avatar size="110" class="biz-logo">
-                    <v-img
-                      :src="
-                        facility.logo ? facility.logo : '/img/mcdonald-icon.png'
-                      "
-                      alt="alt"
-                    />
+                  <v-avatar size="115" class="biz-logo" color="grey lighten-3">
+                    <v-img :src="facility.logo && facility.logo" />
                   </v-avatar>
                 </v-col>
                 <v-col cols="9" sm="9" class="pt-0 pl-8 pl-sm-0">

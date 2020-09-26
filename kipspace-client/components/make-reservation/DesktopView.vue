@@ -1,11 +1,8 @@
 <template>
   <div id="desktop" class="hidden-sm-and-down">
     <v-container fluid class="pa-0">
-      <v-sheet tile height="180" color="grey lighten-5">
-        <v-img
-          :src="facility.cover ? facility.cover : '/img/chips.png'"
-          height="180"
-        >
+      <v-sheet tile height="180" color="grey lighten-3">
+        <v-img :src="facility.cover && facility.cover" height="100%">
           <v-row justify="center" align="center" class="fill-height">
             <v-col md="10" lg="8">
               <v-card class="reserve-box pa-0 pl-8 mb-5" height="48" flat>
@@ -139,11 +136,8 @@
       <v-container>
         <v-row>
           <v-col md="3" lg="2">
-            <v-avatar size="160" class="biz-logo">
-              <v-img
-                :src="facility.logo ? facility.logo : '/img/mcdonald-icon.png'"
-                alt="alt"
-              />
+            <v-avatar size="160" class="biz-logo" color="grey lighten-3">
+              <v-img :src="facility.logo && facility.logo" />
             </v-avatar>
           </v-col>
           <v-col md="9" lg="10" class="pt-0">

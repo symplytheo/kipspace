@@ -4,12 +4,7 @@ query Facilities {
 		items {
 			_id
 			name
-			location {
-				address
-				state
-				city
-			}
-			capacity
+			cover
 			reviews {
 				_id
 				rating
