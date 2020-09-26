@@ -8,33 +8,29 @@
           </div>
           <v-row>
             <v-col cols="12">
-              <label for="oldPassword">
-                <b>Old password</b>
-                <v-text-field
-                  v-model="oldPassword"
-                  placeholder="Enter old password"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="showPassword ? 'text' : 'password'"
-                  :rules="[
-                    (v) => !!v || 'Old password is required',
-                    (v) => v !== profile.password || 'Password is incorrect',
-                  ]"
-                  @click:append="showPassword = !showPassword"
-                />
-              </label>
+              <v-text-field
+                v-model="oldPassword"
+                label="Old Password"
+                outlined
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                :rules="[
+                  (v) => !!v || 'Old password is required',
+                  (v) => v !== profile.password || 'Password is incorrect',
+                ]"
+                @click:append="showPassword = !showPassword"
+              />
             </v-col>
             <v-col cols="12">
-              <label for="newPassword">
-                <b>New password</b>
-                <v-text-field
-                  v-model="newPassword"
-                  placeholder="Enter old password"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="showPassword ? 'text' : 'password'"
-                  :rules="[(v) => !!v || 'New password is required']"
-                  @click:append="showPassword = !showPassword"
-                />
-              </label>
+              <v-text-field
+                v-model="newPassword"
+                label="New Password"
+                outlined
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                :rules="[(v) => !!v || 'New password is required']"
+                @click:append="showPassword = !showPassword"
+              />
             </v-col>
             <v-col cols="12" class="text-center">
               <v-btn
@@ -45,7 +41,6 @@
                 depressed
                 :loading="loading"
                 class="text-capitalize"
-                @click="changePassword()"
               >
                 Change Password
               </v-btn>
@@ -59,11 +54,11 @@
 
 <script>
 import ProfileGql from '~/graphql/queries/profile'
-import UpdateUserPasswordGql from '~/graphql/mutations/UpdatePassword'
+// import UpdateUserPasswordGql from '~/graphql/mutations/UpdatePassword'
 
 export default {
   data: () => ({
-    lodaing: false,
+    loading: false,
     oldPassword: '',
     newPassword: '',
     showPassword: false,
@@ -77,34 +72,34 @@ export default {
     },
   },
   methods: {
-    async changePassword() {
-      this.loading = true
-      const record = {
-        password: this.newPassword,
-      }
-      try {
-        await this.$apollo
-          .mutate({
-            mutation: UpdateUserPasswordGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.$store.commit('snackbar/show', {
-              text: 'Password was updated successfully',
-              icon: 'success',
-            })
-          })
-      } catch (error) {
-        // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
-        this.$store.commit('snackbar/show', {
-          text: response.data.message,
-          icon: 'error',
-        })
-      } finally {
-        this.loading = false
-      }
-    },
+    // async changePassword() {
+    //   this.loading = true
+    //   const record = {
+    //     password: this.newPassword,
+    //   }
+    //   try {
+    //     await this.$apollo
+    //       .mutate({
+    //         mutation: UpdateUserPasswordGql,
+    //         variables: { record },
+    //       })
+    //       .then(() => {
+    //         this.$store.commit('snackbar/show', {
+    //           text: 'Password was updated successfully',
+    //           icon: 'success',
+    //         })
+    //       })
+    //   } catch (error) {
+    //     // eslint-disable-next-line no-unused-vars
+    //     const { response, message } = error
+    //     this.$store.commit('snackbar/show', {
+    //       text: response.data.message,
+    //       icon: 'error',
+    //     })
+    //   } finally {
+    //     this.loading = false
+    //   }
+    // },
   },
 }
 </script>
