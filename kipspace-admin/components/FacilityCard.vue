@@ -1,9 +1,6 @@
 <template>
   <v-card outlined>
-    <v-img
-      :src="facility.cover ? facility.cover : '/img/burger.png'"
-      height="200"
-    >
+    <v-img :src="facility.cover ? facility.cover : '/burger.png'" height="200">
       <template v-slot:placeholder>
         <v-row justify="center" align="center" class="fill-height">
           <v-progress-circular indeterminate color="primary" />
@@ -11,7 +8,9 @@
       </template>
     </v-img>
     <v-card-text class="text--primary">
-      <div class="subtitle-1 font-weight-bold">{{ facility.name }}</div>
+      <div class="subtitle-1 font-weight-bold text-capitalize">
+        {{ facility.name }}
+      </div>
       <div>
         <v-rating
           :value="averageRating"
@@ -19,6 +18,7 @@
           background-color="primary"
           half-increments
           dense
+          readonly
           size="20"
         />
       </div>
