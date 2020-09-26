@@ -26,18 +26,16 @@
                       </div>
                       <div>
                         {{
-                          activeR.facility.location.address +
-                          ', ' +
-                          activeR.facility.location.city +
-                          ', ' +
-                          activeR.facility.location.state
+                          `${activeR.facility.location.address}, 
+                          ${activeR.facility.location.city}, 
+                          ${activeR.facility.location.state}`
                         }}
                       </div>
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col cols="5" class="py-0 pl-0">
-                      <v-img src="/img/qr-code.png" height="100" contain />
+                    <v-col cols="4" class="py-0 white px-0 ml-3">
+                      <v-img :src="activeR.barcode_url" height="auto" contain />
                     </v-col>
                     <v-col cols="12" class="pb-0">
                       <v-dialog v-model="dialog" persistent max-width="290">
@@ -48,6 +46,7 @@
                             depressed
                             large
                             class="text-capitalize font-weight-bold"
+                            :loading="loading"
                             v-on="on"
                           >
                             Cancel Reservation
@@ -65,18 +64,20 @@
                                 text
                                 width="50%"
                                 class="text-capitalize font-weight-bold"
-                                @click="dialog = false"
-                                >Yes</v-btn
+                                @click="cancelReservation(activeR.code)"
                               >
-                              <v-divider vertical></v-divider>
+                                Yes
+                              </v-btn>
+                              <v-divider vertical />
                               <v-btn
                                 color="black"
                                 text
                                 width="50%"
                                 class="text-capitalize font-weight-bold"
                                 @click="dialog = false"
-                                >No</v-btn
                               >
+                                No
+                              </v-btn>
                             </v-card-actions>
                           </v-card>
                         </v-row>
@@ -124,11 +125,9 @@
                       </div>
                       <div>
                         {{
-                          cancelledR.facility.location.address +
-                          ', ' +
-                          cancelledR.facility.location.city +
-                          ', ' +
-                          cancelledR.facility.location.state
+                          `${cancelledR.facility.location.address}, 
+                          ${cancelledR.facility.location.city}, 
+                          ${cancelledR.facility.location.state}`
                         }}
                       </div>
                     </v-col>
@@ -185,11 +184,9 @@
                       </div>
                       <div>
                         {{
-                          historyR.facility.location.address +
-                          ', ' +
-                          historyR.facility.location.city +
-                          ', ' +
-                          historyR.facility.location.state
+                          `${historyR.facility.location.address}, 
+                          ${historyR.facility.location.city}, 
+                          ${historyR.facility.location.state}`
                         }}
                       </div>
                     </v-col>
@@ -264,7 +261,6 @@
                           'date reserved',
                           'time reserved',
                           'status',
-                          '',
                         ]"
                         :key="i"
                         class="text-uppercase primary--text"
@@ -287,9 +283,6 @@
                       <td>{{ item.date_reserved.substr(0, 10) }}</td>
                       <td>{{ item.time_reserved }}</td>
                       <td>{{ item.current_status }}</td>
-                      <td>
-                        <v-btn text small color="primary"> Details </v-btn>
-                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -306,9 +299,13 @@
 </template>
 
 <script>
+import CancelReservationGql from '~/graphql/mutations/CancelReservation'
+
 export default {
+  middleware: ['authenticated'],
   data: () => ({
     dialog: false,
+    loading: false,
   }),
   computed: {
     reservations() {
@@ -331,6 +328,33 @@ export default {
       return this.reservations
         .filter((el) => el.current_status === 'COMPLETED')
         .slice(-1)[0]
+    },
+  },
+  methods: {
+    async cancelReservation(code) {
+      this.dialog = false
+      this.loading = true
+      //
+      try {
+        await this.$apollo.mutate({
+          mutation: CancelReservationGql,
+          variables: { code },
+        })
+        this.$store.commit('snackbar/show', {
+          text: 'Reservation has been cancelled',
+          icon: 'success',
+        })
+        this.$router.go(0)
+        //
+      } catch (error) {
+        console.log(error)
+        this.$store.commit('snackbar/show', {
+          text: error,
+          icon: 'error',
+        })
+      } finally {
+        this.loading = false
+      }
     },
   },
   head() {
