@@ -9,22 +9,26 @@
               <div v-if="isLoggedIn">
                 <!-- User Faciities' Link -->
                 <v-list color="rgba(0,0,0,0)" dense flat>
-                  <v-list-item
-                    v-for="(item, f) in user.facilities"
-                    v-show="user.facilities"
-                    :key="f"
-                    link
-                    :href="`/account/facilities/${item._id}`"
-                  >
-                    <v-list-item-title class="text-capitalize">
-                      {{ item.name }}
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-list-item link @click.stop="openCreateFacility = true">
-                    <v-list-item-title class="text-capitalize">
-                      Create Facility
-                    </v-list-item-title>
-                  </v-list-item>
+                  <div v-if="user.facilities.length > 0">
+                    <v-list-item
+                      v-for="(item, f) in user.facilities"
+                      v-show="user.facilities"
+                      :key="f"
+                      link
+                      :href="`/account/facilities/${item._id}`"
+                    >
+                      <v-list-item-title class="text-capitalize">
+                        {{ item.name }}
+                      </v-list-item-title>
+                    </v-list-item>
+                  </div>
+                  <div v-else>
+                    <v-list-item link @click.stop="openCreateFacility = true">
+                      <v-list-item-title class="text-capitalize">
+                        Create Facility
+                      </v-list-item-title>
+                    </v-list-item>
+                  </div>
                   <v-list-item link @click="signOut">
                     <v-list-item-title class="text-capitalize">
                       Log out
@@ -116,14 +120,17 @@ export default {
   },
   methods: {
     async signOut() {
-      await this.$apolloHelpers.onLogout().then(() => {
-        this.$store.commit('user/setUser', null)
+      try {
+        await this.$apolloHelpers.onLogout()
         this.$store.commit('snackbar/show', {
           text: 'Logged out successfully',
           icon: 'success',
         })
-        this.$router.replace('/')
-      })
+        this.$store.commit('user/setUser', null)
+        this.$router.push('/')
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 }

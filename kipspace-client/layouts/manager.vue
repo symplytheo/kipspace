@@ -12,21 +12,21 @@
         <v-btn icon color="white" @click="toggleDrawer">
           <v-icon size="30">mdi-close</v-icon>
         </v-btn>
-
-        <v-spacer />
-
-        <v-btn
-          color="secondary"
-          depressed
-          class="mr-2 font-weight-bold text-capitalize"
-          :to="`/account/facilities/${id}/walk-ins`"
-        >
-          Walk-ins
-        </v-btn>
       </v-toolbar>
       <v-list nav>
         <v-list-item v-for="(link, n) in links" :key="n" :to="link.to" exact>
           <v-list-item-title>{{ link.text }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item class="pl-0">
+          <v-btn
+            color="secondary"
+            depressed
+            block
+            class="mr-2 font-weight-bold text-capitalize"
+            :to="`/account/facilities/${id}/walk-ins`"
+          >
+            Walk-ins
+          </v-btn>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -189,14 +189,17 @@ export default {
       this.drawer = !this.drawer
     },
     async signOut() {
-      await this.$apolloHelpers.onLogout().then(() => {
-        this.$store.commit('user/setUser', null)
+      try {
+        await this.$apolloHelpers.onLogout()
         this.$store.commit('snackbar/show', {
           text: 'Logged out successfully',
           icon: 'success',
         })
-        this.$router.replace('/')
-      })
+        this.$store.commit('user/setUser', null)
+        this.$router.push('/')
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 }

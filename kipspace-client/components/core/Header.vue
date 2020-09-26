@@ -12,19 +12,6 @@
         <v-btn icon color="white" @click="toggleDrawer">
           <v-icon size="30">mdi-close</v-icon>
         </v-btn>
-
-        <v-spacer />
-
-        <v-btn
-          v-show="isLoggedIn"
-          depressed
-          color="secondary"
-          class="text-capitalize"
-          to="/categories"
-          active-class="mkr-active"
-        >
-          Make Reservation
-        </v-btn>
       </v-toolbar>
 
       <div v-if="isLoggedIn">
@@ -37,28 +24,40 @@
           >
             <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
+          <v-list-item class="pl-0">
+            <v-btn
+              depressed
+              block
+              color="secondary"
+              to="/categories"
+              class="text-capitalize"
+            >
+              Make Reservation
+            </v-btn>
+          </v-list-item>
         </v-list>
       </div>
 
       <div v-else>
-        <v-list>
+        <v-list nav>
           <v-list-item link to="/">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
           <v-list-item to="/account/login">
             <v-list-item-title>Log In</v-list-item-title>
           </v-list-item>
+          <v-list-item class="pl-0">
+            <v-btn
+              color="secondary"
+              class="text-capitalize"
+              block
+              depressed
+              to="/account/register"
+            >
+              Sign Up
+            </v-btn>
+          </v-list-item>
         </v-list>
-
-        <v-btn
-          color="secondary"
-          class="mx-3 text-capitalize"
-          width="90%"
-          depressed
-          to="/account/register"
-        >
-          Sign Up
-        </v-btn>
       </div>
     </v-navigation-drawer>
 
@@ -242,7 +241,6 @@ export default {
     navLinks: [
       { text: 'Home', href: '/' },
       { text: 'My Reservations', href: '/account/reservations' },
-      { text: 'Scan to Exit', href: '/exit' },
     ],
   }),
   computed: {
@@ -259,14 +257,17 @@ export default {
       this.drawer = !this.drawer
     },
     async signOut() {
-      await this.$apolloHelpers.onLogout().then(() => {
-        this.$store.commit('user/setUser', null)
+      try {
+        await this.$apolloHelpers.onLogout()
         this.$store.commit('snackbar/show', {
           text: 'Logged out successfully',
           icon: 'success',
         })
-        this.$router.replace('/')
-      })
+        this.$store.commit('user/setUser', null)
+        this.$router.push('/')
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 }
