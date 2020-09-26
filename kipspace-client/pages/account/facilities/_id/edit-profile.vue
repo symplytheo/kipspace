@@ -2,8 +2,58 @@
   <div id="mgr-edit">
     <v-container>
       <v-card outlined flat class="my-5">
-        <v-sheet tile height="150" color="grey lighten-4">
-          <v-img height="100%" src="/img/chips.png">
+        <v-sheet tile height="150" color="grey lighten-3">
+          <v-img height="100%" :src="item.cover && item.cover">
+            <v-dialog v-model="coverDialog" persistent max-width="600">
+              <template v-slot:activator="{ on, attrs }">
+                <v-row align="end" justify="end" class="fill-height">
+                  <v-btn
+                    color="rgba(255,255,255,0.35)"
+                    class="mx-2"
+                    depressed
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon large color="primary">mdi-camera</v-icon>
+                  </v-btn>
+                </v-row>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <v-spacer />
+                  <v-btn text small @click="coverDialog = false"> close </v-btn>
+                </v-card-title>
+                <v-card-text class="pl-1 pr-2">
+                  <v-file-input
+                    v-model="cover"
+                    color="primary"
+                    label="Facility Cover"
+                    outlined
+                    placeholder="upload jpeg or png file"
+                    accept="image/*"
+                    show-size
+                    :clearable="false"
+                  >
+                    <template v-slot:selection="{ text }">
+                      <v-chip small label color="primary">
+                        {{ text }}
+                      </v-chip>
+                    </template>
+                  </v-file-input>
+                  <v-btn
+                    large
+                    depressed
+                    color="primary"
+                    :loading="coverUploading"
+                    :disabled="cover.length === 0"
+                    class="ml-10 text-capitalize"
+                    @click="uploadFacilityCover()"
+                  >
+                    upload facility cover
+                  </v-btn>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
             <v-row align="end" justify="end" class="fill-height">
               <v-btn color="rgba(255,255,255,0.35)" class="mx-2" depressed>
                 <v-icon large color="primary">mdi-camera</v-icon>
@@ -13,24 +63,63 @@
         </v-sheet>
         <v-row justify="center" class="text-center">
           <v-col cols="6">
-            <v-avatar size="160" class="biz-logo">
-              <v-img src="/img/pizza.png" alt="alt">
-                <v-row align="end" justify="center" class="fill-height">
-                  <v-btn
-                    color="rgba(255,255,255,0.35)"
-                    class="my-3 mx-2"
-                    depressed
-                    small
-                    block
+            <v-dialog v-model="logoDialog" persistent max-width="600">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon height="150" width="150" v-bind="attrs" v-on="on">
+                  <v-avatar size="150" color="grey lighten-3">
+                    <v-img :src="item.logo && item.logo">
+                      <v-row align="end" justify="center" class="fill-height">
+                        <v-btn
+                          color="rgba(255,255,255,0.35)"
+                          class="mb-5"
+                          depressed
+                        >
+                          <v-icon large color="primary">mdi-camera</v-icon>
+                        </v-btn>
+                      </v-row>
+                    </v-img>
+                  </v-avatar>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <v-spacer />
+                  <v-btn text small @click="logoDialog = false"> close </v-btn>
+                </v-card-title>
+                <v-card-text class="pl-1 pr-2">
+                  <v-file-input
+                    v-model="logo"
+                    color="primary"
+                    label="Facility Logo"
+                    outlined
+                    placeholder="upload jpeg or png file"
+                    accept="image/*"
+                    show-size
+                    :clearable="false"
                   >
-                    <v-icon size="30" color="primary">mdi-camera</v-icon>
+                    <template v-slot:selection="{ text }">
+                      <v-chip small label color="primary">
+                        {{ text }}
+                      </v-chip>
+                    </template>
+                  </v-file-input>
+                  <v-btn
+                    large
+                    depressed
+                    color="primary"
+                    :loading="logoUploading"
+                    :disabled="logo.length === 0"
+                    class="ml-10 text-capitalize"
+                    @click="uploadFacilityLogo()"
+                  >
+                    upload facility logo
                   </v-btn>
-                </v-row>
-              </v-img>
-            </v-avatar>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
           </v-col>
         </v-row>
-        <v-row class="px-10 py-5">
+        <v-row class="pa-3">
           <v-col cols="12" md="6">
             <v-text-field
               v-model="item.name"
@@ -45,6 +134,16 @@
               outlined
               label="Short Description"
               :rules="[(v) => !!v || 'Short description is required']"
+            />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-select
+              v-model="item.category._id"
+              outlined
+              :items="categories.items"
+              item-text="name"
+              item-value="_id"
+              label="Category"
             />
           </v-col>
           <v-col cols="12" md="6">
@@ -73,7 +172,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-select
-              v-model="country"
+              v-model="item.location.country._id"
               outlined
               :items="countries.items"
               item-text="name"
@@ -83,11 +182,11 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
-              v-model="item.capacity"
+              v-model.number="item.capacity"
               outlined
               label="Capacity"
               :rules="[
-                (v) => !!v || 'Facility City is required',
+                (v) => !!v || 'Capacity is required',
                 (v) => /^\d+$/.test(v) || 'Must be numbers only',
               ]"
             />
@@ -101,16 +200,16 @@
             />
           </v-col>
           <v-col cols="12" md="6">
-            <div class="subtitle-2">Opening Hours</div>
+            <div class="subtitle-2 mb-1">Opening Hours</div>
             <v-card outlined>
               <div v-for="(open, p) in opening" :key="p">
                 <v-row class="px-5" align="center">
-                  <v-col cols="5" class="py-0">
+                  <v-col cols="5" class="py-0 subtitle-2">
                     {{ open.day }}
                   </v-col>
                   <v-col cols="7" class="py-0">
                     <v-row>
-                      <v-col cols="4">
+                      <v-col cols="4 subtitle-2 pl-0">
                         <v-menu
                           v-model="menu[p]"
                           :close-on-content-click="false"
@@ -130,7 +229,14 @@
                               color="black"
                               v-on="on"
                             >
-                              {{ open.from ? open.from : '----' }}
+                              {{
+                                open.from
+                                  ? open.from
+                                  : item.opening_hours[p] &&
+                                    item.opening_hours[p].from
+                                  ? item.opening_hours[p].from
+                                  : '---'
+                              }}
                             </v-btn>
                           </template>
                           <v-time-picker
@@ -138,12 +244,11 @@
                             color="primary"
                             ampm-in-title
                             @input="menu[p] = false"
-                          >
-                          </v-time-picker>
+                          />
                         </v-menu>
                       </v-col>
-                      <v-col cols="4" class="text-center">to</v-col>
-                      <v-col cols="4">
+                      <v-col cols="4" class="text-center subtitle-2">to</v-col>
+                      <v-col cols="4 subtitle-2 pl-0">
                         <v-menu
                           v-model="menu2[p]"
                           :close-on-content-click="false"
@@ -163,7 +268,14 @@
                               color="black"
                               v-on="on"
                             >
-                              {{ open.to ? open.to : '----' }}
+                              {{
+                                open.to
+                                  ? open.to
+                                  : item.opening_hours[p] &&
+                                    item.opening_hours[p].to
+                                  ? item.opening_hours[p].to
+                                  : '---'
+                              }}
                             </v-btn>
                           </template>
                           <v-time-picker
@@ -171,14 +283,13 @@
                             color="primary"
                             ampm-in-title
                             @input="menu2[p] = false"
-                          >
-                          </v-time-picker>
+                          />
                         </v-menu>
                       </v-col>
                     </v-row>
                   </v-col>
                 </v-row>
-                <v-divider></v-divider>
+                <v-divider />
               </div>
             </v-card>
           </v-col>
@@ -188,8 +299,9 @@
               class="text-capitalize"
               depressed
               large
+              width="75%"
               :loading="loading"
-              @click="updateFacility(item)"
+              @click="updateFacility()"
             >
               Update facility
             </v-btn>
@@ -204,6 +316,7 @@
 <script>
 import UserFacilityGql from '~/graphql/queries/user-facility'
 import CountriesGql from '~/graphql/queries/countries'
+import CategoriesGql from '~/graphql/queries/categories'
 import UpdateFacilityGql from '~/graphql/mutations/UpdateFacility'
 import { emailValidation } from '~/utils/validation'
 
@@ -216,21 +329,32 @@ export default {
       facility: {
         _id: '',
         name: '',
+        short_description: '',
+        category: {
+          _id: '',
+          name: '',
+        },
         location: {
           address: '',
           state: '',
           city: '',
           country: {
+            _id: '',
             name: '',
           },
         },
+        description: '',
         opening_hours: [],
         capacity: 0,
-        reviews: [],
       },
       countries: {
         items: [],
       },
+      categories: {
+        items: [],
+      },
+      country: '',
+      category: '',
       opening: [
         { day: 'Monday', from: '', to: '' },
         { day: 'Tuesday', from: '', to: '' },
@@ -242,7 +366,15 @@ export default {
       ],
       menu: [],
       menu2: [],
-      country: '',
+      //
+      logo: [],
+      logoDialog: false,
+      logoUploading: false,
+      //
+      //
+      cover: [],
+      coverDialog: false,
+      coverUploading: false,
     }
   },
   apollo: {
@@ -258,32 +390,84 @@ export default {
       query: CountriesGql,
       prefetch: true,
     },
+    categories: {
+      query: CategoriesGql,
+      prefetch: true,
+    },
   },
   computed: {
     item() {
-      const item = this.facility
+      const item = { ...this.facility }
       return item
     },
   },
   methods: {
     emailValidation,
-    async updateFacility(item) {
+    // upload facility logo
+    async uploadFacilityLogo() {
+      this.logoUploading = true
+      const formData = new FormData()
+      formData.append('file', this.logo)
+      console.log('>> formData >> ', formData)
+      await this.$axios
+        .put(`/v1/facility/${this.id}/logo`, formData)
+        .then(({ data }) => {
+          this.logoUploading = false
+          console.log(data)
+          this.$store.commit('snackbar/show', {
+            text: 'Logo was uploaded successfully',
+            icon: 'success',
+          })
+          this.logoDialog = false
+        })
+        .catch((err) => {
+          console.log(err)
+          this.logoUploading = false
+        })
+    },
+    // upload facility cover
+    async uploadFacilityCover() {
+      this.coverUploading = true
+      const data = new FormData()
+      data.append('file', this.cover)
+      console.log(data)
+      console.log(this.cover)
+      await this.$axios
+        .put(`/v1/facility/${this.id}/cover`, data)
+        .then(({ data }) => {
+          this.coverUploading = false
+          console.log(data)
+          this.$store.commit('snackbar/show', {
+            text: data.message,
+            icon: 'success',
+          })
+          this.logoDialog = true
+        })
+        .catch((err) => {
+          console.log(err)
+          this.coverUploading = false
+        })
+    },
+    // update facility details
+    async updateFacility() {
       this.loading = true
       const record = {
-        _id: item._id,
-        name: item.name,
-        short_description: item.short_description,
-        // location: {
-        //   address: item.address,
-        //   city: item.city,
-        //   state: item.state,
-        // },
-        // country: item.country,
-        capacity: item.capacity,
-        description: item.description,
+        _id: this.id,
+        name: this.item.name,
+        short_description: this.item.short_description,
+        location: {
+          address: this.item.location.address,
+          city: this.item.location.city,
+          state: this.item.location.state,
+          country: this.item.location.country._id,
+        },
+        category: this.item.category._id,
+        capacity: this.item.capacity,
+        description: this.item.description,
+        opening_hours: this.opening,
       }
       try {
-        console.log(record.country)
+        console.log(record)
         await this.$apollo.mutate({
           mutation: UpdateFacilityGql,
           variables: { record },
@@ -292,12 +476,13 @@ export default {
           text: 'Facility was updated successfully',
           icon: 'success',
         })
+        // this.$router.go(0)
+        //
       } catch (error) {
-        console.log('Error ' + error.message)
+        console.log(error)
         // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
         this.$store.commit('snackbar/show', {
-          text: response.data.message,
+          text: error,
           icon: 'error',
         })
       } finally {
