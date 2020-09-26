@@ -10,19 +10,19 @@
         <v-col cols="6" sm="5" md="3">
           <v-card class="pa-5" elevation="5">
             <h4 class="mb-10">Open tickets</h4>
-            <div class="pt-5">300</div>
+            <div class="pt-5">{{ openTickets }}</div>
           </v-card>
         </v-col>
         <v-col cols="6" sm="5" md="3">
           <v-card class="pa-5" elevation="5">
             <h4 class="mb-10">Closed tickets</h4>
-            <div class="pt-5">1000</div>
+            <div class="pt-5">{{ closedTickets }}</div>
           </v-card>
         </v-col>
         <v-col cols="6" sm="5" md="3">
           <v-card class="pa-5" color="secondary" dark elevation="5">
             <h4 class="mb-10">Total Clock-ins</h4>
-            <div class="pt-5">1050</div>
+            <div class="pt-5">{{ facility.reservations.length }}</div>
           </v-card>
         </v-col>
         <v-col cols="6" sm="5" md="3">
@@ -50,7 +50,7 @@
                 class="primary--text"
                 :show-labels="true"
                 type="bar"
-              ></v-sparkline>
+              />
             </div>
           </v-card>
         </v-col>
@@ -95,6 +95,7 @@ export default {
     facility: {
       name: '',
       capacity: 0,
+      reservations: [],
     },
   }),
   apollo: {
@@ -105,6 +106,20 @@ export default {
           _id: this.$route.params.id,
         }
       },
+    },
+  },
+  computed: {
+    openTickets() {
+      const open = this.facility.reservations.filter(
+        (el) => el.current_status === 'PENDING'
+      )
+      return open.length
+    },
+    closedTickets() {
+      const close = this.facility.reservations.filter(
+        (el) => el.current_status === 'COMPLETED'
+      )
+      return close.length
     },
   },
   head() {
