@@ -33,9 +33,6 @@ cloudinary.config({
 });
 
 // Set basic express settings
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(COOKIE_SECRET));
 app.use(
 	cors({
 		origin: true, // ['http://localhost'],
@@ -43,6 +40,9 @@ app.use(
 		credentials: true,
 	})
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(COOKIE_SECRET));
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
