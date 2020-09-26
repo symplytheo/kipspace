@@ -65,12 +65,7 @@
                 />
               </div>
               <div>
-                <v-btn
-                  color="secondary"
-                  class="text-capitalize"
-                  depressed
-                  to="/make-reservation"
-                >
+                <v-btn color="secondary" class="text-capitalize" depressed>
                   Reserve
                 </v-btn>
               </div>
@@ -86,7 +81,10 @@
         <v-col cols="12" sm="10" md="12">
           <v-row>
             <v-col
-              v-for="(item, f) in facilities.items"
+              v-for="(item, f) in facilities.items
+                .slice()
+                .reverse()
+                .slice(0, 8)"
               :key="f"
               cols="6"
               md="3"
