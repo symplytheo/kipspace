@@ -1,0 +1,9 @@
+mutation CompleteReservation ($code: String!, $facility: MongoID!) {
+  completeReservation (code: $code, facility: $facility) {
+    _id
+    facility {
+      _id
+      name
+    }
+  }
+}

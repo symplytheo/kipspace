@@ -1,0 +1,9 @@
+mutation CancelReservation ($code: String!) {
+  cancelReservation (code: $code) {
+    _id
+    facility {
+      _id
+      name
+    }
+  }
+}
