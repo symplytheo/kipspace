@@ -6,7 +6,7 @@
       </div>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="12">
-          <v-row>
+          <v-row v-if="category.facilities.items.length > 0">
             <v-col
               v-for="(item, g) in category.facilities.items"
               :key="g"
@@ -23,6 +23,14 @@
                 class="pagination"
               />
             </v-col>
+          </v-row>
+          <v-row
+            v-else
+            justify="center"
+            align="center"
+            class="fill-height mt-3 mb-10"
+          >
+            <div class="subtitle-1">No facility in this category yet</div>
           </v-row>
         </v-col>
       </v-row>
