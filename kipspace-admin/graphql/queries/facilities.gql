@@ -9,8 +9,16 @@ query Facilities {
 				address
 				state
 				city
+				country {
+					_id
+					name
+				}
 			}
 			capacity
+			reviews {
+        _id
+        rating
+      }
 		}
 	}
 }

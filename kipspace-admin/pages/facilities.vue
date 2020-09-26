@@ -23,7 +23,7 @@
               md="4"
               lg="3"
             >
-              <FacilityCard />
+              <FacilityCard :facility="facility" />
             </v-col>
             <v-col cols="12">
               <v-pagination
