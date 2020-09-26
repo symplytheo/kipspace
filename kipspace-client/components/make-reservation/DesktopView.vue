@@ -11,7 +11,7 @@
               <v-card class="reserve-box pa-0 pl-8 mb-5" height="48" flat>
                 <v-form v-model="MkrForm">
                   <v-row>
-                    <v-col class="pa-0">
+                    <v-col col="4" class="pa-0">
                       <v-dialog
                         ref="date"
                         v-model="datepicker"
@@ -56,7 +56,7 @@
                         </v-date-picker>
                       </v-dialog>
                     </v-col>
-                    <v-col class="pa-0">
+                    <v-col col="4" class="pa-0">
                       <v-dialog
                         ref="time"
                         v-model="timepicker"
@@ -102,7 +102,7 @@
                         </v-time-picker>
                       </v-dialog>
                     </v-col>
-                    <v-col class="pa-0">
+                    <v-col col="4" class="pa-0">
                       <v-select
                         v-model="seats"
                         :items="[1, 2, 3, 4, 5]"
@@ -112,14 +112,13 @@
                         :rules="[(v) => !!v || 'Seat is required']"
                       />
                     </v-col>
-                    <v-col class="pa-0 reserve-btn-col">
+                    <v-col col="4" class="pa-0">
                       <v-btn
-                        color="white"
-                        text
-                        large
-                        class="reserve-btn text-capitalize"
-                        width="100%"
+                        color="secondary"
+                        depressed
+                        width="95%"
                         height="48"
+                        class="text-capitalize reserve-btn"
                         :disabled="!MkrForm"
                         :loading="loading"
                         @click="makeReservation()"
@@ -148,7 +147,7 @@
             </v-avatar>
           </v-col>
           <v-col md="9" lg="10" class="pt-0">
-            <div class="title font-weight-bold">
+            <div class="title font-weight-bold text-capitalize">
               {{ facility.name }}
             </div>
             <div class="pt-1">
@@ -163,7 +162,7 @@
                 class="d-inline"
               />
             </div>
-            <div class="pt-1">
+            <div class="pt-1 text-capitalize">
               {{
                 `${facility.location.address}, 
                 ${facility.location.city}, 
@@ -186,18 +185,18 @@
               </v-col>
               <v-col cols="10">
                 <v-row v-for="(open, h) in facility.opening_hours" :key="h">
-                  <v-col cols="4" class="pt-1">
+                  <v-col cols="5" class="pl-0 pt-1 subtitle-2">
                     {{ open.day }}
                   </v-col>
-                  <v-col cols="8" class="pt-1">
+                  <v-col cols="7" class="pt-1">
                     <v-row>
-                      <v-col cols="5" class="py-0">
+                      <v-col cols="5" class="py-0 subtitle-2">
                         {{ open.from }}
                       </v-col>
-                      <v-col cols="2" class="py-0">
+                      <v-col cols="2" class="py-0 subtitle-2">
                         <span>-</span>
                       </v-col>
-                      <v-col cols="5" class="py-0">
+                      <v-col cols="5" class="py-0 subtitle-2">
                         {{ open.to }}
                       </v-col>
                     </v-row>
@@ -354,7 +353,7 @@ export default {
           text: 'Reservation was successfully made',
           icon: 'success',
         })
-        this.$router.push('/success')
+        this.$router.replace('/success')
       } catch (error) {
         // log error in console
         // snackbar for error not perfected yet
@@ -380,22 +379,7 @@ export default {
 #desktop .reserve-box {
   border-radius: 50px !important;
 }
-#desktop .reserve-box .v-input__slot {
-  border-right: 2px solid #dedede;
-  border-radius: 0%;
-}
-#desktop .reserve-box .remind .v-input__slot {
-  border: none;
-}
-#desktop .time-btn {
-  text-transform: lowercase;
-  border-right: 2px solid #dedede;
-}
-#desktop .time-btn::before {
-  background-color: transparent !important;
-}
 #desktop .reserve-btn-col {
-  background: #ea3788;
   height: 48px;
   border-radius: 0px 50px 50px 0px;
 }

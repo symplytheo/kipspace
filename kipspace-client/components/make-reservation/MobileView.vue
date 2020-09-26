@@ -3,7 +3,7 @@
     <v-container class="px-sm-10">
       <v-form v-model="MkrForm">
         <v-row>
-          <v-col cols="4" class="py-3 pr-0">
+          <v-col cols="4" class="pb-0 pr-0">
             <v-dialog
               ref="date"
               v-model="datepicker"
@@ -39,7 +39,7 @@
               </v-date-picker>
             </v-dialog>
           </v-col>
-          <v-col cols="4" class="pr-0">
+          <v-col cols="4" class="pr-0 pb-0">
             <v-dialog
               ref="time"
               v-model="timepicker"
@@ -80,7 +80,7 @@
               </v-time-picker>
             </v-dialog>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="4" class="pb-0">
             <v-select
               v-model="seats"
               :items="[1, 2, 3, 4, 5]"
@@ -89,7 +89,7 @@
               :rules="[(v) => !!v || 'Seat is required']"
             />
           </v-col>
-          <v-col>
+          <v-col class="pt-0">
             <v-btn
               x-large
               depressed
@@ -368,7 +368,7 @@ export default {
           text: 'Reservation was successfully made',
           icon: 'success',
         })
-        this.$router.push('/success')
+        this.$router.replace('/success')
       } catch (error) {
         // log error in console
         // snackbar for error not perfected yet
@@ -390,11 +390,5 @@ export default {
   margin-top: -65px;
   border: 3px solid white;
   border-radius: 50%;
-}
-#mobile .v-input__control {
-  height: 48px;
-}
-#mobile .v-text-field--solo.v-select {
-  border: 1px solid #d1d1d1;
 }
 </style>
