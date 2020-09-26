@@ -21,15 +21,15 @@
     <v-sheet tile elevation="3">
       <v-container>
         <v-row>
-          <v-col md="3" lg="2">
-            <v-avatar size="160" class="biz-logo">
+          <v-col cols="5" md="3" lg="2">
+            <v-avatar size="140" class="biz-logo">
               <v-img
                 :src="facility.logo ? facility.logo : '/img/mcdonald-icon.png'"
                 alt="alt"
               />
             </v-avatar>
           </v-col>
-          <v-col md="9" lg="10" class="pt-0">
+          <v-col cols="7" md="9" lg="10" class="pt-0">
             <div class="title font-weight-bold text-capitalize">
               {{ facility.name }}
             </div>
@@ -45,7 +45,14 @@
                 class="d-inline"
               />
             </div>
-            <div class="pt-1">{{ facilityAddress }}</div>
+            <div class="pt-1">
+              {{
+                `${facility.location.address}, 
+                ${facility.location.city}, 
+                ${facility.location.state},  
+                ${facility.location.country.name}`
+              }}
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -61,20 +68,20 @@
                   <v-col cols="2">
                     <v-icon color="primary" size="28">mdi-clock-outline</v-icon>
                   </v-col>
-                  <v-col cols="10">
+                  <v-col cols="10" class="pl-0">
                     <v-row v-for="(open, h) in facility.opening_hours" :key="h">
-                      <v-col cols="4" class="pt-1">
+                      <v-col cols="4" class="pt-1 pl-0 subtitle-2">
                         {{ open.day }}
                       </v-col>
                       <v-col cols="8" class="pt-1">
                         <v-row>
-                          <v-col cols="5" class="py-0">
+                          <v-col cols="5" class="py-0 subtitle-2">
                             {{ open.from }}
                           </v-col>
-                          <v-col cols="2" class="py-0">
+                          <v-col cols="2" class="py-0 subtitle-2">
                             <span>-</span>
                           </v-col>
-                          <v-col cols="5" class="py-0">
+                          <v-col cols="5" class="py-0 subtitle-2">
                             {{ open.to }}
                           </v-col>
                         </v-row>
@@ -219,25 +226,12 @@ export default {
     },
   },
   computed: {
-    facilityAddress() {
-      return (
-        this.facility.location.address +
-        ', ' +
-        this.facility.location.city +
-        ', ' +
-        this.facility.location.state +
-        ', ' +
-        this.facility.location.country.name
-      )
-    },
     averageRating() {
       let sum = 0
-      for (const item in this.facility.reviews) {
-        sum += item.rating
-      }
+      for (const item in this.facility.reviews) sum += item.rating
       const length = this.facility.reviews.length
-      const average = sum / (length !== 0 ? length : 1)
-      return average > 0 ? average : average + 1
+      const average = sum / (length !== 0 ? length : 1) // 0/0 is NaN
+      return average
     },
   },
   head() {
