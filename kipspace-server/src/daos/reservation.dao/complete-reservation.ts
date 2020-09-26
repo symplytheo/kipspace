@@ -32,7 +32,7 @@ export const CompleteReservation = async (code: string, facilityId: string) => {
 				if (reservationDate.getTime() < Date.now() + layover) {
 					await reservation.updateOne({
 						current_status: 'MISSED',
-						$addToSet: { status: 'MISSED' },
+						$addToSet: { statuses: { status: 'MISSED' } },
 					});
 
 					throw new Exception(BAD_REQUEST, 'Cannot complete a missed reservation.');
@@ -51,7 +51,7 @@ export const CompleteReservation = async (code: string, facilityId: string) => {
 
 				await reservation.updateOne({
 					current_status: 'COMPLETED',
-					$addToSet: { status: 'COMPLETED' },
+					$addToSet: { statuses: { status: 'COMPLETED' } },
 				});
 
 				reservation.current_status = 'COMPLETED';

@@ -10,7 +10,7 @@ class UserService extends KipspaceService<IUser> {
 	public CreateAccount = async (req: Request): Promise<void> => {
 		try {
 			const user = await CreateUser({
-				email: req.body.email,
+				email: req.body.email?.toLowerCase(),
 				password: req.body.password,
 			});
 
