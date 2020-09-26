@@ -6,7 +6,6 @@ query Facility ($filter: FacilityPublicFilter) {
     description
     logo
     cover
-    gallery
     location {
       address
       state

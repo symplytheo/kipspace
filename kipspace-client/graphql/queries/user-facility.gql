@@ -28,6 +28,12 @@ query UserFacility($_id: MongoID!) {
       from
       to
     }
+    reservations {
+      _id
+      current_status
+      code
+      barcode_url
+    }
     reviews {
       _id
       display_name

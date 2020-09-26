@@ -12,6 +12,8 @@ query Profile {
 		}
     reservations {
       _id
+      code
+      barcode_url
       facility {
         _id
         name

@@ -9,6 +9,10 @@ query Category($filter: CategoryPublicFilter) {
       items {
         _id
         name
+        reviews {
+          _id
+          rating
+        }
       }
     }
   }

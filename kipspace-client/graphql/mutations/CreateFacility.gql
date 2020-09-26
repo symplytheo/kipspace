@@ -3,22 +3,6 @@ mutation CreateFacility($record: CreateOneFacilityInput!) {
     record {
       _id
       name
-      short_description
-      category {
-        _id
-        name
-      }
-      location {
-        address
-        state
-        city
-      }
-      capacity
-      opening_hours {
-        day
-        from
-        to
-      }
     }
   }
 }

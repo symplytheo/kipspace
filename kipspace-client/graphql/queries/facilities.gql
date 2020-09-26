@@ -10,6 +10,10 @@ query Facilities {
 				city
 			}
 			capacity
+			reviews {
+				_id
+				rating
+			}
 		}
 	}
 }

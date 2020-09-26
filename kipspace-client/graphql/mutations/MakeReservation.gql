@@ -6,11 +6,6 @@ mutation ($record: NewReservation) {
         _id
         name
       }
-      seats
-      statuses {
-        _id
-        status
-      }
     }
   }
 }
