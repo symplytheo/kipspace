@@ -1,28 +1,36 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12" sm="10" md="8" lg="7">
-        <v-card outlined flat class="pa-10">
+      <v-col cols="12" sm="8" md="6" lg="5">
+        <v-card outlined flat class="pa-5 my-10">
           <v-row justify="center" class="text-center">
             <v-col cols="6">
-              <v-avatar size="160">
-                <v-img src="/img/lamp.jpg" alt="alt">
-                  <v-row align="end" justify="center" class="fill-height">
-                    <v-btn
-                      color="rgba(255,255,255,0.35)"
-                      class="mx-2"
-                      depressed
-                      block
-                    >
-                      <v-icon size="30" color="primary">mdi-camera</v-icon>
-                    </v-btn>
-                  </v-row>
-                </v-img>
+              <v-avatar
+                size="140"
+                color="primary"
+                class="headline white--text font-weight-bold text-uppercase"
+              >
+                <v-img v-if="user.avatar" :src="user.avatar" />
+                <span v-else>
+                  {{
+                    getInitials(user.firstname ? user.firstname : user.email)
+                  }}
+                </span>
               </v-avatar>
+              <v-btn
+                text
+                color="primary"
+                class="subtitle-2 text-lowercase font-weight-bold"
+              >
+                <v-icon size="16" color="primary" class="mr-1">
+                  mdi-cloud-upload
+                </v-icon>
+                upload
+              </v-btn>
             </v-col>
           </v-row>
           <v-row class="pt-5">
-            <v-col cols="12" sm="6">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.firstname"
                 label="First name"
@@ -35,7 +43,7 @@
                 ]"
               />
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.lastname"
                 label="Last name"
@@ -48,7 +56,7 @@
                 ]"
               />
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.email"
                 label="Email"
@@ -59,7 +67,7 @@
                 ]"
               />
             </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12">
               <v-text-field
                 v-model="user.phone"
                 label="Phone"
@@ -72,6 +80,7 @@
             <v-btn
               large
               depressed
+              width="75%"
               :loading="loading"
               color="secondary"
               @click="updateProfile()"
@@ -89,6 +98,7 @@
 import ProfileGql from '~/graphql/queries/profile'
 import UpdateProfileGql from '~/graphql/mutations/UpdateProfile'
 import { emailValidation } from '~/utils/validation'
+import getInitials from '~/utils/getInitials'
 
 export default {
   middleware: ['authenticated'],
@@ -111,14 +121,16 @@ export default {
   },
   computed: {
     user() {
-      const user = this.profile
+      const user = { ...this.profile }
       return user
     },
   },
   methods: {
+    getInitials,
     emailValidation,
     async updateProfile() {
       this.loading = true
+      //
       const record = {
         firstname: this.user.firstname,
         lastname: this.user.lastname,
@@ -126,27 +138,25 @@ export default {
         phone: this.user.phone,
       }
       try {
-        await this.$apollo
-          .mutate({
-            mutation: UpdateProfileGql,
-            variables: { record },
-          })
-          .then(() => {
-            this.$store.commit('snackbar/show', {
-              text: 'Profile was updated successfully',
-              icon: 'success',
-            })
-            this.$router.go(0)
-          })
+        await this.$apollo.mutate({
+          mutation: UpdateProfileGql,
+          variables: { record },
+        })
+        //
+        this.$store.commit('snackbar/show', {
+          text: 'Profile was updated successfully',
+          icon: 'success',
+        })
+        this.loading = false
+        this.$router.go(0)
+        //
       } catch (error) {
         // eslint-disable-next-line no-unused-vars
-        const { response, message } = error
+        console.log(error)
         this.$store.commit('snackbar/show', {
-          text: response.data.message,
+          text: error,
           icon: 'error',
         })
-      } finally {
-        this.loading = false
       }
     },
   },
