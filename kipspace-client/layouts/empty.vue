@@ -7,6 +7,7 @@
     >
       <v-container>
         <nuxt />
+        <Snackbar />
       </v-container>
     </v-row>
   </v-app>
