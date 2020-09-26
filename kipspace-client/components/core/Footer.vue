@@ -122,7 +122,7 @@ export default {
           text: 'Logged out successfully',
           icon: 'success',
         })
-        // this.$router.go(0)
+        this.$router.replace('/')
       })
     },
   },

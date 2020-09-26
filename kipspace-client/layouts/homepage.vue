@@ -230,6 +230,7 @@
     <!-- Content -->
     <v-main>
       <nuxt />
+      <Snackbar />
     </v-main>
 
     <!-- Footer -->
@@ -264,8 +265,15 @@ export default {
     toggleDrawer() {
       this.drawer = !this.drawer
     },
-    signOut() {
-      this.$store.commit('user/logout')
+    async signOut() {
+      await this.$apolloHelpers.onLogout().then(() => {
+        this.$store.commit('user/setUser', null)
+        this.$store.commit('snackbar/show', {
+          text: 'Logged out successfully',
+          icon: 'success',
+        })
+        this.$router.replace('/')
+      })
     },
   },
 }

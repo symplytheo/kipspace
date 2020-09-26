@@ -29,7 +29,12 @@
 
       <div v-if="isLoggedIn">
         <v-list dark nav>
-          <v-list-item v-for="(link, n) in navLinks" :key="n" :to="link.href">
+          <v-list-item
+            v-for="(link, n) in navLinks"
+            :key="n"
+            :to="link.href"
+            exact
+          >
             <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -260,7 +265,7 @@ export default {
           text: 'Logged out successfully',
           icon: 'success',
         })
-        this.$router.go(0)
+        this.$router.replace('/')
       })
     },
   },
